@@ -6,6 +6,7 @@ TagManager:
   tags:
   - peca
   - SeguraPecaController
+  - Board
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Board
   - 
   - 
   - 
@@ -40,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Board
+    uniqueID: 2235729505
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
