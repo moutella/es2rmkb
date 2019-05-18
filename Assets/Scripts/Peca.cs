@@ -13,15 +13,11 @@ public class Peca : IComparable
     }
     
 
-    public int CodigoCor{
-        get=> codigoCor;
-        set=>codigoCor=value;
-    }
+    public int getCodigoCor(){return this.codigoCor;}
+    public void setCodigoCor(int cor){this.codigoCor=cor;}
 
-    public int Valor{
-        get=> valor;
-        set=>valor=value;
-    }
+    public int getValor(){return this.valor;}
+    public void setValor(int value){this.valor=value;}
 
     public int CompareTo(Object obj){
         if(obj==null)return 1;
@@ -34,6 +30,5 @@ public class Peca : IComparable
 
     }
 
-    public bool getCoringa(){return coringa;}
-    public void setCoringa(bool value){coringa=value;}
+    public bool ehCoringa(){return coringa;}
 }
