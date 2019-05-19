@@ -11,18 +11,27 @@ public class Conjunto
     public Conjunto(){
         this.pecas = new ArrayList();
     }
-
+    public bool getValida()
+    {
+        return this.valida;
+    }
     public void inserePeca(Peca p){
         this.pecas.Add(p);
+
+        this.valida = this.validaConjunto();
         //this.pecas.Sort(); quando inserirmos o coringa, ele ainda não terá um valor atribuido
     }
     public void inserePecaAntes(Peca p)
     {
         pecas.Insert(0, p);
+
+        this.valida = this.validaConjunto();
     }
 
     public void removePeca(Peca p){
         this.pecas.Remove(p);
+
+        this.valida = this.validaConjunto();
     }
 
     public void inserteConjunto(Conjunto conj)
@@ -31,14 +40,12 @@ public class Conjunto
         {
             inserePeca(p);
         }
+        this.valida = this.validaConjunto();
     }
 
     public void removePeca(int i){
         if(i<this.pecas.Count){this.pecas.RemoveAt(i);}
-    }
-    public void atualizaTodosCoringas()
-    {
-
+        this.valida = this.validaConjunto();
     }
     public void atualizaCoringa(Peca p, int valor, int cor){
         p.setValor(valor);
@@ -75,10 +82,9 @@ public class Conjunto
         {
             if (p.ehCoringa())
             {
-                p.setValor(valorDoGrupo);
+                atualizaCoringa(p, valorDoGrupo, -1);
             }
         }
-
             this.tipo = 0;
         return true;
     }
@@ -126,8 +132,7 @@ public class Conjunto
             {
                 if (p.ehCoringa())
                 {
-                    p.setCodigoCor(corDaSequencia);
-                    p.setValor(valorAtribuido);
+                    atualizaCoringa(p, valorAtribuido, corDaSequencia);
                 }
                 valorAtribuido++;
             }

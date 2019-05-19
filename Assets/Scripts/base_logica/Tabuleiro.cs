@@ -24,7 +24,7 @@ public class Tabuleiro
 
     public bool validaTabuleiro(){
       foreach(Conjunto c in this.conjuntos){
-        if(!c.validaConjunto()) {
+        if(!c.getValida()) {
           return false;
         }
       }
