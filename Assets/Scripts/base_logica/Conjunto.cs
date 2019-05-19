@@ -66,6 +66,8 @@ public class Conjunto
         {
             if (p.ehCoringa())
             {
+                p.setValor(valorAtual);
+                p.setCodigoCor(corDaSequencia);
                 numeroCoringas++;
             }
             else { 

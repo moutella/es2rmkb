@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
-
+using UnityEngine;
 public class Peca : IComparable
 {
     private int codigoCor;
     private int valor;
     private bool coringa;
-
+    private Vector3 pos;
+    
     public Peca(int cor, int valor, bool coringa)
     {
         this.codigoCor = cor;
@@ -27,7 +28,7 @@ public class Peca : IComparable
         return valor;
     }
 
-    public int CompareTo(Object obj)
+    public int CompareTo(object obj)
     {
         if (obj == null) return 1;
 

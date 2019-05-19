@@ -20,11 +20,11 @@ public class TestesLogica : MonoBehaviour
         tabuleiro.insereConjunto(seq);
         Debug.Log(seq.validaConjunto());
 
-        Conjunto c = new Conjunto(); //caso de teste com 2 peças da mesma cor dando true
+        Conjunto c = new Conjunto(); 
         Peca p = new Peca(0, 1, false);
         Peca p1 = new Peca(1, 1, false);
         Peca p2 = new Peca(2, 1, false);
-        Peca p3 = new Peca(2, 1, false);
+        Peca p3 = new Peca(2, 1, true);
         c.inserePeca(p);
         c.inserePeca(p1);
         c.inserePeca(p2);
