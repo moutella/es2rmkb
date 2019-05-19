@@ -4,7 +4,7 @@ using System.Collections;
 public class Tabuleiro
 {
     private ArrayList conjuntos;
-
+    
     public Tabuleiro(){
         this.conjuntos = new ArrayList();
     }

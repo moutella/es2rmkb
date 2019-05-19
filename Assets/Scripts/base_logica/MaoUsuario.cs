@@ -10,6 +10,18 @@ public class MaoUsuario : MonoBehaviour
     {
         this.pecas = new ArrayList();
     }
+    public void compraPeca(Deck deck)
+    {
+        Peca p = deck.pegaPecaAleatoria();
+        inserePeca(p);
+    }
+    public void insereMaoInicial(ArrayList pecasIniciais)
+    {
+        foreach(Peca p in pecasIniciais)
+        {
+            pecas.Add(p);
+        }
+    }
     public void inserePeca(Peca p)
     {
         if (p.ehCoringa())
