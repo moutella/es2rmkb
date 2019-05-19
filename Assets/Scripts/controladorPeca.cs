@@ -37,8 +37,6 @@ public class controladorPeca : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        
-        print("ue, colisao peca");
         if (pecaSolta & other.gameObject.tag=="peca") { 
             Vector3 dif = other.gameObject.transform.position - transform.position;
             if(dif.x > 0)

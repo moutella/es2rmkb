@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
-public class Peca : IComparable
+using UnityEngine;
+public class Peca : MonoBehaviour, IComparable
 {
     private int codigoCor;
     private int valor;
     private bool coringa;
+    private Vector3 position;
 
     public Peca(int cor, int valor, bool coringa){
         this.codigoCor=cor;
@@ -19,7 +21,7 @@ public class Peca : IComparable
     public int getValor(){return this.valor;}
     public void setValor(int value){this.valor=value;}
 
-    public int CompareTo(Object obj){
+    public int CompareTo(object obj){
         if(obj==null)return 1;
 
         Peca p = obj as Peca;
