@@ -22,6 +22,9 @@ public class Peca : IComparable
     public int getValor() { return this.valor; }
     public void setValor(int value) { this.valor = value; }
 
+    public Vector3 getPosition() { return this.pos; }
+    public void setPosition(Vector3 pos) { this.pos = pos; }    
+
     public int getPontos() //Penalidade por ter a peça na mão ao final do jogo
     {
         if (coringa) return 30;

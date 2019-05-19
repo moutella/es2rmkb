@@ -11,27 +11,31 @@ public class TestesLogica : MonoBehaviour
         tabuleiro = new Tabuleiro();
         
         Conjunto seq = new Conjunto();
-        Peca seq2 = new Peca(0, 1, false);
-        Peca seq3 = new Peca(0, 2, false);
-        Peca seq1 = new Peca(0, 1, true);
+        
+        Peca seq1 = new Peca(0, 1, false);
+        
+        Peca seq2 = new Peca(0, 2, false);
+        
+        Peca seq3 = new Peca(0, 1, true);
         seq.inserePeca(seq1);
         seq.inserePeca(seq2);
         seq.inserePeca(seq3);
+
         tabuleiro.insereConjunto(seq);
         Debug.Log(seq.validaConjunto());
 
-        Conjunto c = new Conjunto(); 
-        Peca p = new Peca(0, 1, false);
-        Peca p1 = new Peca(1, 1, false);
-        Peca p2 = new Peca(2, 1, false);
-        Peca p3 = new Peca(2, 1, true);
-        c.inserePeca(p);
-        c.inserePeca(p1);
-        c.inserePeca(p2);
-        c.inserePeca(p3);
-        tabuleiro.insereConjunto(c);
+        //Conjunto c = new Conjunto(); 
+        //Peca p = new Peca(0, 1, false);
+        //Peca p1 = new Peca(1, 1, false);
+        //Peca p2 = new Peca(2, 1, false);
+        //Peca p3 = new Peca(2, 1, true);
+        //c.inserePeca(p);
+        //c.inserePeca(p1);
+        //c.inserePeca(p2);
+        //c.inserePeca(p3);
+        //tabuleiro.insereConjunto(c);
 
-        Debug.Log(c.validaConjunto());
+        //Debug.Log(c.validaConjunto());
         Debug.Log(tabuleiro.validaTabuleiro());
     }
     
