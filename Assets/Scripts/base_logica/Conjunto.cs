@@ -11,6 +11,10 @@ public class Conjunto
     public Conjunto(){
         this.pecas = new ArrayList();
     }
+
+    public int getNumPecas(){
+        return this.pecas.Count;
+    }
     public bool getValida()
     {
         return this.valida;
@@ -140,6 +144,39 @@ public class Conjunto
         this.tipo = 1;
         return true;
     }
+    public Conjunto cloneConjunto()
+    {
+        Conjunto clone = new Conjunto();
+        foreach(Peca p in this.pecas)
+        {
+            Peca clonePeca = p.clonePeca();
+            clone.inserePeca(p);
+        }
+        return clone;
+    }
 
+
+    public Conjunto divide(Peca p){
+        int indP = this.pecas.IndexOf(p);
+        Peca atual;
+
+        if(indP==this.pecas.Count-1 || indP==0){
+            this.removePeca(indP);
+            return null;
+        }else {
+            Conjunto novo = new Conjunto();
+            int diferenca = (this.pecas.Count-1) - indP;
+            int n = this.pecas.Count-1;
+            for(int i=n;i>indP;i--){
+                atual = this.pecas[i];
+                novo.inserePeca(atual);
+                this.removePeca(atual);
+            }
+
+            this.removePeca(indP);
+
+            return novo;
+        }
+    }
     
 }

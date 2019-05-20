@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck : MonoBehaviour
+public class Deck
 {
     private ArrayList pecas;
     private int quantasPecasTem = 106;
     
     public Deck()
     {
+        pecas = new ArrayList();
         for(int i=0; i < 4; i++)
         {
-            for(int j = 0; j < 13; j++)
+            for(int j = 1; j < 14; j++)
             {
                 for(int k = 0; k<2; k++)
                 {
-                    pecas.Add(new Peca(i,j,false));
+                    Peca pecaNova = new Peca(i, j, false);
+                    this.pecas.Add(pecaNova);
                 }
                 
             }
