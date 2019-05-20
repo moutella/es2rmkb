@@ -6,6 +6,8 @@ TagManager:
   tags:
   - peca
   - SeguraPecaController
+  - Slot
+  - SeguraPecaUi
   layers:
   - Default
   - TransparentFX
