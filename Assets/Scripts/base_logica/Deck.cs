@@ -12,7 +12,7 @@ public class Deck
         pecas = new ArrayList();
         for(int i=0; i < 4; i++)
         {
-            for(int j = 0; j < 13; j++)
+            for(int j = 1; j < 14; j++)
             {
                 for(int k = 0; k<2; k++)
                 {
