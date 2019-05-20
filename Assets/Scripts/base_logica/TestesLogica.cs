@@ -8,6 +8,10 @@ public class TestesLogica : MonoBehaviour
     //CLASSE PURAMENTE PARA TESTES, ADICIONE O PREFAB TestesLogica a cena para ver o output no console
     void Start() //trate como o main
     {
+        Deck deck = new Deck();
+        MaoUsuario MaoUsuario = new MaoUsuario();
+        MaoUsuario.insereMaoInicial(deck.pegaCartasIniciais());
+        MaoUsuario.printaPecas();
         tabuleiro = new Tabuleiro();
         
         Conjunto seq = new Conjunto();

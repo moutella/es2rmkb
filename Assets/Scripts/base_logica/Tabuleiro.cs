@@ -30,4 +30,14 @@ public class Tabuleiro
       }
       return true;
     }
+    public Tabuleiro cloneTabuleiro()
+    {
+        Tabuleiro clone = new Tabuleiro();
+        foreach(Conjunto c in this.conjuntos)
+        {
+            Conjunto cloneConj = c.cloneConjunto();
+            clone.insereConjunto(cloneConj);
+        }
+        return clone;
+    }
 }

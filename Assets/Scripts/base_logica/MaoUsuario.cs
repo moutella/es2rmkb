@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MaoUsuario : MonoBehaviour
+public class MaoUsuario
 {
     private ArrayList pecas;
 
@@ -51,6 +51,13 @@ public class MaoUsuario : MonoBehaviour
             pontos += p.getPontos();
         }
         return pontos;
+    }
+    public void printaPecas()
+    {
+        foreach(Peca p in pecas)
+        {
+            Debug.Log("Valor: " +p.getValor()+ " Cor: " + p.getCodigoCor() + " Coringa? " + p.ehCoringa());
+        }
     }
 
 }

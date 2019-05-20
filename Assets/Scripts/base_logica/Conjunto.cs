@@ -140,6 +140,15 @@ public class Conjunto
         this.tipo = 1;
         return true;
     }
-
+    public Conjunto cloneConjunto()
+    {
+        Conjunto clone = new Conjunto();
+        foreach(Peca p in this.pecas)
+        {
+            Peca clonePeca = p.clonePeca();
+            clone.inserePeca(p);
+        }
+        return clone;
+    }
     
 }

@@ -45,5 +45,10 @@ public class Peca : IComparable
 
     }
 
+    public Peca clonePeca()
+    {
+        Peca clone = new Peca(this.codigoCor, this.valor, this.coringa);
+        return clone;
+    }
     public bool ehCoringa() { return coringa; }
 }
