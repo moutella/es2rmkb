@@ -12,7 +12,8 @@ public class controladorPeca : MonoBehaviour
     private Collider2D colisao;
     private void OnMouseDown()
     {
-        seguraPecas.limpaArrays(gameObject);
+        Debug.Log("PRINTOU PEÇA");
+        //seguraPecas.limpaArrays(gameObject);
         //colisao.enabled = false;
     }
     private void OnMouseDrag()
@@ -51,7 +52,7 @@ public class controladorPeca : MonoBehaviour
     }
     void Start()
     {
-        seguraPecas = GameObject.FindGameObjectsWithTag("SeguraPecaController")[0].GetComponent<seguradorDePecas>();
+        //seguraPecas = GameObject.FindGameObjectsWithTag("SeguraPecaController")[0].GetComponent<seguradorDePecas>();
 
         colisao = gameObject.GetComponent<BoxCollider2D>();
         pecaMovimentada = false;

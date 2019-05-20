@@ -10,6 +10,10 @@ public class MaoUsuario
     {
         this.pecas = new ArrayList();
     }
+    public ArrayList getPecas()
+    {
+        return this.pecas;
+    }
     public void compraPeca(Deck deck)
     {
         Peca p = deck.pegaPecaAleatoria();

@@ -5,7 +5,7 @@ using TMPro;
 public class controladorPecaMenu : MonoBehaviour
 {
     // Start is called before the first frame update
-    float distance = 10;
+    //float distance = 10;
     public int valor, tipo;
     public TextMeshPro texto;
     

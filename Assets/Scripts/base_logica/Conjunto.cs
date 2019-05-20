@@ -168,7 +168,7 @@ public class Conjunto
             int diferenca = (this.pecas.Count-1) - indP;
             int n = this.pecas.Count-1;
             for(int i=n;i>indP;i--){
-                atual = this.pecas[i];
+                atual = (Peca)this.pecas[i];
                 novo.inserePeca(atual);
                 this.removePeca(atual);
             }
