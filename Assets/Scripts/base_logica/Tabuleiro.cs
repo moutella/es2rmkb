@@ -40,4 +40,14 @@ public class Tabuleiro
         }
         return clone;
     }
+
+    public void divideJogada(Conjunto c, Peca p){
+        Conjunto novo = c.divide(p);
+
+        //Se um novo conjunto foi criado insere no tabuleiro
+        if(!Object.ReferenceEquals(novo,null))this.insereConjunto(novo);
+        
+        //se o conjunto só tinha uma peça e ficou vazio, remove ele do tabuleiro
+        if(c.getNumPecas()==0) this.removeConjunto(c);
+    }
 }
