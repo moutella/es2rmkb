@@ -44,4 +44,11 @@ public class Deck
         pecas.Remove(p);
         return p;
     }
+    public void removeCoringas(){
+        foreach(Peca p in this.pecas){
+            if(p.ehCoringa()){
+                this.pecas.Remove(p);
+            }
+        }
+    }
 }

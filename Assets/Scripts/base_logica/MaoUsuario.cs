@@ -5,10 +5,12 @@ using UnityEngine;
 public class MaoUsuario
 {
     private ArrayList pecas;
+    private bool primeiraJogada;
 
     public MaoUsuario()
     {
         this.pecas = new ArrayList();
+        this.primeiraJogada = true;
     }
     public ArrayList getPecas()
     {
