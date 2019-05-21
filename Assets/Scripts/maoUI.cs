@@ -14,6 +14,7 @@ public class maoUI : MonoBehaviour
     {
         transformProprio = GetComponent<RectTransform>();
         pecas = new ArrayList();
+        maoLogica = new MaoUsuario();
     }
     public GameObject getPrimeiroVazio()
     {
@@ -31,9 +32,9 @@ public class maoUI : MonoBehaviour
     {
         
     }
-    public void setMaoLogica(MaoUsuario mao)
+    public void setMaoInicial(ArrayList mao)
     {
-        maoLogica = mao;
+        maoLogica.insereMaoInicial(mao);
         arranjaPecas();
         
     }

@@ -8,7 +8,6 @@ public class ControladorJogo : MonoBehaviour
     private const int CPU=1;
     public Color32[] coresDoJogo;
     public maoUI maoInterface;
-    private MaoUsuario maoLogica;
     private Tabuleiro tabuleiroAtual;
     private Deck deckAtual;
     private ArrayList tabuleirosValidos;
@@ -30,11 +29,9 @@ public class ControladorJogo : MonoBehaviour
     {
         deckAtual = new Deck();
         tabuleiroAtual = new Tabuleiro();
-        maoLogica = new MaoUsuario();
         Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
-        maoLogica.insereMaoInicial(deckAtual.pegaCartasIniciais());
+        maoInterface.setMaoInicial(deckAtual.pegaCartasIniciais());
         tabuleirosValidos.Add(cloneBase);
-        maoInterface.setMaoLogica(maoLogica);
         yield return null;
     }
 

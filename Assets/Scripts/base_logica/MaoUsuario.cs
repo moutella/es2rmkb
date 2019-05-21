@@ -6,12 +6,17 @@ public class MaoUsuario
 {
     private ArrayList pecas;
     private bool primeiraJogada;
+    private ArrayList jogadaAtual;
 
     public MaoUsuario()
     {
         this.pecas = new ArrayList();
         this.primeiraJogada = true;
+        this.jogadaAtual = new ArrayList();
     }
+    public bool getPrimeiraJogada(){return primeiraJogada;}
+    public void setPrimeiraJogada(bool valor){primeiraJogada=valor;}
+
     public ArrayList getPecas()
     {
         return this.pecas;
@@ -65,5 +70,33 @@ public class MaoUsuario
             Debug.Log("Valor: " +p.getValor()+ " Cor: " + p.getCodigoCor() + " Coringa? " + p.ehCoringa());
         }
     }
+
+    public void limpaJogada(){
+        this.jogadaAtual.Clear();
+    }
+    /*TODO: passar isso para a classe controladorJogo, que se comunica com a maoUI, que se comunica com esta
+     public void terminaJogada()
+    {
+        if(this.primeiraJogada){
+            int pontos = this.pontuacaoJogada();
+            if(pontos>=30){
+                this.primeiraJogada=false;
+                this.jogadaAtual.Clear();
+            }
+        }
+    }*/
+    
+
+    public int pontuacaoJogada()
+    {
+        int pontos = 0;
+        foreach(Peca p in jogadaAtual)
+        {
+            pontos += p.getPontos();
+        }
+        return pontos;
+    }
+
+    
 
 }
