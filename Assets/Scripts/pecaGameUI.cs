@@ -6,7 +6,7 @@ using TMPro;
 public class pecaGameUI : MonoBehaviour
 {
     public TextMeshProUGUI pecaUiTexto;
-    private Peca pecaLogica;
+    public Peca pecaLogica;
     private Color32 corPeca;
     // Start is called before the first frame update
     void OnCreate() { 
@@ -28,7 +28,7 @@ public class pecaGameUI : MonoBehaviour
     public void criaPeca(Peca p)
     {
         pecaLogica = p;
-        if (pecaLogica.getCodigoCor() == -1)
+        if (pecaLogica.getCodigoCor() < 0)
         {
             pecaLogica.setCodigoCor(0);
         }

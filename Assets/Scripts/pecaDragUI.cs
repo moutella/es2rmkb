@@ -2,32 +2,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
+    public bool movimentando;
+    float distance = 10; //mudar para pegar a distancia toda frame
     public Collider2D colisor;
-    public maoUI maoPlayer;
+    public GameObject pecaGamePrefab;
+    private GameObject pecaGame;
+    private PecaGame criadorPecaGame;
+    private controladorPeca controlaPeca;
+    private maoUI maoPlayer;
     public GameObject slotAtual;
-    private bool setou;
+    public bool setou;
+    public Image imagem;
+    public TMPro.TextMeshProUGUI texto;
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = Input.mousePosition;
+        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+        Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
+        if (pecaGame != null) { 
+            pecaGame.transform.position = pecaPos;
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+
         if (slotAtual != null) {
             Debug.Log("Liberou:  " + slotAtual);
             slotAtual.GetComponent<slotMao>().libera();
             slotAtual = null;
         }
+        if (pecaGame == null)
+        {
+            pecaGame = Instantiate(pecaGamePrefab);
+            criadorPecaGame = pecaGame.GetComponent<PecaGame>();
+            controlaPeca = pecaGame.GetComponent<controladorPeca>();
+            criadorPecaGame.criaPeca(GetComponent<pecaGameUI>().pecaLogica);
+            criadorPecaGame.setInvisivel();
+            controlaPeca.setaPecaUI(gameObject);
+            colisor.enabled = true;
+        }
+        movimentando = true;
+        colisor.enabled = true;
         setou = false;
-        //colisor.enabled = false;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        colisor.enabled = true;
+        movimentando = false;
+        Debug.Log("soltou");
     }
 
     private void OnMouseDrag()
@@ -48,7 +75,10 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
 
     void Start()
     {
+
+        distance = -Camera.main.transform.position.z;
         maoPlayer = GameObject.FindGameObjectWithTag("SeguraPecaUi").GetComponent<maoUI>();
+        movimentando = false;
     }
 
     // Update is called once per frame
@@ -59,25 +89,47 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(col.gameObject.name);
-        if (col.tag == "Slot" && !setou)
-        {
-            if (col.GetComponent<slotMao>().vazio())
+        if (movimentando) { 
+        if(col.tag == "SeguraPecaUi")
             {
-                transform.SetPositionAndRotation(col.transform.position, Quaternion.identity);
-                col.GetComponent<slotMao>().preenche(gameObject);
-                slotAtual = col.gameObject;
-                colisor.enabled = false;
-                setou = true;
+                GetComponent<Image>().enabled = true;
+                texto.enabled = true;
+                criadorPecaGame.setInvisivel();
             }
-            else
+        }
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if(col.tag == "SeguraPecaUi")
+        {
+            GetComponent<Image>().enabled = false;
+            texto.enabled = false;
+            criadorPecaGame.setVisivel();
+        }
+    }
+    void OnTriggerStay2D(Collider2D col)
+    {
+        if(!movimentando)
+        { 
+            if (col.tag == "Slot" && !setou)
             {
-                GameObject slot = maoPlayer.getPrimeiroVazio();
-                transform.SetPositionAndRotation(slot.gameObject.transform.position, Quaternion.identity);
-                slot.GetComponent<slotMao>().preenche(gameObject);
-                slotAtual = slot;
-                colisor.enabled = false;
-                setou = true;
+                if (col.GetComponent<slotMao>().vazio())
+                {
+                    transform.SetPositionAndRotation(col.transform.position, Quaternion.identity);
+                    col.GetComponent<slotMao>().preenche(gameObject);
+                    slotAtual = col.gameObject;
+                    colisor.enabled = false;
+                    setou = true;
+                }
+                else
+                {
+                    GameObject slot = maoPlayer.getPrimeiroVazio();
+                    transform.SetPositionAndRotation(slot.gameObject.transform.position, Quaternion.identity);
+                    slot.GetComponent<slotMao>().preenche(gameObject);
+                    slotAtual = slot;
+                    colisor.enabled = false;
+                    setou = true;
+                }
             }
         }
     }

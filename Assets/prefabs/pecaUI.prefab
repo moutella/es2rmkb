@@ -152,8 +152,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colisor: {fileID: 8339853820772997189}
-  maoPlayer: {fileID: 0}
+  pecaGamePrefab: {fileID: 1029946743598585878, guid: 9baa241392ee4684dbba42bb684e9bdb,
+    type: 3}
   slotAtual: {fileID: 0}
+  imagem: {fileID: 8339853820772997191}
+  texto: {fileID: 8339853822046001853}
 --- !u!1 &8339853822046001855
 GameObject:
   m_ObjectHideFlags: 0

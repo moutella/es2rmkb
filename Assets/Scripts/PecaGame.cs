@@ -1,38 +1,42 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-public class PecaGame : MonoBehaviour, IComparable
+public class PecaGame : MonoBehaviour
 {
-    private int codigoCor;
-    private int valor;
-    private bool coringa;
-    private Vector3 position;
-
-    public PecaGame(int cor, int valor, bool coringa){
-        this.codigoCor=cor;
-        this.valor=valor;
-        this.coringa=coringa;
-    }
+    private Peca pecaLogica;
+    public SpriteRenderer imagemCarta;
+    public TMPro.TextMeshPro textoPeca;
+    private Color32 corPeca;
     
+    public void criaPeca(Peca peca)
+    {
 
-    public int getCodigoCor(){return this.codigoCor;}
-    public void setCodigoCor(int cor){this.codigoCor=cor;}
-
-    public int getValor(){return this.valor;}
-    public void setValor(int value){this.valor=value;}
-
-
-    public int CompareTo(object obj){
-        if(obj==null)return 1;
-
-        Peca p = obj as Peca;
-
-        if(p!=null){
-            return this.valor.CompareTo(p.getValor());
-        }else
-            throw new ArgumentException("Objeto comparado não é uma Peça");
-
+        pecaLogica = peca;
+        if (pecaLogica.ehCoringa())
+        {
+            corPeca = GameObject.FindGameObjectWithTag("GameController").
+                GetComponent<ControladorJogo>().
+                coresDoJogo[-pecaLogica.getCodigoCor()];
+            textoPeca.SetText("@");
+            textoPeca.color = corPeca;
+        }
+        else
+        {
+            corPeca = GameObject.FindGameObjectWithTag("GameController").
+                GetComponent<ControladorJogo>().
+                coresDoJogo[pecaLogica.getCodigoCor()];
+            textoPeca.SetText(pecaLogica.getValor().ToString());
+            textoPeca.color = corPeca;
+        }
     }
-
-    public bool ehCoringa(){return coringa;}
+    public void setInvisivel()
+    {
+        imagemCarta.enabled = false;
+        textoPeca.enabled = false;
+    }
+    public void setVisivel()
+    {
+        imagemCarta.enabled = true;
+        textoPeca.enabled = true;
+    }
 }

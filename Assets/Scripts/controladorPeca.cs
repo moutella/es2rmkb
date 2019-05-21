@@ -6,18 +6,29 @@ public class controladorPeca : MonoBehaviour
 {
     // Start is called before the first frame update
     private seguradorDePecas seguraPecas;
-    float distance = 10;
-    public int valor, tipo;
+    float distance = 10; //mudar para pegar a distancia toda frame
     public bool pecaMovimentada, pecaSolta;
+    public bool inseridaNesteTurno;
+    public GameObject pecaNaUi;
     private Collider2D colisao;
     private void OnMouseDown()
     {
-        Debug.Log("PRINTOU PEÇA");
+       
         //seguraPecas.limpaArrays(gameObject);
         //colisao.enabled = false;
     }
     private void OnMouseDrag()
     {
+        Debug.Log("PRINTOU PEÇA");
+        if (inseridaNesteTurno)
+        {
+            pecaNaUi.GetComponent<pecaDragUI>().movimentando = true;
+            pecaNaUi.GetComponent<pecaDragUI>().setou = false;
+            pecaNaUi.transform.position = Input.mousePosition;
+            pecaNaUi.GetComponent<Collider2D>().enabled = true;
+            Debug.Log("ue");
+            //pecaNaUi.GetComponent<>
+        }
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
         Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
         transform.position = pecaPos;
@@ -32,6 +43,11 @@ public class controladorPeca : MonoBehaviour
         {
             pecaMovimentada = false;
             pecaSolta = true;
+        }
+        if (inseridaNesteTurno)
+        {
+            pecaNaUi.GetComponent<pecaDragUI>().movimentando = false;
+
         }
         StartCoroutine("mudaParaSolta");
     }
@@ -50,10 +66,14 @@ public class controladorPeca : MonoBehaviour
             }
         }
     }
+    private void FixedUpdate()
+    {
+        distance = -Camera.main.transform.position.z;
+    }
     void Start()
     {
         //seguraPecas = GameObject.FindGameObjectsWithTag("SeguraPecaController")[0].GetComponent<seguradorDePecas>();
-
+        //inseridaNesteTurno = false;
         colisao = gameObject.GetComponent<BoxCollider2D>();
         pecaMovimentada = false;
         pecaSolta = false;
@@ -67,8 +87,16 @@ public class controladorPeca : MonoBehaviour
         }
         yield return null;
     }
-    void LateUpdate()
+    public void setaPecaUI(GameObject pecaUI)
     {
-        //pecaSolta = false;
+        pecaNaUi = pecaUI;
+        inseridaNesteTurno = true;
     }
+    public void tiraPecaUi()
+    {
+        inseridaNesteTurno = false;
+        pecaNaUi = null;
+        Destroy(pecaNaUi);
+    }
+
 }
