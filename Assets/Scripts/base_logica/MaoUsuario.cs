@@ -74,19 +74,6 @@ public class MaoUsuario
     public void limpaJogada(){
         this.jogadaAtual.Clear();
     }
-    /*TODO: passar isso para a classe controladorJogo, que se comunica com a maoUI, que se comunica com esta
-     public void terminaJogada()
-    {
-        if(this.primeiraJogada){
-            int pontos = this.pontuacaoJogada();
-            if(pontos>=30){
-                this.primeiraJogada=false;
-                this.jogadaAtual.Clear();
-            }
-        }
-    }*/
-    
-
     public int pontuacaoJogada()
     {
         int pontos = 0;

@@ -59,4 +59,34 @@ public class ControladorJogo : MonoBehaviour
         }
         
     }
+
+    public void terminaJogada()
+    {
+        if(tabuleiroAtual.validaTabuleiro()){
+            if(maoInterface.getPrimeiraJogada()){
+                int pontos = maoInterface.getPontosDaJogada();
+                if(pontos>=30){
+                    maoInterface.setPrimeiraJogada(false);
+                    maoInterface.limpaJogada();
+                    this.setTurno(CPU);
+                }else{
+                    avisoJogadaInvalida();
+                    rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
+                }
+            }else{
+                this.setTurno(CPU); //Tem que ter checagem do turno antes das ações, na parte gráfica
+            }
+        }else{
+            avisoJogadaInvalida();
+            rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
+        }   
+    }
+
+    public void rollbackJogada(){
+        //TODO: Retornar as peças para a mão e voltar com o tabuleiro anterior
+    }
+
+    public void avisoJogadaInvalida(){
+        //TODO: Ter algum retorno ao usuário de que a jogada dele não foi válida
+    }
 }

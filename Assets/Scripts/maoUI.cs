@@ -73,4 +73,18 @@ public class maoUI : MonoBehaviour
     {
         
     }
+
+    //----------------------Métodos de Comunicação com MaoUsuario---------------------------------------------
+    public int getPontosDaJogada(){
+        return maoLogica.pontuacaoJogada();
+    }
+    public bool getPrimeiraJogada(){
+        return maoLogica.getPrimeiraJogada();
+    }
+    public void setPrimeiraJogada(bool valor){
+        maoLogica.setPrimeiraJogada(valor);
+    }
+    public void limpaJogada(){
+        maoLogica.limpaJogada();
+    }
 }
