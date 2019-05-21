@@ -38,7 +38,7 @@ public class Conjunto
         this.valida = this.validaConjunto();
     }
 
-    public void inserteConjunto(Conjunto conj)
+    public void insereConjunto(Conjunto conj)
     {
         foreach(Peca p in conj.pecas)
         {
