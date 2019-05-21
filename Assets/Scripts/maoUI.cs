@@ -15,7 +15,7 @@ public class maoUI : MonoBehaviour
     {
         transformProprio = GetComponent<RectTransform>();
         pecaUIObjects = new ArrayList();
-        pecas = new ArrayList();
+
         maoLogica = new MaoUsuario();
     }
     public GameObject getPrimeiroVazio()
