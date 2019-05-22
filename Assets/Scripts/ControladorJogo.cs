@@ -83,7 +83,13 @@ public class ControladorJogo : MonoBehaviour
     }
 
     public void rollbackJogada(){
+        maoInterface.rollbackPecas();
+        rollbackConjuntos();
         //TODO: Retornar as peças para a mão e voltar com o tabuleiro anterior
+    }
+
+    public void rollbackConjuntos() {
+        tabuleiroAtual = tabuleirosValidos[tabuleirosValidos.Count-1].cloneTabuleiro();
     }
 
     public void avisoJogadaInvalida(){

@@ -73,6 +73,9 @@ public class maoUI : MonoBehaviour
     {
         
     }
+    public void rollbackPecas() {
+        maoLogica.rollbackPecas();
+    }
 
     //----------------------Métodos de Comunicação com MaoUsuario---------------------------------------------
     public int getPontosDaJogada(){

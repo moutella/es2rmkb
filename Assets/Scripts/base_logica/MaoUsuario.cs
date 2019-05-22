@@ -5,6 +5,7 @@ using UnityEngine;
 public class MaoUsuario
 {
     private ArrayList pecas;
+    private ArrayList pecasBackup;
     private bool primeiraJogada;
     private ArrayList jogadaAtual;
 
@@ -19,6 +20,7 @@ public class MaoUsuario
 
     public ArrayList getPecas()
     {
+        this.saveBackupPeca();
         return this.pecas;
     }
     public void compraPeca(Deck deck)
@@ -83,7 +85,11 @@ public class MaoUsuario
         }
         return pontos;
     }
-
+    public void saveBackupPeca() {
+        this.backupPeca = (ArrayList)this.pecas.Clone();
+    }
+    public void rollbackPeca() {
+        this.pecas = (ArrayList)this.backupPeca.Clone();
+    }
     
-
 }
