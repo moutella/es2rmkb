@@ -97,4 +97,7 @@ public class maoUI : MonoBehaviour
     public bool estavaNaMao(Peca p){
         return maoLogica.estavaNaMao(p);
     }
+    public void fazBackup(){
+        maoLogica.saveBackupPeca();
+    }
 }

@@ -60,6 +60,14 @@ public class ControladorJogo : MonoBehaviour
         
     }
 
+    
+
+    public void iniciaTurno(){
+        Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
+        tabuleirosValidos.Add(cloneBase);
+        maoInterface.fazBackup();
+    }
+
     public void terminaJogada()
     {
         if(tabuleiroAtual.validaTabuleiro() && maoInterface.jogouAlgumaPeca()){
