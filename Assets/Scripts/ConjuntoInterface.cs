@@ -4,12 +4,28 @@ using UnityEngine;
 
 public class ConjuntoInterface : MonoBehaviour
 {
+    float distance;
     private static float tamanhoPeca = 2 / 3f, distanciaPecas = 0.7f;
     private Conjunto conjuntoLogico;
     public ArrayList pecasObjFilho;
     private BoxCollider2D colisor;
-    
 
+    private void OnMouseDown()
+
+    {
+
+    }
+    private void OnMouseDrag()
+    {
+
+        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+        transform.position = Camera.main.ScreenToWorldPoint(mousePos);
+    }
+
+    private void OnMouseUp()
+    {
+
+    }
 
     public void inserePeca(GameObject peca)
     {
@@ -50,11 +66,28 @@ public class ConjuntoInterface : MonoBehaviour
             colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
         }
     }
+    private void FixedUpdate()
+    {
+
+        distance = -Camera.main.transform.position.z;
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log(pecasObjFilho.Count);
+            conjuntoLogico.printaPecas();
+            Debug.Log("Valido? " + conjuntoLogico.getValida());
+            Debug.Log("Tipo? " + conjuntoLogico.GetType());
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+
+            GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
+            tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift)) { 
+            GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro"); 
+            tabuleiro.GetComponent<TabuleiroInterface>().desativaColisores();
         }
     }
     public void removePeca(GameObject peca)

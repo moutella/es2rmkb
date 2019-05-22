@@ -66,8 +66,10 @@ public class controladorPeca : MonoBehaviour
             pecaNaUi.GetComponent<pecaDragUI>().movimentando = false;
 
         }
-        if (contaColisao == 0) { 
-            criaConjuntoNovo();
+        if (contaColisao == 0) {
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+            Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
+            criaConjuntoNovo(pecaPos);
         }
     }
 
@@ -103,6 +105,8 @@ public class controladorPeca : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
+        Debug.Log(other.gameObject);
+        Debug.Log("pecaSolta: " + pecaSolta);
         if (pecaSolta & other.gameObject.tag == "Conjunto")
         {
             pecaSolta = false;
@@ -137,17 +141,18 @@ public class controladorPeca : MonoBehaviour
         }
     }
 
-    void criaConjuntoNovo()
+    public void criaConjuntoNovo(Vector3 pos)
     {
         GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
         GameObject conj = Instantiate(ConjuntoPrefab,
-                    pecaPos,
+                    pos,
                     Quaternion.identity, tabuleiro.transform);
         tabuleiro.GetComponent<TabuleiroInterface>().insereConjInt(conj);
         ConjuntoInterface conjInt = conj.GetComponent<ConjuntoInterface>();
         conjInt.inicializa();
         conjInt.inserePeca(gameObject);
         conjuntoDono = conj;
+        tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
     }
     
 }

@@ -14,7 +14,11 @@ public class TabuleiroInterface : MonoBehaviour
     }
 
     // Update is called once per frame
-    
+
+    void Update()
+    {
+        
+    }
     public void insereConjInt(GameObject conj)
     {
         conjuntosInterfaces.Add(conj);

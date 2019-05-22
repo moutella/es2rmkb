@@ -26,7 +26,8 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
         Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
         if (pecaGame != null) { 
             pecaGame.transform.position = pecaPos;
-            pecaGame.GetComponent<controladorPeca>().pecaMovimentada = true;
+            controlaPeca.pecaMovimentada = true;
+            controlaPeca.pecaSolta = false;
         }
     }
 
@@ -41,12 +42,19 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
         if (pecaGame == null)
         {
             pecaGame = Instantiate(pecaGamePrefab);
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+            Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
+            pecaGame.transform.position = pecaPos;
             criadorPecaGame = pecaGame.GetComponent<PecaGame>();
             controlaPeca = pecaGame.GetComponent<controladorPeca>();
             criadorPecaGame.criaPeca(GetComponent<pecaGameUI>().pecaLogica);
             criadorPecaGame.setInvisivel();
             controlaPeca.setaPecaUI(gameObject);
             colisor.enabled = true;
+            controlaPeca.contaColisao = 0;
+            controlaPeca.pecaMovimentada = true;
+            controlaPeca.pecaSolta = false;
+            controlaPeca.GetComponent<Collider2D>().enabled = true;
         }
         movimentando = true;
         colisor.enabled = true;
@@ -55,30 +63,25 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        tabuleiro.GetComponent<TabuleiroInterface>().desativaColisores();
+        //tabuleiro.GetComponent<TabuleiroInterface>().desativaColisores();
         movimentando = false;
-        if (pecaGame != null)
+        if (pecaGame != null) { 
+            controlaPeca.pecaSolta = true;
+        }
+        if (pecaGame != null & texto.enabled == false)
         {
-            pecaGame.GetComponent<controladorPeca>().pecaMovimentada = true;
+            pecaGame.GetComponent<controladorPeca>().pecaMovimentada = false;
+            Debug.Log("CONTA COLISAO:  " + controlaPeca.contaColisao);
+            if (controlaPeca.contaColisao == 0)
+            {
+                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+                Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
+                controlaPeca.criaConjuntoNovo(pecaPos);
+            }
         }
         //Debug.Log("soltou");
     }
 
-    private void OnMouseDrag()
-    {
-        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-        //Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
-        //transform.position = pecaPos;
-        //pecaMovimentada = true;
-        //pecaSolta = false;
-        transform.position = mousePos;
-    }
-
-    private void OnMouseUp()
-    {
-        
-        //StartCoroutine("mudaParaSolta");
-    }
 
     void Start()
     {
