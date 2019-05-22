@@ -56,6 +56,11 @@ public class MaoUsuario
         pecas.Sort();
     }
 
+    public void arrumaPorCores(){
+        IComparer comparador = Peca.getComparadorPorCores();
+        pecas.Sort(comparador);
+    }
+
     public int pontuacao()
     {
         int pontos = 0;
