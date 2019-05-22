@@ -89,7 +89,8 @@ public class ControladorJogo : MonoBehaviour
     }
 
     public void rollbackConjuntos() {
-        tabuleiroAtual = tabuleirosValidos[tabuleirosValidos.Count-1].cloneTabuleiro();
+        const Tabuleiro tabuleiroBackup = (Tabuleiro)tabuleirosValidos[tabuleirosValidos.Count-1];
+        tabuleiroAtual = tabuleiroBackup.cloneTabuleiro();
     }
 
     public void avisoJogadaInvalida(){

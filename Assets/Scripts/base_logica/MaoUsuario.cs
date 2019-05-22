@@ -86,10 +86,10 @@ public class MaoUsuario
         return pontos;
     }
     public void saveBackupPeca() {
-        this.backupPeca = (ArrayList)this.pecas.Clone();
+        this.pecasBackup = (ArrayList)this.pecas.Clone();
     }
-    public void rollbackPeca() {
-        this.pecas = (ArrayList)this.backupPeca.Clone();
+    public void rollbackPecas() {
+        this.pecas = (ArrayList)this.pecasBackup.Clone();
     }
     
 }
