@@ -17,6 +17,10 @@ public class Tabuleiro
     public void removeConjunto(Conjunto c){
         this.conjuntos.Remove(c);
     }
+    public ArrayList getConjuntos()
+    {
+        return conjuntos;
+    }
 
     public void removeConjunto(int i){
         if(i<this.conjuntos.Count){this.conjuntos.RemoveAt(i);}

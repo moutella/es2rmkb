@@ -22,9 +22,22 @@ public class ControladorJogo : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("---------------------------------------------------VERIFICANDO CONJUNTOS DA MESAATUAL-------------------------");
+            int contador = 1;
+            foreach(Conjunto c in tabuleiroAtual.getConjuntos()){
+                Debug.Log("------------------- Conjunto: " + contador++ + "--Valido: " + c.getValida() + "----------------");
+                c.printaPecas();
+            }
+
+        }
+    }
+    public Tabuleiro getTabuleiroAtual()
+    {
+        return tabuleiroAtual;
     }
     private IEnumerator GameStart()
     {
