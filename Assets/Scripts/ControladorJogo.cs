@@ -62,7 +62,7 @@ public class ControladorJogo : MonoBehaviour
 
     public void terminaJogada()
     {
-        if(tabuleiroAtual.validaTabuleiro()){
+        if(tabuleiroAtual.validaTabuleiro() && maoInterface.jogouPeca()){
             if(maoInterface.getPrimeiraJogada()){
                 int pontos = maoInterface.getPontosDaJogada();
                 if(pontos>=30){
@@ -72,6 +72,7 @@ public class ControladorJogo : MonoBehaviour
                 }else{
                     avisoJogadaInvalida();
                     rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
+                    penalizacaoTimeout();
                 }
             }else{
                 this.setTurno(CPU); //Tem que ter checagem do turno antes das ações, na parte gráfica
@@ -79,13 +80,13 @@ public class ControladorJogo : MonoBehaviour
         }else{
             avisoJogadaInvalida();
             rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
+            penalizacaoTimeout();
         }   
     }
 
     public void rollbackJogada(){
         maoInterface.rollbackPecas();
         rollbackConjuntos();
-        //TODO: Retornar as peças para a mão e voltar com o tabuleiro anterior
     }
 
     public void rollbackConjuntos() {
@@ -95,5 +96,9 @@ public class ControladorJogo : MonoBehaviour
 
     public void avisoJogadaInvalida(){
         //TODO: Ter algum retorno ao usuário de que a jogada dele não foi válida
+    }
+
+    public void penalizacaoTimeout(){
+    	//TODO: Realizar as penalizações caso o usuário estoure o tempo
     }
 }

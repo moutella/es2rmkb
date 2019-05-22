@@ -73,11 +73,12 @@ public class maoUI : MonoBehaviour
     {
         
     }
+    
+
+    //----------------------Métodos de Comunicação com MaoUsuario---------------------------------------------
     public void rollbackPecas() {
         maoLogica.rollbackPecas();
     }
-
-    //----------------------Métodos de Comunicação com MaoUsuario---------------------------------------------
     public int getPontosDaJogada(){
         return maoLogica.pontuacaoJogada();
     }
@@ -89,5 +90,8 @@ public class maoUI : MonoBehaviour
     }
     public void limpaJogada(){
         maoLogica.limpaJogada();
+    }
+    public bool jogouPeca(){
+        return maoLogica.jogouPeca();
     }
 }
