@@ -91,8 +91,11 @@ public class MaoUsuario
     public void rollbackPecas() {
         this.pecas = (ArrayList)this.pecasBackup.Clone();
     }
-    public bool jogouPeca(){
+    public bool jogouAlgumaPeca(){
         return this.pecas.Count==this.pecasBackup.Count;
+    }
+    public bool estavaNaMao(Peca p){
+        return this.pecasBackup.Contains(p);
     }
     
 }

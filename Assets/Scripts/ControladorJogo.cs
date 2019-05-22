@@ -62,7 +62,7 @@ public class ControladorJogo : MonoBehaviour
 
     public void terminaJogada()
     {
-        if(tabuleiroAtual.validaTabuleiro() && maoInterface.jogouPeca()){
+        if(tabuleiroAtual.validaTabuleiro() && maoInterface.jogouAlgumaPeca()){
             if(maoInterface.getPrimeiraJogada()){
                 int pontos = maoInterface.getPontosDaJogada();
                 if(pontos>=30){
