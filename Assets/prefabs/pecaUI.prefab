@@ -151,12 +151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d49447c2e6b2794cbaf264164068b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movimentando: 0
   colisor: {fileID: 8339853820772997189}
   pecaGamePrefab: {fileID: 1029946743598585878, guid: 9baa241392ee4684dbba42bb684e9bdb,
     type: 3}
   slotAtual: {fileID: 0}
+  setou: 0
   imagem: {fileID: 8339853820772997191}
   texto: {fileID: 8339853822046001853}
+  tabuleiro: {fileID: 0}
 --- !u!1 &8339853822046001855
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,11 +302,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:

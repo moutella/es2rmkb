@@ -143,8 +143,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea62d32f47703664abe701f6d07b0e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  contaColisao: 0
   pecaMovimentada: 0
   pecaSolta: 0
+  ConjuntoPrefab: {fileID: 495713156181758876, guid: cd0b993096060304c936f1b56cf1c1f1,
+    type: 3}
+  inseridaNesteTurno: 0
+  pecaNaUi: {fileID: 0}
+  tabuleiro: {fileID: 0}
 --- !u!114 &1029946743598585879
 MonoBehaviour:
   m_ObjectHideFlags: 0

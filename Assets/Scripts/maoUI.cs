@@ -75,4 +75,16 @@ public class maoUI : MonoBehaviour
     {
         
     }
+    public void removePeca(GameObject peca)
+    {
+        Peca p = peca.GetComponent<pecaGameUI>().getPeca();
+        pecaUIObjects.Remove(peca);
+        maoLogica.removePeca(p);
+    }
+    public void inserePeca(GameObject peca)
+    {
+        Peca p = peca.GetComponent<pecaGameUI>().getPeca();
+        pecaUIObjects.Add(peca);
+        maoLogica.inserePeca(p);
+    }
 }

@@ -154,7 +154,17 @@ public class Conjunto
         }
         return clone;
     }
-
+    public void printaPecas()
+    {
+        foreach(Peca p in pecas)
+        {
+            Debug.Log(p.getValor() + " " + p.getCodigoCor());
+        }
+    }
+    public ArrayList getPecas()
+    {
+        return pecas;
+    }
 
     public Conjunto divide(Peca p){
         int indP = this.pecas.IndexOf(p);
@@ -169,10 +179,9 @@ public class Conjunto
             int n = this.pecas.Count-1;
             for(int i=n;i>indP;i--){
                 atual = (Peca) this.pecas[i];
-                novo.inserePeca(atual);
+                novo.inserePecaAntes(atual);
                 this.removePeca(atual);
             }
-
             this.removePeca(indP);
 
             return novo;

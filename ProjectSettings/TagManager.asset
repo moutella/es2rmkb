@@ -8,6 +8,8 @@ TagManager:
   - SeguraPecaController
   - Slot
   - SeguraPecaUi
+  - Conjunto
+  - Tabuleiro
   layers:
   - Default
   - TransparentFX

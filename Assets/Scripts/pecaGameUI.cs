@@ -22,7 +22,10 @@ public class pecaGameUI : MonoBehaviour
     {
         
     }
-
+    public Peca getPeca()
+    {
+        return pecaLogica;
+    }
 
 
     public void criaPeca(Peca p)

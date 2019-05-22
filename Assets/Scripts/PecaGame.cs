@@ -39,4 +39,12 @@ public class PecaGame : MonoBehaviour
         imagemCarta.enabled = true;
         textoPeca.enabled = true;
     }
+    public Peca getPecaLogica()
+    {
+        return pecaLogica;
+    }
+    public void setaPosicao(float pos)
+    {
+        transform.localPosition = new Vector3(pos,0,0);
+    }
 }

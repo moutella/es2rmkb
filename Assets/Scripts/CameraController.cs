@@ -19,6 +19,6 @@ public class CameraController : MonoBehaviour
         sizeObjetivo = Mathf.Clamp(sizeObjetivo + -Input.GetAxis("Mouse ScrollWheel"), 4, 7);
 
         Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, sizeObjetivo, velocidadeZoom);
-        Debug.Log(sizeObjetivo);
+        //Debug.Log(sizeObjetivo);
     }
 }

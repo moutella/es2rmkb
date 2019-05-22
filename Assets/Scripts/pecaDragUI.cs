@@ -18,6 +18,7 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     public bool setou;
     public Image imagem;
     public TMPro.TextMeshProUGUI texto;
+    public GameObject tabuleiro;
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = Input.mousePosition;
@@ -25,14 +26,15 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
         Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
         if (pecaGame != null) { 
             pecaGame.transform.position = pecaPos;
+            pecaGame.GetComponent<controladorPeca>().pecaMovimentada = true;
         }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
 
+        tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
         if (slotAtual != null) {
-            Debug.Log("Liberou:  " + slotAtual);
             slotAtual.GetComponent<slotMao>().libera();
             slotAtual = null;
         }
@@ -53,8 +55,13 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        tabuleiro.GetComponent<TabuleiroInterface>().desativaColisores();
         movimentando = false;
-        Debug.Log("soltou");
+        if (pecaGame != null)
+        {
+            pecaGame.GetComponent<controladorPeca>().pecaMovimentada = true;
+        }
+        //Debug.Log("soltou");
     }
 
     private void OnMouseDrag()
@@ -76,6 +83,7 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     void Start()
     {
 
+        tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
         distance = -Camera.main.transform.position.z;
         maoPlayer = GameObject.FindGameObjectWithTag("SeguraPecaUi").GetComponent<maoUI>();
         movimentando = false;
@@ -95,6 +103,9 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
                 GetComponent<Image>().enabled = true;
                 texto.enabled = true;
                 criadorPecaGame.setInvisivel();
+                if (!maoPlayer.pecaUIObjects.Contains(gameObject)) { 
+                    maoPlayer.inserePeca(gameObject);
+                }
             }
         }
     }
@@ -102,6 +113,8 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     {
         if(col.tag == "SeguraPecaUi")
         {
+            
+            maoPlayer.removePeca(gameObject);
             GetComponent<Image>().enabled = false;
             texto.enabled = false;
             criadorPecaGame.setVisivel();
