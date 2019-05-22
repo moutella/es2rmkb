@@ -7,7 +7,14 @@ public class PecaGame : MonoBehaviour
     public SpriteRenderer imagemCarta;
     public TMPro.TextMeshPro textoPeca;
     private Color32 corPeca;
-    
+
+    private void LateUpdate()
+    {
+        if(gameObject.GetComponent<controladorPeca>().enabled == false)
+        {
+            gameObject.GetComponent<controladorPeca>().enabled = true;
+        }
+    }
     public void criaPeca(Peca peca)
     {
 
@@ -45,6 +52,9 @@ public class PecaGame : MonoBehaviour
     }
     public void setaPosicao(float pos)
     {
-        transform.localPosition = new Vector3(pos,0,0);
+        Vector3 pos3d = new Vector3(pos, 0, 0);
+        Debug.Log("SETOU: " + pos3d + "  PECA: " + pecaLogica.getValor());
+        transform.localPosition = pos3d;
+        pecaLogica.setPosition(transform.position);
     }
 }

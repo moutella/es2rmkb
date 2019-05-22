@@ -149,6 +149,7 @@ MonoBehaviour:
   ConjuntoPrefab: {fileID: 495713156181758876, guid: cd0b993096060304c936f1b56cf1c1f1,
     type: 3}
   inseridaNesteTurno: 0
+  ignoraConjunto: 0
   pecaNaUi: {fileID: 0}
   tabuleiro: {fileID: 0}
 --- !u!114 &1029946743598585879

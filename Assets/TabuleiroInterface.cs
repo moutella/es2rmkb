@@ -17,7 +17,15 @@ public class TabuleiroInterface : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ativaColisores();
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            desativaColisores();
+        }
+
     }
     public void insereConjInt(GameObject conj)
     {

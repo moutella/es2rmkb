@@ -33,8 +33,6 @@ public class controladorPeca : MonoBehaviour
     }
     private void OnMouseDrag()
     {
-        
-
         if (inseridaNesteTurno)
         {
             pecaNaUi.GetComponent<pecaDragUI>().movimentando = true;
@@ -105,8 +103,8 @@ public class controladorPeca : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(other.gameObject);
-        Debug.Log("pecaSolta: " + pecaSolta);
+        //Debug.Log(other.gameObject);
+        //Debug.Log("pecaSolta: " + pecaSolta);
         if (pecaSolta & other.gameObject.tag == "Conjunto")
         {
             pecaSolta = false;
