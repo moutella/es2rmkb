@@ -90,7 +90,7 @@ public class ControladorJogo : MonoBehaviour
     }
 
     public void rollbackConjuntos() {
-        const Tabuleiro tabuleiroBackup = (Tabuleiro)tabuleirosValidos[tabuleirosValidos.Count-1];
+        Tabuleiro tabuleiroBackup = (Tabuleiro)tabuleirosValidos[tabuleirosValidos.Count-1];
         tabuleiroAtual = tabuleiroBackup.cloneTabuleiro();
     }
 

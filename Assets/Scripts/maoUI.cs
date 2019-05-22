@@ -92,9 +92,9 @@ public class maoUI : MonoBehaviour
         maoLogica.limpaJogada();
     }
     public bool jogouAlgumaPeca(){
-        return maoLogica.jogouPeca();
+        return maoLogica.jogouAlgumaPeca();
     }
     public bool estavaNaMao(Peca p){
-        return maoLogica.estavaNaMao();
+        return maoLogica.estavaNaMao(p);
     }
 }
