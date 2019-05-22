@@ -6,6 +6,7 @@ public class ControladorJogo : MonoBehaviour
 {
     private const int JOGADOR=0;
     private const int CPU=1;
+    float cronometroAtual;
     public Color32[] coresDoJogo;
     public maoUI maoInterface;
     private Tabuleiro tabuleiroAtual;
@@ -61,11 +62,26 @@ public class ControladorJogo : MonoBehaviour
     }
 
     
+    public IEnumerator IniciaContagem(float tempoMax = 60)
+    {
+        cronometroAtual = tempoMax;
+        while (cronometroAtual > 0)
+        {
+            //Mostrar ao usuário no jogo
+            Debug.Log("Tempo: " + cronometroAtual);
+            yield return new WaitForSeconds(1.0f);
+            cronometroAtual--;
+        }
+
+        terminaJogada();
+    }
 
     public void iniciaTurno(){
         Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
         tabuleirosValidos.Add(cloneBase);
         maoInterface.fazBackup();
+
+        StartCoroutine(IniciaContagem());
     }
 
     public void terminaJogada()
