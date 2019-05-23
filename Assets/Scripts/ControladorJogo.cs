@@ -15,6 +15,7 @@ public class ControladorJogo : MonoBehaviour
     private ArrayList tabuleirosValidos;
     private int turno; //0 é turno do jogador, 1 da ia
     public bool modoConjunto = false;
+    public bool isBotandoPeca;
     //Isso pode ser feito dentro da classe do jogador futuramente
 
     void Start()
@@ -46,6 +47,7 @@ public class ControladorJogo : MonoBehaviour
             
         }
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
+        
     }
     public Tabuleiro getTabuleiroAtual()
     {
@@ -157,7 +159,7 @@ public class ControladorJogo : MonoBehaviour
     public void penalizacaoTimeout(){
     	//TODO: Realizar as penalizações caso o usuário estoure o tempo
     }
-    void flipaModo()
+    public void flipaModo()
     {
         modoConjunto = !modoConjunto;
     }

@@ -17,6 +17,7 @@ public class controladorPeca : MonoBehaviour
     private Vector3 pecaPos;
     public GameObject tabuleiro;
     private GameObject conjuntoDono;
+    ControladorJogo Controlador;
 
     public void setaConjuntoDono(GameObject conjuntoInt)
     {
@@ -25,7 +26,7 @@ public class controladorPeca : MonoBehaviour
     private void OnMouseDown()
         
     {
-        
+        Controlador.isBotandoPeca = true;
         if (conjuntoDono != null)
         {
             conjuntoDono.GetComponent<ConjuntoInterface>().removePeca(gameObject);
@@ -69,10 +70,12 @@ public class controladorPeca : MonoBehaviour
             pecaNaUi.GetComponent<pecaDragUI>().movimentando = false;
 
         }
-        if (contaColisao == 0) {
+        if (contaColisao == 0)
+        {
             Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
             Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
-            if (!pecaNaUi.GetComponent<Image>().enabled) { 
+            if (!pecaNaUi.GetComponent<Image>().enabled)
+            {
                 criaConjuntoNovo(pecaPos);
             }
         }
@@ -92,6 +95,7 @@ public class controladorPeca : MonoBehaviour
         contaColisao = 0;
         //inseridaNesteTurno = false;
         colisao = gameObject.GetComponent<BoxCollider2D>();
+        Controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
         pecaMovimentada = false;
         pecaSolta = false;
     }
@@ -128,6 +132,8 @@ public class controladorPeca : MonoBehaviour
             {
                 other.gameObject.GetComponent<ConjuntoInterface>().inserePecaAntes(gameObject);
             }
+
+            Controlador.isBotandoPeca = false;
             conjuntoDono = other.gameObject;
             tabuleiro.GetComponent<TabuleiroInterface>().desativaColisores();
             contaColisao = 0;

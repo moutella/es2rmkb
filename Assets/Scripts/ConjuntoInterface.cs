@@ -12,9 +12,11 @@ public class ConjuntoInterface : MonoBehaviour
     private BoxCollider2D colisor;
     private bool conjuntoEmMovimento, conjuntoSolto;
     private int contaCol;
+    ControladorJogo Controlador;
 
 
-    
+
+
     void Start()
     {
         conjuntoSolto = false;
@@ -24,16 +26,17 @@ public class ConjuntoInterface : MonoBehaviour
     {
         GetComponent<Collider2D>().enabled = !GetComponent<Collider2D>().enabled;
     }
-    void Update()
+    void FixedUpdate()
     {
         distance = -Camera.main.transform.position.z;
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Controlador.isBotandoPeca)
         {
-            flipaColisor();
-            Debug.Log("FLIPA COLISOR");
+            GetComponent<Collider2D>().enabled = true;
         }
-        
+        else { 
+            GetComponent<Collider2D>().enabled = Controlador.modoConjunto;
+        }
+
     }
     public void LateUpdate()
     {
@@ -85,7 +88,7 @@ public class ConjuntoInterface : MonoBehaviour
         this.conjuntoLogico = new Conjunto();
         this.pecasObjFilho = new ArrayList();
         GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
-        ControladorJogo Controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
+        Controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
         Tabuleiro tabAtual = Controlador.getTabuleiroAtual();
         GetComponent<Collider2D>().enabled = Controlador.modoConjunto;
         tabAtual.insereConjunto(conjuntoLogico);

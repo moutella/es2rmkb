@@ -20,6 +20,7 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     public TMPro.TextMeshProUGUI texto;
     public GameObject tabuleiro;
     private bool jaExistePecaWorld;
+    public ControladorJogo controlador;
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = Input.mousePosition;
@@ -34,7 +35,7 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
 
     public void OnPointerDown(PointerEventData eventData)
     {
-
+        controlador.isBotandoPeca = true;
         tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
         if (slotAtual != null) {
             slotAtual.GetComponent<slotMao>().libera();
@@ -95,6 +96,8 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
         distance = -Camera.main.transform.position.z;
         maoPlayer = GameObject.FindGameObjectWithTag("SeguraPecaUi").GetComponent<maoUI>();
         movimentando = false;
+
+        controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
     }
 
     // Update is called once per frame
