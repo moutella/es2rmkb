@@ -17,6 +17,10 @@ public class controladorPeca : MonoBehaviour
     public GameObject tabuleiro;
     private GameObject conjuntoDono;
 
+    public void setaConjuntoDono(GameObject conjuntoInt)
+    {
+        conjuntoDono = conjuntoInt;
+    }
     private void OnMouseDown()
         
     {

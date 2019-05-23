@@ -10,6 +10,7 @@ public class ConjuntoInterface : MonoBehaviour
     public GameObject conjuntoPrefab, pecaGamePrefab;
     public ArrayList pecasObjFilho;
     private BoxCollider2D colisor;
+    private bool conjuntoEmMovimento, conjuntoSolto;
 
 
     /// <summary>
@@ -42,13 +43,18 @@ public class ConjuntoInterface : MonoBehaviour
     }
     private void OnMouseDrag()
     {
-
+        conjuntoSolto = false;
+        conjuntoEmMovimento = true;
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
         transform.position = Camera.main.ScreenToWorldPoint(mousePos);
     }
 
     private void OnMouseUp()
     {
+        if (conjuntoEmMovimento)
+        {
+            conjuntoSolto = true;
+        }
         mudaPosPecasFilho();
     }
     /// <summary>
@@ -72,6 +78,7 @@ public class ConjuntoInterface : MonoBehaviour
     public void addPecaInterface(GameObject peca)
     {
         pecasObjFilho.Add(peca);
+        peca.GetComponent<controladorPeca>().setaConjuntoDono(gameObject);
         peca.transform.parent = transform;
         if (pecasObjFilho.Count > 1)
         {
@@ -99,6 +106,13 @@ public class ConjuntoInterface : MonoBehaviour
             colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
         }
     }
+    public void insereOutroConjunto(ArrayList pecas)
+    {
+        foreach (GameObject peca in pecas)
+        {
+            inserePeca(peca);
+        }
+    }
     public void inserePecaAntes(GameObject peca)
     {
         Peca p = peca.GetComponent<PecaGame>().getPecaLogica();
@@ -119,7 +133,13 @@ public class ConjuntoInterface : MonoBehaviour
             colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
         }
     }
-    
+    public void insereOutroConjuntoAntes(ArrayList pecas)
+    {
+        foreach (GameObject peca in pecas)
+        {
+            inserePecaAntes(peca);
+        }
+    }
     public void removePeca(GameObject peca)
     {
         //Debug.ClearDeveloperConsole();
@@ -231,5 +251,25 @@ public class ConjuntoInterface : MonoBehaviour
                 }
             }
     }
-    
+    void OnTriggerStay2D(Collider2D other)
+    {
+        //Debug.Log(other.gameObject);
+        //Debug.Log("conjuntoSolto: " + conjuntoSolto);
+        if (conjuntoSolto & other.gameObject.tag == "Conjunto")
+        {
+            conjuntoSolto = false;
+            if (other.gameObject.transform.position.x < transform.position.x)
+            {
+                other.gameObject.GetComponent<ConjuntoInterface>().insereOutroConjunto(pecasObjFilho);
+
+            }
+            else
+            {
+                other.gameObject.GetComponent<ConjuntoInterface>().insereOutroConjuntoAntes(pecasObjFilho);
+            }
+            Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
+            tabAtual.removeConjunto(conjuntoLogico);
+            Destroy(gameObject);
+        }
+    }
 }
