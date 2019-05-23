@@ -124,14 +124,7 @@ public class ConjuntoInterface : MonoBehaviour
             peca.transform.parent = transform;
             mudaPosPecasFilho();
             colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
-            if (conjuntoLogico.getValida())
-            {
-                validezInterface.color = coresFundo[0];
-            }
-            else
-            {                
-                    validezInterface.color = coresFundo[1];
-            }
+            setaCores();
         }
     }
     public void insereOutroConjunto(ArrayList pecas)
@@ -159,6 +152,8 @@ public class ConjuntoInterface : MonoBehaviour
 
             mudaPosPecasFilho();
             colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
+
+            setaCores();
         }
     }
     public void insereOutroConjuntoAntes(ArrayList pecas)
@@ -224,6 +219,7 @@ public class ConjuntoInterface : MonoBehaviour
             }
             colisor.size = new Vector2((tamanhoPeca * (x - 1)), 1);
         }
+        setaCores();
     }
 
     public Vector3 recalculaPosition() //Quando retirar vai setar a nova raiz do conjunto no meio do conjunto restante
@@ -320,6 +316,18 @@ public class ConjuntoInterface : MonoBehaviour
             }
             ;
         }
+    }
+
+
+    public void setaCores(){
+        if (conjuntoLogico.getValida())
+            {
+                validezInterface.color = coresFundo[0];
+            }
+            else
+            {                
+                validezInterface.color = coresFundo[1];
+            }
     }
     
 }
