@@ -10,6 +10,7 @@ public class ControladorJogo : MonoBehaviour
     public Color32[] coresDoJogo;
     public maoUI maoInterface;
     private Tabuleiro tabuleiroAtual;
+    public TabuleiroInterface controlaTabInterface;
     private Deck deckAtual;
     private ArrayList tabuleirosValidos;
     private int turno; //0 é turno do jogador, 1 da ia
@@ -24,6 +25,8 @@ public class ControladorJogo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("---------------------------------------------------VERIFICANDO CONJUNTOS DA MESAATUAL-------------------------");
@@ -34,6 +37,14 @@ public class ControladorJogo : MonoBehaviour
             }
 
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            maoInterface.reset();
+            controlaTabInterface.reset();
+            StartCoroutine(GameStart());
+            
+        }
+        //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
     }
     public Tabuleiro getTabuleiroAtual()
     {

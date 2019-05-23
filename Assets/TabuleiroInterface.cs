@@ -7,6 +7,7 @@ public class TabuleiroInterface : MonoBehaviour
     public ArrayList conjuntosInterfaces;
     //public GameObject[] conjuntosInterfaces;
     // Start is called before the first frame update
+    
     void Start()
     {
       conjuntosInterfaces = new ArrayList();
@@ -67,6 +68,13 @@ public class TabuleiroInterface : MonoBehaviour
         foreach (GameObject go in desativaEm)
         {
             go.GetComponent<Collider2D>().enabled = true;
+        }
+    }
+    public void reset()
+    {
+        foreach (GameObject conj in conjuntosInterfaces)
+        {
+            Destroy(conj);
         }
     }
 }

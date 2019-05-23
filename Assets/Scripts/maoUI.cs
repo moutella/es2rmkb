@@ -11,6 +11,7 @@ public class maoUI : MonoBehaviour
     private ArrayList pecasUsadasNaRodada;
     public ArrayList pecaUIObjects;
     // Start is called before the first frame update
+    
     void Start()
     {
         transformProprio = GetComponent<RectTransform>();
@@ -123,5 +124,19 @@ public class maoUI : MonoBehaviour
         peca.GetComponent<pecaDragUI>().slotAtual = slot;
         peca.GetComponent<RectTransform>().SetPositionAndRotation(slot.transform.position, Quaternion.identity);
         pecaUIObjects.Add(peca);
+    }
+    public void reset()
+    {
+        maoLogica = new MaoUsuario();
+        foreach (GameObject pecaUI in pecaUIObjects)
+        {
+            Destroy(pecaUI);
+        }
+        foreach (GameObject slot in slots)
+        {
+            slot.GetComponent<slotMao>().libera();
+        }
+        pecaUIObjects = new ArrayList();
+        
     }
 }
