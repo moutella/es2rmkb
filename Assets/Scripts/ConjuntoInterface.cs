@@ -158,10 +158,14 @@ public class ConjuntoInterface : MonoBehaviour
 
             if (transform.childCount == 0)
             {
+                Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
+                tabAtual.removeConjunto(conjuntoLogico);
                 Destroy(gameObject);
             }
             if (conjuntoLogico.getPecas().Count == 0)
             {
+                Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
+                tabAtual.removeConjunto(conjuntoLogico);
                 Destroy(gameObject);
             }
             else
