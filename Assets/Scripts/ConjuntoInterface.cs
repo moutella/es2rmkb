@@ -75,19 +75,19 @@ public class ConjuntoInterface : MonoBehaviour
         tabuleiro.GetComponent<TabuleiroInterface>().desativaColisores();
 //        conjuntoLogico.setPos(transform.localPosition);
     }
-    public void addPecaInterface(GameObject peca)
+    public void addPecaInterface(GameObject peca, bool mudapos)
     {
         pecasObjFilho.Add(peca);
         peca.GetComponent<controladorPeca>().setaConjuntoDono(gameObject);
         peca.transform.parent = transform;
-        if (pecasObjFilho.Count > 1)
+        if (pecasObjFilho.Count > 1 & mudapos)
         {
             transform.localPosition += new Vector3(0.35f, 0, 0);
         }
         mudaPosPecasFilho();
         colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
     }
-    public void inserePeca(GameObject peca)
+    public void inserePeca(GameObject peca, bool mudaPos)
     {
         Peca p = peca.GetComponent<PecaGame>().getPecaLogica();
         if (!conjuntoLogico.getPecas().Contains(p)) {
@@ -98,7 +98,7 @@ public class ConjuntoInterface : MonoBehaviour
             //Debug.Log(pecasObjFilho.Count);
             conjuntoLogico.inserePeca(peca.GetComponent<PecaGame>().getPecaLogica());
             //Debug.Log(tamanhoPeca * pecasObjFilho.Count);
-            if (pecasObjFilho.Count > 1) {
+            if (pecasObjFilho.Count > 1 & mudaPos) {
                 transform.localPosition += new Vector3(0.35f, 0, 0);
             }
             peca.transform.parent = transform;
@@ -110,7 +110,7 @@ public class ConjuntoInterface : MonoBehaviour
     {
         foreach (GameObject peca in pecas)
         {
-            inserePeca(peca);
+            inserePeca(peca, false);
         }
     }
     public void inserePecaAntes(GameObject peca)

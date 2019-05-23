@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class controladorPeca : MonoBehaviour
 {
@@ -71,7 +72,9 @@ public class controladorPeca : MonoBehaviour
         if (contaColisao == 0) {
             Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
             Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
-            criaConjuntoNovo(pecaPos);
+            if (!pecaNaUi.GetComponent<Image>().enabled) { 
+                criaConjuntoNovo(pecaPos);
+            }
         }
     }
 
@@ -114,7 +117,7 @@ public class controladorPeca : MonoBehaviour
             pecaSolta = false;
             if (other.gameObject.transform.position.x < transform.position.x)
             {
-                other.gameObject.GetComponent<ConjuntoInterface>().inserePeca(gameObject);
+                other.gameObject.GetComponent<ConjuntoInterface>().inserePeca(gameObject, true);
                 
             }
             else
@@ -152,7 +155,7 @@ public class controladorPeca : MonoBehaviour
         tabuleiro.GetComponent<TabuleiroInterface>().insereConjInt(conj);
         ConjuntoInterface conjInt = conj.GetComponent<ConjuntoInterface>();
         conjInt.inicializa();
-        conjInt.inserePeca(gameObject);
+        conjInt.inserePeca(gameObject, true);
         conjuntoDono = conj;
         tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
     }

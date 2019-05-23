@@ -207,6 +207,7 @@ public class Conjunto
         }
         //Debug.Log(posicao);
         posicao = posicao / pecas.Count;
+        Debug.Log(posicao);
         this.pos = posicao;
         return posicao;
     }
