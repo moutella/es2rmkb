@@ -11,14 +11,29 @@ public class ConjuntoInterface : MonoBehaviour
     public ArrayList pecasObjFilho;
     private BoxCollider2D colisor;
     private bool conjuntoEmMovimento, conjuntoSolto;
+    private int contaCol;
 
 
-    /// <summary>
-    /// FUNÇÕES CHAMADAS PELO UNITY
-    /// </summary>
+    
+    void Start()
+    {
+        conjuntoSolto = false;
+        conjuntoEmMovimento = true;
+    }
+    void flipaColisor()
+    {
+        GetComponent<Collider2D>().enabled = !GetComponent<Collider2D>().enabled;
+    }
     void Update()
     {
         distance = -Camera.main.transform.position.z;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            flipaColisor();
+            Debug.Log("FLIPA COLISOR");
+        }
+        
     }
     public void LateUpdate()
     {
@@ -51,26 +66,28 @@ public class ConjuntoInterface : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (conjuntoEmMovimento)
+        if (conjuntoEmMovimento & contaCol != 0)
         {
             conjuntoSolto = true;
         }
         mudaPosPecasFilho();
+        //if (contaCol == 0)
+        //{
+        //    conjuntoSolto = falso;
+        //}
     }
     /// <summary>
     /// FIM DAS FUNÇÕES CHAMADAS PELO UNITY
     /// </summary>
-    private void Start()
-    {
-        //Debug.Break();
-    }
     public void inicializa()
     {
         this.colisor = GetComponent<BoxCollider2D>();
         this.conjuntoLogico = new Conjunto();
         this.pecasObjFilho = new ArrayList();
         GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
-        Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
+        ControladorJogo Controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
+        Tabuleiro tabAtual = Controlador.getTabuleiroAtual();
+        GetComponent<Collider2D>().enabled = Controlador.modoConjunto;
         tabAtual.insereConjunto(conjuntoLogico);
         tabuleiro.GetComponent<TabuleiroInterface>().desativaColisores();
 //        conjuntoLogico.setPos(transform.localPosition);
@@ -110,7 +127,7 @@ public class ConjuntoInterface : MonoBehaviour
     {
         foreach (GameObject peca in pecas)
         {
-            inserePeca(peca, false);
+            inserePeca(peca, true);
         }
     }
     public void inserePecaAntes(GameObject peca)
@@ -143,7 +160,7 @@ public class ConjuntoInterface : MonoBehaviour
     public void removePeca(GameObject peca)
     {
         //Debug.ClearDeveloperConsole();
-        Debug.Log("--------------COMECOU UM SPLIT----------");
+        //Debug.Log("--------------COMECOU UM SPLIT----------");
         int x = pecasObjFilho.Count;
         Peca p = peca.GetComponent<PecaGame>().getPecaLogica();
         Conjunto extra = conjuntoLogico.divide(p);
@@ -208,7 +225,7 @@ public class ConjuntoInterface : MonoBehaviour
             posicao += p.transform.position;
             
         }
-        Debug.Log(posicao);
+        //Debug.Log(posicao);
         posicao = posicao / pecasObjFilho.Count;
         return posicao;
     }
@@ -251,25 +268,47 @@ public class ConjuntoInterface : MonoBehaviour
                 }
             }
     }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Conjunto" & conjuntoEmMovimento)
+        {
+            contaCol++;
+        }
+    }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Conjunto" & conjuntoEmMovimento)
+        {
+            contaCol--;
+        }
+    }
     void OnTriggerStay2D(Collider2D other)
     {
-        //Debug.Log(other.gameObject);
-        //Debug.Log("conjuntoSolto: " + conjuntoSolto);
+
+        //Debug.Log("BIRL COLIDIU COM: " + other.gameObject.tag);
+
         if (conjuntoSolto & other.gameObject.tag == "Conjunto")
         {
+            Debug.Log("ENTROU");
             conjuntoSolto = false;
             if (other.gameObject.transform.position.x < transform.position.x)
             {
                 other.gameObject.GetComponent<ConjuntoInterface>().insereOutroConjunto(pecasObjFilho);
-
+                Debug.Log("BOTOU DEPOIS");
+                Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
+                tabAtual.removeConjunto(conjuntoLogico);
+                Destroy(gameObject);
             }
             else
             {
                 other.gameObject.GetComponent<ConjuntoInterface>().insereOutroConjuntoAntes(pecasObjFilho);
+                Debug.Log("BOTOU ANTES");
+                Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
+                tabAtual.removeConjunto(conjuntoLogico);
+                Destroy(gameObject);
             }
-            Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
-            tabAtual.removeConjunto(conjuntoLogico);
-            Destroy(gameObject);
+            ;
         }
     }
+    
 }

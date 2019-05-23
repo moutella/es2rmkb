@@ -18,15 +18,6 @@ public class TabuleiroInterface : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            ativaColisores();
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            desativaColisores();
-        }
-
     }
     public void insereConjInt(GameObject conj)
     {
@@ -53,6 +44,7 @@ public class TabuleiroInterface : MonoBehaviour
             go.GetComponent<Collider2D>().enabled = false;
         }
     }
+
     public void ativaColisores()
     {
         List<GameObject> desativaEm = new List<GameObject>();

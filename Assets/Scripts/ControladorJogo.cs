@@ -14,6 +14,7 @@ public class ControladorJogo : MonoBehaviour
     private Deck deckAtual;
     private ArrayList tabuleirosValidos;
     private int turno; //0 é turno do jogador, 1 da ia
+    public bool modoConjunto = false;
     //Isso pode ser feito dentro da classe do jogador futuramente
 
     void Start()
@@ -155,5 +156,9 @@ public class ControladorJogo : MonoBehaviour
 
     public void penalizacaoTimeout(){
     	//TODO: Realizar as penalizações caso o usuário estoure o tempo
+    }
+    void flipaModo()
+    {
+        modoConjunto = !modoConjunto;
     }
 }

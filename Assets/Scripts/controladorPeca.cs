@@ -13,7 +13,7 @@ public class controladorPeca : MonoBehaviour
     public GameObject ConjuntoPrefab;
     public bool inseridaNesteTurno, ignoraConjunto;
     public GameObject pecaNaUi;
-    private Collider2D colisao;
+    public Collider2D colisao;
     private Vector3 pecaPos;
     public GameObject tabuleiro;
     private GameObject conjuntoDono;
@@ -44,7 +44,7 @@ public class controladorPeca : MonoBehaviour
             pecaNaUi.GetComponent<pecaDragUI>().setou = false;
             pecaNaUi.transform.position = Input.mousePosition;
             colisao.enabled = true;
-            //Debug.Log("ue");
+            //Debug.Log("MOUSE DRAG PECA NORMAL");
             //pecaNaUi.GetComponent<>
         }
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
@@ -61,8 +61,8 @@ public class controladorPeca : MonoBehaviour
         {
             pecaMovimentada = false;
             pecaSolta = true;
-            tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
-            tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
+            //tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
+            //tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
         }
         if (inseridaNesteTurno)
         {
@@ -83,7 +83,7 @@ public class controladorPeca : MonoBehaviour
         distance = -Camera.main.transform.position.z;
         if(colisao.enabled == false)
         {
-            Debug.Log("COLISAO DESATIVADA");
+            //Debug.Log("COLISAO DESATIVADA");
         }
     }
     void Start()
@@ -94,6 +94,10 @@ public class controladorPeca : MonoBehaviour
         colisao = gameObject.GetComponent<BoxCollider2D>();
         pecaMovimentada = false;
         pecaSolta = false;
+    }
+    private void Update()
+    {
+       
     }
     
     public void setaPecaUI(GameObject pecaUI)
