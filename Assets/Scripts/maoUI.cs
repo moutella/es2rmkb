@@ -71,6 +71,12 @@ public class maoUI : MonoBehaviour
         maoLogica.arrumaPorCores();
         arranjaPecas();
     }
+    public void sortMaoPorNumero()
+    {
+        liberaTodos();
+        maoLogica.arrumaSequencial();
+        arranjaPecas();
+    }
     public void comprarPeca()
     {
         

@@ -33,7 +33,7 @@ public class controladorPeca : MonoBehaviour
     }
     private void OnMouseDrag()
     {
-        if (inseridaNesteTurno)
+        if (inseridaNesteTurno & pecaNaUi != null)
         {
             pecaNaUi.GetComponent<pecaDragUI>().movimentando = true;
             pecaNaUi.GetComponent<pecaDragUI>().setou = false;
