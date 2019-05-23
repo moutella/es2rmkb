@@ -42,6 +42,7 @@ public class Deck
     {
         Peca p = (Peca)pecas[Random.Range(0, quantasPecasTem)];
         pecas.Remove(p);
+        quantasPecasTem--;
         return p;
     }
     public void removeCoringas(){

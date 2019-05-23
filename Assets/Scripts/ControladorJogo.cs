@@ -48,6 +48,13 @@ public class ControladorJogo : MonoBehaviour
         tabuleirosValidos.Add(cloneBase);
         yield return null;
     }
+    public void compraCarta()
+    {
+        if (maoInterface.maoLogica.getPecas().Count < 24) { 
+            Peca p = deckAtual.pegaPecaAleatoria();
+            maoInterface.compraPeca(p);
+        }
+    }
 
     public void setTurno(int vez){
         /*Fazendo uma função separada para setar o turno para o caso da implementação ser mudada
