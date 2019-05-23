@@ -13,14 +13,14 @@ public class ConjuntoInterface : MonoBehaviour
     private bool conjuntoEmMovimento, conjuntoSolto;
     private int contaCol;
     ControladorJogo Controlador;
-
-
-
-
+    public SpriteRenderer validezInterface;
+    public List<Color> coresFundo;
+    private float tamanhoPecaSprite;
     void Start()
     {
         conjuntoSolto = false;
         conjuntoEmMovimento = true;
+        
     }
     void flipaColisor()
     {
@@ -124,6 +124,14 @@ public class ConjuntoInterface : MonoBehaviour
             peca.transform.parent = transform;
             mudaPosPecasFilho();
             colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
+            if (conjuntoLogico.getValida())
+            {
+                validezInterface.color = coresFundo[0];
+            }
+            else
+            {                
+                    validezInterface.color = coresFundo[1];
+            }
         }
     }
     public void insereOutroConjunto(ArrayList pecas)
@@ -155,9 +163,9 @@ public class ConjuntoInterface : MonoBehaviour
     }
     public void insereOutroConjuntoAntes(ArrayList pecas)
     {
-        foreach (GameObject peca in pecas)
+        for (int i = pecas.Count - 1; i>=0; i--)
         {
-            inserePecaAntes(peca);
+            inserePecaAntes((GameObject)pecas[i]);
         }
     }
     public void removePeca(GameObject peca)
