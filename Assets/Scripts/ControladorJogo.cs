@@ -7,7 +7,6 @@ public class ControladorJogo : MonoBehaviour
     private const int JOGADOR=0;
     private const int CPU=1;
     float cronometroAtual;
-    private bool jogadaTerminada;
     public Color32[] coresDoJogo;
     public maoUI maoInterface;
     private Tabuleiro tabuleiroAtual;
@@ -25,16 +24,10 @@ public class ControladorJogo : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            if(jogadaTerminada){
-                Debug.Log("Iniciando turno");
-                iniciaTurno();
-            }else jogadaTerminada = true;
-        }
+        
     }
     private IEnumerator GameStart()
     {
-        jogadaTerminada = true;
         deckAtual = new Deck();
         tabuleiroAtual = new Tabuleiro();
         Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
@@ -71,9 +64,8 @@ public class ControladorJogo : MonoBehaviour
     
     public IEnumerator IniciaContagem(float tempoMax = 60)
     {
-        tempoMax=60;
         cronometroAtual = tempoMax;
-        while (cronometroAtual > 0 && !jogadaTerminada)
+        while (cronometroAtual > 0)
         {
             //Mostrar ao usuário no jogo
             Debug.Log("Tempo: " + cronometroAtual);
@@ -88,14 +80,12 @@ public class ControladorJogo : MonoBehaviour
         Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
         tabuleirosValidos.Add(cloneBase);
         maoInterface.fazBackup();
-        jogadaTerminada = false;
 
         StartCoroutine(IniciaContagem());
     }
 
     public void terminaJogada()
     {
-        Debug.Log("TERMINANDO JOGADA");
         if(tabuleiroAtual.validaTabuleiro() && maoInterface.jogouAlgumaPeca()){
             if(maoInterface.getPrimeiraJogada()){
                 int pontos = maoInterface.getPontosDaJogada();
