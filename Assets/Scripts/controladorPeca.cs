@@ -23,16 +23,22 @@ public class controladorPeca : MonoBehaviour
     {
         conjuntoDono = conjuntoInt;
     }
+    public void removeConjuntoDono()
+    {
+        conjuntoDono = null;
+    }
     private void OnMouseDown()
         
     {
+        
         Controlador.isBotandoPeca = true;
         if (conjuntoDono != null)
         {
+            Debug.Log(this.enabled);
             conjuntoDono.GetComponent<ConjuntoInterface>().removePeca(gameObject);
             contaColisao = 0;
-            conjuntoDono = null;
             ignoraConjunto = true;
+            this.enabled = true;
         }
         contaColisao = 0;
         gameObject.transform.parent = transform.root;
