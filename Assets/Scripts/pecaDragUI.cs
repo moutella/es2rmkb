@@ -19,6 +19,8 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     public Image imagem;
     public TMPro.TextMeshProUGUI texto;
     public GameObject tabuleiro;
+    private bool jaExistePecaWorld;
+    public ControladorJogo controlador;
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = Input.mousePosition;
@@ -33,7 +35,7 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
 
     public void OnPointerDown(PointerEventData eventData)
     {
-
+        controlador.isBotandoPeca = true;
         tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
         if (slotAtual != null) {
             slotAtual.GetComponent<slotMao>().libera();
@@ -56,6 +58,10 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
             controlaPeca.pecaSolta = false;
             controlaPeca.GetComponent<Collider2D>().enabled = true;
         }
+        else
+        {
+            jaExistePecaWorld=true;
+        }
         movimentando = true;
         colisor.enabled = true;
         setou = false;
@@ -72,7 +78,7 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
         {
             pecaGame.GetComponent<controladorPeca>().pecaMovimentada = false;
             //Debug.Log("CONTA COLISAO:  " + controlaPeca.contaColisao);
-            if (controlaPeca.contaColisao == 0)
+            if (controlaPeca.contaColisao == 0 & !jaExistePecaWorld)
             {
                 Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
                 Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -85,11 +91,13 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
 
     void Start()
     {
-
+        jaExistePecaWorld = false;
         tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
         distance = -Camera.main.transform.position.z;
         maoPlayer = GameObject.FindGameObjectWithTag("SeguraPecaUi").GetComponent<maoUI>();
         movimentando = false;
+
+        controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
     }
 
     // Update is called once per frame

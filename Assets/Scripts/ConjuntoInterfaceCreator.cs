@@ -29,7 +29,7 @@ public class ConjuntoInterfaceCreator : MonoBehaviour
         foreach(GameObject p in pecasInterface)
         {
             p.transform.parent = conjunto.transform;
-            conjInt.addPecaInterface(p);
+            conjInt.addPecaInterface(p, false);
         }
         //foreach (Peca p in conjLogico.getPecas())
         //{

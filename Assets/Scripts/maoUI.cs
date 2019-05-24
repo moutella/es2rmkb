@@ -11,6 +11,7 @@ public class maoUI : MonoBehaviour
     private ArrayList pecasUsadasNaRodada;
     public ArrayList pecaUIObjects;
     // Start is called before the first frame update
+    
     void Start()
     {
         transformProprio = GetComponent<RectTransform>();
@@ -37,8 +38,7 @@ public class maoUI : MonoBehaviour
     public void setMaoInicial(ArrayList mao)
     {
         maoLogica.insereMaoInicial(mao);
-        arranjaPecas();
-        
+        arranjaPecas();        
     }
     public void arranjaPecas()
     {
@@ -71,11 +71,12 @@ public class maoUI : MonoBehaviour
         maoLogica.arrumaPorCores();
         arranjaPecas();
     }
-    public void comprarPeca()
+    public void sortMaoPorNumero()
     {
-        
+        liberaTodos();
+        maoLogica.arrumaSequencial();
+        arranjaPecas();
     }
-
     public void rollbackPecas() {
         maoLogica.rollbackPecas();
     }
@@ -111,5 +112,31 @@ public class maoUI : MonoBehaviour
         Peca p = peca.GetComponent<pecaGameUI>().getPeca();
         pecaUIObjects.Add(peca);
         maoLogica.inserePeca(p);
+    }
+    public void compraPeca(Peca p)
+    {
+        maoLogica.inserePeca(p);
+        GameObject peca = Instantiate(pecaPrefab, this.transform);
+        peca.GetComponent<pecaGameUI>().criaPeca(p);
+        GameObject slot = getPrimeiroVazio();
+        slot.GetComponent<slotMao>().preenche(peca);
+        //Debug.Log("Preencheu: " + slot.name);
+        peca.GetComponent<pecaDragUI>().slotAtual = slot;
+        peca.GetComponent<RectTransform>().SetPositionAndRotation(slot.transform.position, Quaternion.identity);
+        pecaUIObjects.Add(peca);
+    }
+    public void reset()
+    {
+        maoLogica = new MaoUsuario();
+        foreach (GameObject pecaUI in pecaUIObjects)
+        {
+            Destroy(pecaUI);
+        }
+        foreach (GameObject slot in slots)
+        {
+            slot.GetComponent<slotMao>().libera();
+        }
+        pecaUIObjects = new ArrayList();
+        
     }
 }
