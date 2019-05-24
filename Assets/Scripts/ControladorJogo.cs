@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ControladorJogo : MonoBehaviour
 {
-    private const int JOGADOR=0;
-    private const int CPU=1;
+    public const int JOGADOR=0;
+    public const int CPU=1;
     float cronometroAtual;
     public Color32[] coresDoJogo;
     public maoUI maoInterface;
