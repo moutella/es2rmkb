@@ -26,7 +26,7 @@ public class ConjuntoInterface : MonoBehaviour
     {
         GetComponent<Collider2D>().enabled = !GetComponent<Collider2D>().enabled;
     }
-    void FixedUpdate()
+    void Update()
     {
         distance = -Camera.main.transform.position.z;
         if (Controlador.isBotandoPeca)
@@ -45,7 +45,7 @@ public class ConjuntoInterface : MonoBehaviour
             Destroy(gameObject);
         }
         //transform.localPosition = recalculaPosition();
-        if (transform.childCount == 0)
+        if (transform.childCount == 1)
         {
             GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
             tabuleiro.GetComponent<TabuleiroInterface>().removeConjInt(gameObject);
@@ -105,7 +105,8 @@ public class ConjuntoInterface : MonoBehaviour
             transform.localPosition += new Vector3(0.35f, 0, 0);
         }
         mudaPosPecasFilho();
-        colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
+        
+        setaCores();
     }
     public void inserePeca(GameObject peca, bool mudaPos)
     {
@@ -123,7 +124,7 @@ public class ConjuntoInterface : MonoBehaviour
             }
             peca.transform.parent = transform;
             mudaPosPecasFilho();
-            colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
+            colisor.size = new Vector2(tamanhoPeca * (transform.childCount - 1), 1);
             setaCores();
         }
     }
@@ -151,7 +152,7 @@ public class ConjuntoInterface : MonoBehaviour
             peca.transform.parent = transform;
 
             mudaPosPecasFilho();
-            colisor.size = new Vector2(tamanhoPeca * transform.childCount, 1);
+             colisor.size = new Vector2(tamanhoPeca * (transform.childCount-1), 1);
 
             setaCores();
         }

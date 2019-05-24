@@ -101,7 +101,10 @@ public class controladorPeca : MonoBehaviour
     }
     private void Update()
     {
-       
+        distance = -Camera.main.transform.position.z;
+        if (!Controlador.isBotandoPeca) { 
+            GetComponent<Collider2D>().enabled = !Controlador.modoConjunto;
+        }
     }
     
     public void setaPecaUI(GameObject pecaUI)
@@ -123,17 +126,17 @@ public class controladorPeca : MonoBehaviour
         if (pecaSolta & other.gameObject.tag == "Conjunto")
         {
             pecaSolta = false;
+            Controlador.isBotandoPeca = false;
             if (other.gameObject.transform.position.x < transform.position.x)
             {
                 other.gameObject.GetComponent<ConjuntoInterface>().inserePeca(gameObject, true);
-                
             }
             else
             {
                 other.gameObject.GetComponent<ConjuntoInterface>().inserePecaAntes(gameObject);
+                
             }
 
-            Controlador.isBotandoPeca = false;
             conjuntoDono = other.gameObject;
             tabuleiro.GetComponent<TabuleiroInterface>().desativaColisores();
             contaColisao = 0;
