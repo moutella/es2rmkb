@@ -38,15 +38,15 @@ public class Peca : IComparable
             Peca p1=(Peca)a;
             Peca p2=(Peca)b;
 
-            Debug.Log("Peça " + p1.getValor()+"/"+p1.getCodigoCor() + " comparada com" + "Peça " + p2.getValor()+"/"+p2.getCodigoCor());
+            //Debug.Log("Peça " + p1.getValor()+"/"+p1.getCodigoCor() + " comparada com" + "Peça " + p2.getValor()+"/"+p2.getCodigoCor());
 
             if (p1.getCodigoCor() > p2.getCodigoCor()){
-                Debug.Log("Ganhou p1");
+                //Debug.Log("Ganhou p1");
                 return 1;
             }
 
             if (p1.getCodigoCor() < p2.getCodigoCor()){
-                Debug.Log("Ganhou p2");
+                //Debug.Log("Ganhou p2");
                 return -1;
             }
             else

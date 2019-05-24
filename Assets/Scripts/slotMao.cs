@@ -15,7 +15,6 @@ public class slotMao : MonoBehaviour
     }
     public void libera()
     {
-        Debug.Log("libera");
         pecaNoLocal = null;
     }
     public void preenche(GameObject peca)

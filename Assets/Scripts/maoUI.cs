@@ -8,12 +8,14 @@ public class maoUI : MonoBehaviour
     private RectTransform transformProprio;
     public GameObject pecaPrefab;
     public GameObject[] slots;
-    public ArrayList pecas;
+    private ArrayList pecasUsadasNaRodada;
+    public ArrayList pecaUIObjects;
     // Start is called before the first frame update
     void Start()
     {
         transformProprio = GetComponent<RectTransform>();
-        pecas = new ArrayList();
+        pecaUIObjects = new ArrayList();
+
         maoLogica = new MaoUsuario();
     }
     public GameObject getPrimeiroVazio()
@@ -46,15 +48,15 @@ public class maoUI : MonoBehaviour
             peca.GetComponent<pecaGameUI>().criaPeca(p);
             GameObject slot = getPrimeiroVazio();
             slot.GetComponent<slotMao>().preenche(peca);
-            Debug.Log("Preencheu: " + slot.name);
+            //Debug.Log("Preencheu: " + slot.name);
             peca.GetComponent<pecaDragUI>().slotAtual = slot;
             peca.GetComponent<RectTransform>().SetPositionAndRotation(slot.transform.position, Quaternion.identity);
-            pecas.Add(peca);
+            pecaUIObjects.Add(peca);
         }
     }
     public void liberaTodos()
     {
-        foreach(GameObject p in pecas)
+        foreach(GameObject p in pecaUIObjects)
         {
             Destroy(p);
         }
@@ -73,9 +75,7 @@ public class maoUI : MonoBehaviour
     {
         
     }
-    
 
-    //----------------------Métodos de Comunicação com MaoUsuario---------------------------------------------
     public void rollbackPecas() {
         maoLogica.rollbackPecas();
     }
@@ -97,7 +97,19 @@ public class maoUI : MonoBehaviour
     public bool estavaNaMao(Peca p){
         return maoLogica.estavaNaMao(p);
     }
-    public void fazBackup(){
+    public void fazBackup() {
         maoLogica.saveBackupPeca();
+    }
+    public void removePeca(GameObject peca)
+    {
+        Peca p = peca.GetComponent<pecaGameUI>().getPeca();
+        pecaUIObjects.Remove(peca);
+        maoLogica.removePeca(p);
+    }
+    public void inserePeca(GameObject peca)
+    {
+        Peca p = peca.GetComponent<pecaGameUI>().getPeca();
+        pecaUIObjects.Add(peca);
+        maoLogica.inserePeca(p);
     }
 }

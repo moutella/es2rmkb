@@ -6,12 +6,20 @@ public class Conjunto
     private ArrayList pecas;
     private int tipo; //para salvarmos se a jogada é grupo ou sequencia: -1 inválido, 0 grupo, 1 sequencia
     private bool valida; //flag para sabermos se a jogada é válida[utilizado na checagem final do board]
+    private Vector3 pos;
 
-
-    public Conjunto(){
+    public Conjunto() {
         this.pecas = new ArrayList();
     }
+    public void setPos(Vector3 pos)
+    {
+        this.pos = pos;
+    }
 
+    public Vector3 getPos()
+    {
+        return pos;
+    }
     public int getNumPecas(){
         return this.pecas.Count;
     }
@@ -154,7 +162,17 @@ public class Conjunto
         }
         return clone;
     }
-
+    public void printaPecas()
+    {
+        foreach(Peca p in pecas)
+        {
+            Debug.Log(p.getValor() + " " + p.getCodigoCor());
+        }
+    }
+    public ArrayList getPecas()
+    {
+        return pecas;
+    }
 
     public Conjunto divide(Peca p){
         int indP = this.pecas.IndexOf(p);
@@ -169,14 +187,28 @@ public class Conjunto
             int n = this.pecas.Count-1;
             for(int i=n;i>indP;i--){
                 atual = (Peca) this.pecas[i];
-                novo.inserePeca(atual);
+                novo.inserePecaAntes(atual);
                 this.removePeca(atual);
             }
-
             this.removePeca(indP);
 
             return novo;
         }
+    }
+    public Vector3 calculaPosPorPecas()
+    {
+        Vector3 posicao = Vector3.zero;
+        //Debug.Log("NUMERO DE ELEMENTOS: " + pecasObjFilho.Count + "NUMERO PECAS: " + conjuntoLogico.getPecas().Count);
+        foreach (Peca p in pecas)
+        {
+        //    Debug.Log(p.getPosition());
+            posicao += p.getPosition();
+
+        }
+        //Debug.Log(posicao);
+        posicao = posicao / pecas.Count;
+        this.pos = posicao;
+        return posicao;
     }
     
 }
