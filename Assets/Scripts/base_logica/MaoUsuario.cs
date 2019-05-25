@@ -7,20 +7,18 @@ public class MaoUsuario
     private ArrayList pecas;
     private ArrayList pecasBackup;
     private bool primeiraJogada;
-    private ArrayList jogadaAtual;
 
     public MaoUsuario()
     {
         this.pecas = new ArrayList();
         this.primeiraJogada = true;
-        this.jogadaAtual = new ArrayList();
     }
     public bool getPrimeiraJogada(){return primeiraJogada;}
     public void setPrimeiraJogada(bool valor){primeiraJogada=valor;}
 
     public ArrayList getPecas()
     {
-        this.saveBackupPeca();
+        //this.saveBackupPeca();
         return this.pecas;
     }
     public void compraPeca(Deck deck)
@@ -70,6 +68,19 @@ public class MaoUsuario
         }
         return pontos;
     }
+    public int pontuacaoJogada()
+    {
+        int pontos = 0;
+        //ISSO DARÁ ERRADO EM ALGUNS CASOS ENQUANTO NÃO IMPLEMENTAMOS A OPÇÃO EXCLUSIVA ENTRE COMPRAR E JOGAR NA MESA
+        foreach(Peca p in pecasBackup)
+        {
+            if(!this.pecas.Contains(p)){
+                Debug.Log("Valor: " +p.getValor()+ " Cor: " + p.getCodigoCor() + " Coringa? " + p.ehCoringa());
+                pontos += p.getValor();
+            }
+        }
+        return pontos;
+    }
     public void printaPecas()
     {
         foreach(Peca p in pecas)
@@ -79,25 +90,18 @@ public class MaoUsuario
     }
 
     public void limpaJogada(){
-        this.jogadaAtual.Clear();
-    }
-    public int pontuacaoJogada()
-    {
-        int pontos = 0;
-        foreach(Peca p in jogadaAtual)
-        {
-            pontos += p.getPontos();
-        }
-        return pontos;
+        //this.jogadaAtual.Clear();
+        this.pecasBackup.Clear();
     }
     public void saveBackupPeca() {
         this.pecasBackup = (ArrayList)this.pecas.Clone();
+        Debug.Log("Salvou Backup");
     }
     public void rollbackPecas() {
         this.pecas = (ArrayList)this.pecasBackup.Clone();
     }
     public bool jogouAlgumaPeca(){
-        return this.pecas.Count==this.pecasBackup.Count;
+        return !(this.pecas.Count==this.pecasBackup.Count);
     }
     public bool estavaNaMao(Peca p){
         return this.pecasBackup.Contains(p);

@@ -48,7 +48,10 @@ public class ControladorJogo : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.F)){
-            flipaTurno();
+            bool terminada = terminaJogada();
+            if(getTurno(JOGADOR) && terminada){
+                iniciaTurno();
+            }
         }
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
         
@@ -59,11 +62,15 @@ public class ControladorJogo : MonoBehaviour
     }
     private IEnumerator GameStart()
     {
+        sorteiaPrimeiroJogador();
+        Debug.Log("Quem começa: " + this.turno);
         deckAtual = new Deck();
         tabuleiroAtual = new Tabuleiro();
-        Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
         maoInterface.setMaoInicial(deckAtual.pegaCartasIniciais());
-        tabuleirosValidos.Add(cloneBase);
+        if(getTurno(JOGADOR)){
+            this.iniciaTurno();
+        }
+        
         yield return null;
     }
     public void compraCarta()
@@ -89,7 +96,7 @@ public class ControladorJogo : MonoBehaviour
     public void sorteiaPrimeiroJogador(){
         /*Neste método vale colocar alguma animação entre os comandos de pegar peça*/
         Deck deckAux = new Deck();
-        deckAux.removeCoringas();
+        //deckAux.removeCoringas();
         Peca pecaPlayer = deckAux.pegaPecaAleatoria();
         Peca pecaCPU = deckAux.pegaPecaAleatoria();
         while(pecaPlayer.getValor()==pecaCPU.getValor() && pecaPlayer.getCodigoCor()==pecaCPU.getCodigoCor()){
@@ -129,27 +136,43 @@ public class ControladorJogo : MonoBehaviour
         //StartCoroutine(IniciaContagem());
     }
 
-    public void terminaJogada()
+    public bool terminaJogada()
     {
-        if(tabuleiroAtual.validaTabuleiro() && maoInterface.jogouAlgumaPeca()){
-            if(maoInterface.getPrimeiraJogada()){
-                int pontos = maoInterface.getPontosDaJogada();
-                if(pontos>=30){
-                    maoInterface.setPrimeiraJogada(false);
-                    maoInterface.limpaJogada();
-                    this.setTurno(CPU);
+        if(getTurno(JOGADOR)){
+            Debug.Log("Tabuleiro válido?" + tabuleiroAtual.validaTabuleiro());
+            Debug.Log("Jogou Peça?" + maoInterface.jogouAlgumaPeca());
+            if(tabuleiroAtual.validaTabuleiro() && maoInterface.jogouAlgumaPeca()){
+                if(maoInterface.getPrimeiraJogada()){
+                    Debug.Log("Primeira jogada:");
+                    int pontos = maoInterface.getPontosDaJogada();
+                    Debug.Log(pontos + " Pontos");
+                    if(pontos>=30){
+                        Debug.Log("passou");
+                        maoInterface.setPrimeiraJogada(false);
+                        maoInterface.limpaJogada();
+                        flipaTurno();
+                        return true;
+                    }else{
+                        avisoJogadaInvalida();
+                        //rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
+                        //penalizacaoTimeout();
+                        return false;
+                    }
                 }else{
-                    avisoJogadaInvalida();
-                    rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
-                    penalizacaoTimeout();
+                    maoInterface.limpaJogada();
+                    flipaTurno(); //Tem que ter checagem do turno antes das ações, na parte gráfica
+                    return true;
                 }
             }else{
-                this.setTurno(CPU); //Tem que ter checagem do turno antes das ações, na parte gráfica
+                avisoJogadaInvalida();
+                //rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
+                //penalizacaoTimeout();
+                return false;
             }
         }else{
-            avisoJogadaInvalida();
-            rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
-            penalizacaoTimeout();
+            //Por enquanto só flipa turno, até termos ia implementada
+            flipaTurno();
+            return true;
         }   
     }
 
@@ -165,6 +188,7 @@ public class ControladorJogo : MonoBehaviour
 
     public void avisoJogadaInvalida(){
         //TODO: Ter algum retorno ao usuário de que a jogada dele não foi válida
+        Debug.Log("JOGADA INVÁLIDA");
     }
 
     public void penalizacaoTimeout(){
