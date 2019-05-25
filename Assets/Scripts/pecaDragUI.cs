@@ -20,22 +20,24 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     public TMPro.TextMeshProUGUI texto;
     public GameObject tabuleiro;
     private bool jaExistePecaWorld;
-    public ControladorJogo controlador;
+    public ControladorJogo Controlador;
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = Input.mousePosition;
-        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
-        if (pecaGame != null) { 
-            pecaGame.transform.position = pecaPos;
-            controlaPeca.pecaMovimentada = true;
-            controlaPeca.pecaSolta = false;
+        if(Controlador.getTurno(ControladorJogo.JOGADOR)){
+            transform.position = Input.mousePosition;
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+            Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
+            if (pecaGame != null) { 
+                pecaGame.transform.position = pecaPos;
+                controlaPeca.pecaMovimentada = true;
+                controlaPeca.pecaSolta = false;
+            }
         }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        controlador.isBotandoPeca = true;
+        Controlador.isBotandoPeca = true;
         tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
         if (slotAtual != null) {
             slotAtual.GetComponent<slotMao>().libera();
@@ -97,7 +99,7 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
         maoPlayer = GameObject.FindGameObjectWithTag("SeguraPecaUi").GetComponent<maoUI>();
         movimentando = false;
 
-        controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
+        Controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
     }
 
     // Update is called once per frame

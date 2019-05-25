@@ -30,69 +30,80 @@ public class controladorPeca : MonoBehaviour
     private void OnMouseDown()
         
     {
+
+        if(Controlador.getTurno(ControladorJogo.JOGADOR)){
         
-        Controlador.isBotandoPeca = true;
-        if (conjuntoDono != null)
-        {
-            Debug.Log(this.enabled);
-            conjuntoDono.GetComponent<ConjuntoInterface>().removePeca(gameObject);
+            Controlador.isBotandoPeca = true;
+            if (conjuntoDono != null)
+            {
+                Debug.Log(this.enabled);
+                conjuntoDono.GetComponent<ConjuntoInterface>().removePeca(gameObject);
+                contaColisao = 0;
+                ignoraConjunto = true;
+                this.enabled = true;
+            }
             contaColisao = 0;
-            ignoraConjunto = true;
-            this.enabled = true;
+            gameObject.transform.parent = transform.root;
+
         }
-        contaColisao = 0;
-        gameObject.transform.parent = transform.root;
     }
     private void OnMouseDrag()
     {
-        if (inseridaNesteTurno & pecaNaUi != null)
-        {
-            pecaNaUi.GetComponent<pecaDragUI>().movimentando = true;
-            pecaNaUi.GetComponent<pecaDragUI>().setou = false;
-            pecaNaUi.transform.position = Input.mousePosition;
-            colisao.enabled = true;
-            //Debug.Log("MOUSE DRAG PECA NORMAL");
-            //pecaNaUi.GetComponent<>
+        if(Controlador.getTurno(ControladorJogo.JOGADOR)){
+            if (inseridaNesteTurno & pecaNaUi != null)
+            {
+                pecaNaUi.GetComponent<pecaDragUI>().movimentando = true;
+                pecaNaUi.GetComponent<pecaDragUI>().setou = false;
+                pecaNaUi.transform.position = Input.mousePosition;
+                colisao.enabled = true;
+                //Debug.Log("MOUSE DRAG PECA NORMAL");
+                //pecaNaUi.GetComponent<>
+            }
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+            pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
+            transform.position = pecaPos;
+            pecaMovimentada = true;
+            pecaSolta = false;
+
         }
-        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
-        transform.position = pecaPos;
-        pecaMovimentada = true;
-        pecaSolta = false;
     }
 
     private void OnMouseUp()
     {
-        ignoraConjunto = false;
-        if (pecaMovimentada)
-        {
-            pecaMovimentada = false;
-            pecaSolta = true;
-            //tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
-            //tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
-        }
-        if (inseridaNesteTurno)
-        {
-            pecaNaUi.GetComponent<pecaDragUI>().movimentando = false;
-
-        }
-        if (contaColisao == 0)
-        {
-            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-            Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
-            if (!pecaNaUi.GetComponent<Image>().enabled)
+        if(Controlador.getTurno(ControladorJogo.JOGADOR)){
+            ignoraConjunto = false;
+            if (pecaMovimentada)
             {
-                criaConjuntoNovo(pecaPos);
+                pecaMovimentada = false;
+                pecaSolta = true;
+                //tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
+                //tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
+            }
+            if (inseridaNesteTurno)
+            {
+                pecaNaUi.GetComponent<pecaDragUI>().movimentando = false;
+
+            }
+            if (contaColisao == 0)
+            {
+                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+                Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
+                if (!pecaNaUi.GetComponent<Image>().enabled)
+                {
+                    criaConjuntoNovo(pecaPos);
+                }
             }
         }
     }
 
     private void FixedUpdate()
     {
-        distance = -Camera.main.transform.position.z;
-        if(colisao.enabled == false)
-        {
-            //Debug.Log("COLISAO DESATIVADA");
+        if(Controlador.getTurno(ControladorJogo.JOGADOR)){
+            distance = -Camera.main.transform.position.z;
+            if(colisao.enabled == false)
+            {
+                //Debug.Log("COLISAO DESATIVADA");
+            }
         }
     }
     void Start()
@@ -107,9 +118,11 @@ public class controladorPeca : MonoBehaviour
     }
     private void Update()
     {
-        distance = -Camera.main.transform.position.z;
-        if (!Controlador.isBotandoPeca) { 
-            GetComponent<Collider2D>().enabled = !Controlador.modoConjunto;
+        if(!Controlador.getTurno(ControladorJogo.JOGADOR)){
+            distance = -Camera.main.transform.position.z;
+            if (!Controlador.isBotandoPeca) { 
+                GetComponent<Collider2D>().enabled = !Controlador.modoConjunto;
+            }
         }
     }
     

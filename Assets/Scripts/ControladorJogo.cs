@@ -46,6 +46,10 @@ public class ControladorJogo : MonoBehaviour
             StartCoroutine(GameStart());
             
         }
+
+        if(Input.GetKeyDown(KeyCode.F)){
+            flipaTurno();
+        }
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
         
     }
@@ -64,12 +68,18 @@ public class ControladorJogo : MonoBehaviour
     }
     public void compraCarta()
     {
-        if (maoInterface.maoLogica.getPecas().Count < 24) { 
-            Peca p = deckAtual.pegaPecaAleatoria();
-            maoInterface.compraPeca(p);
+        if(getTurno(JOGADOR)){
+            if (maoInterface.maoLogica.getPecas().Count < 24) { 
+                Peca p = deckAtual.pegaPecaAleatoria();
+                maoInterface.compraPeca(p);
+            }
         }
     }
 
+    public bool getTurno(int player){
+        if(this.turno == player)return true;
+        return false;
+    }
     public void setTurno(int vez){
         /*Fazendo uma função separada para setar o turno para o caso da implementação ser mudada
         Assim, nós não precisaremos alterar em todos os locais onde o turno for setado*/
@@ -112,10 +122,11 @@ public class ControladorJogo : MonoBehaviour
 
     public void iniciaTurno(){
         Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
+        tabuleirosValidos.Clear();
         tabuleirosValidos.Add(cloneBase);
         maoInterface.fazBackup();
 
-        StartCoroutine(IniciaContagem());
+        //StartCoroutine(IniciaContagem());
     }
 
     public void terminaJogada()
@@ -162,5 +173,9 @@ public class ControladorJogo : MonoBehaviour
     public void flipaModo()
     {
         modoConjunto = !modoConjunto;
+    }
+    public void flipaTurno(){
+        if(this.turno==CPU)setTurno(JOGADOR);
+        else setTurno(CPU);
     }
 }
