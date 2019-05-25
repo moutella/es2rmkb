@@ -56,9 +56,8 @@ public class maoUI : MonoBehaviour
     }
     public void liberaTodos()
     {
-        foreach(GameObject p in pecaUIObjects)
-        {
-            Destroy(p);
+        for(int i=pecaUIObjects.Count-1; i>=0;i--){
+            Destroy((GameObject)pecaUIObjects[i]);
         }
         foreach(GameObject slot in slots)
         {
@@ -136,9 +135,8 @@ public class maoUI : MonoBehaviour
     public void reset()
     {
         maoLogica = new MaoUsuario();
-        foreach (GameObject pecaUI in pecaUIObjects)
-        {
-            Destroy(pecaUI);
+        for(int i=pecaUIObjects.Count-1; i>=0;i--){
+            Destroy((GameObject)pecaUIObjects[i]);
         }
         foreach (GameObject slot in slots)
         {
