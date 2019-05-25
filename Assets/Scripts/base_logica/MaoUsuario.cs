@@ -7,14 +7,19 @@ public class MaoUsuario
     private ArrayList pecas;
     private ArrayList pecasBackup;
     private bool primeiraJogada;
+    private bool comprouPeca;
 
     public MaoUsuario()
     {
         this.pecas = new ArrayList();
         this.primeiraJogada = true;
+        this.comprouPeca = false;
     }
     public bool getPrimeiraJogada(){return primeiraJogada;}
     public void setPrimeiraJogada(bool valor){primeiraJogada=valor;}
+
+    public bool getComprouPeca(){return this.comprouPeca;}
+    public void setComprouPeca(bool valor){this.comprouPeca = valor;}
 
     public ArrayList getPecas()
     {

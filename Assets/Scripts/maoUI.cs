@@ -101,6 +101,12 @@ public class maoUI : MonoBehaviour
     public void fazBackup() {
         maoLogica.saveBackupPeca();
     }
+    public bool getComprouPeca(){
+        return maoLogica.getComprouPeca();
+    }
+    public void setComprouPeca(bool valor){
+        maoLogica.setComprouPeca(valor);
+    }
     public void removePeca(GameObject peca)
     {
         Peca p = peca.GetComponent<pecaGameUI>().getPeca();
@@ -114,16 +120,18 @@ public class maoUI : MonoBehaviour
         maoLogica.inserePeca(p);
     }
     public void compraPeca(Peca p)
-    {
-        maoLogica.inserePeca(p);
-        GameObject peca = Instantiate(pecaPrefab, this.transform);
-        peca.GetComponent<pecaGameUI>().criaPeca(p);
-        GameObject slot = getPrimeiroVazio();
-        slot.GetComponent<slotMao>().preenche(peca);
-        //Debug.Log("Preencheu: " + slot.name);
-        peca.GetComponent<pecaDragUI>().slotAtual = slot;
-        peca.GetComponent<RectTransform>().SetPositionAndRotation(slot.transform.position, Quaternion.identity);
-        pecaUIObjects.Add(peca);
+    {   if(!(maoLogica.getComprouPeca() || maoLogica.jogouAlgumaPeca())){
+            maoLogica.inserePeca(p);
+            GameObject peca = Instantiate(pecaPrefab, this.transform);
+            peca.GetComponent<pecaGameUI>().criaPeca(p);
+            GameObject slot = getPrimeiroVazio();
+            slot.GetComponent<slotMao>().preenche(peca);
+            //Debug.Log("Preencheu: " + slot.name);
+            peca.GetComponent<pecaDragUI>().slotAtual = slot;
+            peca.GetComponent<RectTransform>().SetPositionAndRotation(slot.transform.position, Quaternion.identity);
+            pecaUIObjects.Add(peca);
+            maoLogica.setComprouPeca(true);
+        }
     }
     public void reset()
     {

@@ -27,6 +27,11 @@ public class ControladorJogo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(maoInterface.getComprouPeca()){
+            //muda o turno
+            flipaTurno();
+            maoInterface.setComprouPeca(false);
+        }
 
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Space))
@@ -62,11 +67,12 @@ public class ControladorJogo : MonoBehaviour
     }
     private IEnumerator GameStart()
     {
-        sorteiaPrimeiroJogador();
+        
         Debug.Log("Quem começa: " + this.turno);
         deckAtual = new Deck();
         tabuleiroAtual = new Tabuleiro();
         maoInterface.setMaoInicial(deckAtual.pegaCartasIniciais());
+        sorteiaPrimeiroJogador();
         if(getTurno(JOGADOR)){
             this.iniciaTurno();
         }
@@ -154,25 +160,28 @@ public class ControladorJogo : MonoBehaviour
                         return true;
                     }else{
                         avisoJogadaInvalida();
-                        //rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
+                        //rollbackJogada();//Fazer verificação de tempo para saber se utiliza rollback
                         //penalizacaoTimeout();
                         return false;
                     }
                 }else{
                     maoInterface.limpaJogada();
-                    flipaTurno(); //Tem que ter checagem do turno antes das ações, na parte gráfica
+                    flipaTurno();
                     return true;
                 }
             }else{
                 avisoJogadaInvalida();
-                //rollbackJogada();//Faz sentido chamar esse método só se estoura o tempo e não em todo fim de jogada
+                //rollbackJogada();//Fazer verificação de tempo para saber se utiliza rollback
                 //penalizacaoTimeout();
                 return false;
             }
         }else{
-            //Por enquanto só flipa turno, até termos ia implementada
+            //A IA vai calcular as jogadas possíveis, apenas... Nunca vai fazer uma jogada que permita um tabuleiro inválido
+            //Dessa forma, acho que não é necessária validação aqui...
             flipaTurno();
             return true;
+            //Por enquanto só flipa turno, até termos ia implementada
+            
         }   
     }
 
