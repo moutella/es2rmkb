@@ -38,6 +38,7 @@ public class PecaGame : MonoBehaviour
     }
     public void setInvisivel()
     {
+        Debug.Log("INVISIVEL?");
         imagemCarta.enabled = false;
         textoPeca.enabled = false;
     }

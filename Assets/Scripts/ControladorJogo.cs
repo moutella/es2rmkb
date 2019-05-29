@@ -210,4 +210,7 @@ public class ControladorJogo : MonoBehaviour
         if(this.turno==CPU)setTurno(JOGADOR);
         else setTurno(CPU);
     }
+    public maoUI getJogador(){
+        return this.maoInterface;
+    }
 }

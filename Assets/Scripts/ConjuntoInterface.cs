@@ -335,5 +335,16 @@ public class ConjuntoInterface : MonoBehaviour
                 validezInterface.color = coresFundo[1];
             }
     }
+
+    public bool ehDaMesa()
+    {
+        maoUI jogador = Controlador.getJogador();
+        foreach(Peca p in this.conjuntoLogico.getPecas()){
+            if(jogador.estavaNaMao(p)){
+                return false;
+            }
+        }
+        return true;
+    }
     
 }
