@@ -42,13 +42,12 @@ public class Deck
     {
         Peca p = (Peca)pecas[Random.Range(0, quantasPecasTem)];
         pecas.Remove(p);
+        quantasPecasTem--;
         return p;
     }
     public void removeCoringas(){
-        foreach(Peca p in this.pecas){
-            if(p.ehCoringa()){
-                this.pecas.Remove(p);
-            }
+        for(int i=0;i<2;i++){
+            this.pecas.RemoveAt(this.pecas.Count-1);
         }
     }
 }
