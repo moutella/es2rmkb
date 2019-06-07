@@ -59,6 +59,36 @@ public class Peca : IComparable
         return (IComparer) new ComparadorPorCores();
     }
 
+    public class ComparadorSequencial : IComparer
+    {
+        int IComparer.Compare(object a, object b)
+         {
+            Peca p1=(Peca)a;
+            Peca p2=(Peca)b;
+
+            //Debug.Log("Peça " + p1.getValor()+"/"+p1.getCodigoCor() + " comparada com" + "Peça " + p2.getValor()+"/"+p2.getCodigoCor());
+
+            if (p1.getValor() > p2.getValor()){
+                //Debug.Log("Ganhou p1");
+                return 1;
+            }
+
+            if (p1.getValor() < p2.getValor()){
+                //Debug.Log("Ganhou p2");
+                return -1;
+            }
+            else{
+                if(p1.getCodigoCor()>p2.getCodigoCor())return 1;
+                else return -1;
+            }
+                
+         }
+    }
+
+    public static IComparer getComparadorSequencial(){
+        return (IComparer) new ComparadorSequencial();
+    }
+
     public int CompareTo(object obj)
     {
         if (obj == null) return 1;

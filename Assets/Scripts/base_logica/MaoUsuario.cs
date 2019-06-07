@@ -56,7 +56,8 @@ public class MaoUsuario
 
     public void arrumaSequencial()
     {
-        pecas.Sort();
+        IComparer comparador = Peca.getComparadorSequencial();
+        pecas.Sort(comparador);
     }
 
     public void arrumaPorCores(){
