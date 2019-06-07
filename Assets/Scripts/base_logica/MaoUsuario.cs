@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MaoUsuario
 {
-    private ArrayList pecas;
-    private ArrayList pecasBackup;
-    private bool primeiraJogada;
-    private bool comprouPeca;
+    protected ArrayList pecas;
+    protected ArrayList pecasBackup;
+    protected bool primeiraJogada;
+    protected bool comprouPeca;
 
     public MaoUsuario()
     {

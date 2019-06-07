@@ -211,5 +211,13 @@ public class Conjunto
         this.pos = posicao;
         return posicao;
     }
+
+    //Função para facilitar na IA
+    public int getPontos(){
+        int pontos = 0;
+        foreach(Peca p in pecas){
+            pontos+=p.getValor;
+        }
+    }
     
 }
