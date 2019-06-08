@@ -67,7 +67,6 @@ public class IA : MaoUsuario
 			if(this.saoDisjuntos((Conjunto)grupos[i],respAtual)){
 				respAtual.Add(grupos[i]);
 				resp.Add((ArrayList)respAtual.Clone());
-				((Conjunto)grupos[i]).printaPecas();
 				conjuntosBacktracking(grupos, respAtual, resp, i);
 				respAtual.Remove(grupos[i]);
 			}	
@@ -79,16 +78,10 @@ public class IA : MaoUsuario
 		ArrayList grupos = retornaTodosOsGrupos();
 		//ArrayList sequencias = retornaTodasAsSequencias();
 
-		foreach(Conjunto c in grupos){
-			Debug.Log("Printando pecas retornadas no método inicial");
-			c.printaPecas();
-		}
-
 
 		ArrayList jogadas = new ArrayList();
 		ArrayList jogadaAtual = new ArrayList();
 		
-		Debug.Log("Conjuntos dentro do BackTracking");
 		conjuntosBacktracking(grupos, jogadaAtual, jogadas, 0);
 
 		return jogadas;
@@ -123,7 +116,6 @@ public class IA : MaoUsuario
 		foreach(Peca p in this.pecas){
 			if(!p.ehCoringa()){
 				if(anterior==null){
-					//jogadaAtual.insereSubJogada(new SubJogada(p, SubJogada.INS));
 					conjunto.inserePeca(p);
 
 				}else{
@@ -152,11 +144,12 @@ public class IA : MaoUsuario
 
 							
 					}
-				}		
+				}
+				//Verifica se o conjunto atual é válido. Se for, add no array de resposta
+				if(conjunto.getValida()) resp.Add(conjunto.cloneConjunto());		
 			}
 
-			//Verifica se o conjunto atual é válido. Se for, add no array de resposta
-			if(conjunto.getValida()) resp.Add(conjunto.cloneConjunto());
+			
 			
 			anterior = p;
 		}
@@ -181,6 +174,17 @@ public class IA : MaoUsuario
 		}
 
 		return true;
+	}
+
+
+	public Jogada transformaArrayListEmJogada(ArrayList al){
+		Jogada jogada = new Jogada();
+
+		foreach(Conjunto c in al){
+			jogada.insereSubJogada(new SubJogada(null, SubJogada.NOVO, c));
+		}
+
+		return jogada;
 	}
 
 }
