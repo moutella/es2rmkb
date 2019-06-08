@@ -8,42 +8,14 @@ public class TestesLogica : MonoBehaviour
     //CLASSE PURAMENTE PARA TESTES, ADICIONE O PREFAB TestesLogica a cena para ver o output no console
     void Start() //trate como o main
     {
-        Deck deck = new Deck();
-        MaoUsuario MaoUsuario = new MaoUsuario();
-        IA maoIA = new IA();
+
+        testesIA();
+
         //MaoUsuario.insereMaoInicial(deck.pegaCartasIniciais());
+        
 
-        Peca p = new Peca(1,1,false);
-        maoIA.inserePeca(p);
-        p = new Peca(0,5,false);
-        maoIA.inserePeca(p);
-        p = new Peca(1,5,false);
-        maoIA.inserePeca(p);
-        p = new Peca(2,5,false);
-        maoIA.inserePeca(p);
-        p = new Peca(3,5,false);
-        maoIA.inserePeca(p);
-        p = new Peca(0,7,false);
-        maoIA.inserePeca(p);
-        p = new Peca(1,7,false);
-        maoIA.inserePeca(p);
-        p = new Peca(2,7,false);
-        maoIA.inserePeca(p);
-        p = new Peca(0,8,false);
-        maoIA.inserePeca(p);
-        p = new Peca(1,8,false);
-        maoIA.inserePeca(p);
-        p = new Peca(2,8,false);
-        maoIA.inserePeca(p);
-        p = new Peca(0,10,false);
-        maoIA.inserePeca(p);
-        p = new Peca(0,12,false);
-        maoIA.inserePeca(p);
-        p = new Peca(1,11,false);
-        maoIA.inserePeca(p);
-
-        ArrayList grupos = maoIA.retornaTodosOsConjuntosDaMao();
-        Debug.Log("VAI MOSTRAR A LISTA DE TODAS AS JOGADAS POSSIVEIS\n\n");
+       
+        /*Debug.Log("VAI MOSTRAR A LISTA DE TODAS AS JOGADAS POSSIVEIS\n\n");
         foreach (ArrayList al in grupos)
         {
             Debug.Log("----------------------------------Jogada Possível-------------------------------------\n");
@@ -53,7 +25,7 @@ public class TestesLogica : MonoBehaviour
                 c.printaPecas();
             }
             
-        }
+        }*/
         
         //MaoUsuario.printaPecas();
         //tabuleiro = new Tabuleiro();
@@ -89,6 +61,82 @@ public class TestesLogica : MonoBehaviour
 
         */
         //Debug.Log(tabuleiro.validaTabuleiro());
+    }
+
+    public bool testesIA(){
+
+        Debug.Log("TesteRetornaGrupos1 - Resultado: " + testeRetornaGrupos1());
+
+        return testeRetornaGrupos1();
+    }
+
+    public bool testeRetornaGrupos1(){
+        
+        //Só é possível fazer grupos na mão(Sem Coringas)
+        Deck deck = new Deck();
+        IA maoIA = new IA();
+        
+        Peca p1 = new Peca(0,5,false);
+        maoIA.inserePeca(p1);
+        Peca p2 = new Peca(1,5,false);
+        maoIA.inserePeca(p2);
+        Peca p3 = new Peca(2,5,false);
+        maoIA.inserePeca(p3);
+        Peca p4 = new Peca(0,7,false);
+        maoIA.inserePeca(p4);
+        Peca p5 = new Peca(1,7,false);
+        maoIA.inserePeca(p5);
+        Peca p6 = new Peca(2,7,false);
+        maoIA.inserePeca(p6);
+        Peca p7 = new Peca(0,8,false);
+        maoIA.inserePeca(p7);
+        Peca p8 = new Peca(1,8,false);
+        maoIA.inserePeca(p8);
+        Peca p9 = new Peca(2,8,false);
+        maoIA.inserePeca(p9);
+
+
+        ArrayList oraculo = new ArrayList();
+        ArrayList atual = new ArrayList();
+        Conjunto c1 = new Conjunto();
+        c1.inserePeca(p1);
+        c1.inserePeca(p2);
+        c1.inserePeca(p3);
+        atual.Add(c1);
+
+        oraculo.Add(atual.Clone());
+
+        Conjunto c2 = new Conjunto();
+        c2.inserePeca(p4);
+        c2.inserePeca(p5);
+        c2.inserePeca(p6);
+        atual.Add(c2);
+
+        oraculo.Add(atual.Clone());
+
+        Conjunto c3 = new Conjunto();
+        c3.inserePeca(p7);
+        c3.inserePeca(p8);
+        c3.inserePeca(p9);
+        atual.Add(c3);
+
+        oraculo.Add(atual.Clone());
+        atual.Remove(c2);
+        oraculo.Add(atual.Clone());
+        atual.Remove(c1);
+        oraculo.Add(atual.Clone());
+        atual.Add(c2);
+        oraculo.Add(atual.Clone());
+        atual.Remove(c3);
+        oraculo.Add(atual.Clone());
+        
+
+        ArrayList result = maoIA.retornaTodosOsConjuntosDaMao();
+        
+
+        //TEM QUE USAR NUGET FLUENTASSERTIONS PARA FUNCIONAR
+        return oraculo.Equals(result);
+
     }
     
 }
