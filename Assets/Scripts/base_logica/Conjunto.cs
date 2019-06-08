@@ -212,12 +212,28 @@ public class Conjunto
         return posicao;
     }
 
-    //Função para facilitar na IA
+    //-------------------------------------------Funções para facilitar na IA----------------------------------------------------
     public int getPontos(){
         int pontos = 0;
         foreach(Peca p in pecas){
-            pontos+=p.getValor;
+            pontos+=p.getValor();
         }
+
+        return pontos;
     }
+
+    public void limpaConjunto(){
+        this.pecas.Clear();
+    }
+
+    public bool ehDisjunto(Conjunto c){
+        foreach(Peca p in c.getPecas()){
+            if(this.pecas.Contains(p)) return false;
+        }
+
+        return true;
+    }
+
+
     
 }

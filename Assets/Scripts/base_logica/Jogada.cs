@@ -14,6 +14,10 @@ public class Jogada
         subjogadas.Add(s);
     }
 
+    public void removeSubJogada(SubJogada s){
+        subjogadas.Remove(s);
+    }
+
     public Jogada clonaJogada(){
         Jogada clone = new Jogada();
         foreach (SubJogada s in subjogadas)
