@@ -89,21 +89,35 @@ public class IA : MaoUsuario
 	}
 
 	public ArrayList retornaTodasAsSequencias(){
-		/*Conjunto conj = new Conjunto();
-		Peca primeira = null;
+		Conjunto conjunto = new Conjunto();
+		ArrayList resp = new ArrayList();
+		int pecasNoConjunto = 0;
+		int ultimaCor = -1;
 		this.arrumaPorCores();
-		foreach(Peca p in this.pecas){
-			if(!p.ehCoringa()){
-				if(primeira==null){
-					primeira = p;
-					conj.inserePeca(p);
+
+		int i, j;
+		for(i = 0; i < this.pecas.Count; i++) {
+			Peca pivo = (Peca) this.pecas[i];
+			conjunto.inserePeca(pivo);
+			ultimaCor = pivo.getCodigoCor();
+			pecasNoConjunto = 1;
+
+			for(j = i+1; j < this.pecas.Count; j++) {
+				Peca auxiliar = (Peca) this.pecas[j];
+				if(ultimaCor != auxiliar.getCodigoCor()) break; //Caso onde eu já to olhando uma cor diferente da primeira peça da sequencia
+				
+				conjunto.inserePeca(auxiliar); //Insiro a possivel proxima peça valida
+				conjunto.printaPecas();
+				pecasNoConjunto += 1; //Atribuo 1 ao número de elementos no conjunto
+				if(conjunto.getValida()) resp.Add(conjunto.cloneConjunto()); // Se o conjunto estiver válido com esse elemento adicionado, adiciono na resposta
+				else if (pecasNoConjunto >= 3) { // Caso onde o conjunto já ficou inválido, e já tem mais de 2 peças no conjunto, ou seja ele nao ficar mais valido se eu adicionar mais peças
+					conjunto.limpaConjunto();
+					break;
 				}
 			}
-		}*/
+		}
 
-		//TODO
-
-		return this.pecas;
+		return resp;
 	}
 
 	public ArrayList retornaTodosOsGrupos(){
