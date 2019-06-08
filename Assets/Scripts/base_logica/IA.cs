@@ -73,10 +73,21 @@ public class IA : MaoUsuario
 		}
 	}
 
+	public ArrayList retornaJogadasPossiveis(){
+		ArrayList conjuntosDaMao = retornaTodosOsConjuntosDaMao();
+		ArrayList jogadasDaMao = transformaTodosOsArrayListsEmJogadas(conjuntosDaMao);
+
+
+		//Aqui farei um AddRange das outras antes de retornar
+		return jogadasDaMao;
+	}
+
 
 	public ArrayList retornaTodosOsConjuntosDaMao(){
 		ArrayList grupos = retornaTodosOsGrupos();
-		//ArrayList sequencias = retornaTodasAsSequencias();
+		ArrayList sequencias = retornaTodasAsSequencias();
+
+		grupos.AddRange(sequencias);
 
 
 		ArrayList jogadas = new ArrayList();
@@ -188,6 +199,15 @@ public class IA : MaoUsuario
 		}
 
 		return true;
+	}
+
+	public ArrayList transformaTodosOsArrayListsEmJogadas(ArrayList al){
+		ArrayList resp = new ArrayList();
+		foreach(ArrayList array in al){
+			resp.Add(transformaArrayListEmJogada(array));
+		}
+
+		return resp;
 	}
 
 
