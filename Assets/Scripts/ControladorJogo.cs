@@ -16,6 +16,7 @@ public class ControladorJogo : MonoBehaviour
     private int turno; //0 é turno do jogador, 1 da ia
     public bool modoConjunto = false;
     public bool isBotandoPeca;
+    public ConjuntoInterfaceCreator criadorDeConjuntos;
     //Isso pode ser feito dentro da classe do jogador futuramente
 
     void Start()
@@ -57,6 +58,11 @@ public class ControladorJogo : MonoBehaviour
             if(getTurno(JOGADOR) && terminada){
                 iniciaTurno();
             }
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            print("Rollback");
+            rollbackJogada();
         }
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
         
@@ -192,6 +198,12 @@ public class ControladorJogo : MonoBehaviour
     public void rollbackConjuntos() {
         Tabuleiro tabuleiroBackup = (Tabuleiro)tabuleirosValidos[tabuleirosValidos.Count-1];
         tabuleiroAtual = tabuleiroBackup.cloneTabuleiro();
+        controlaTabInterface.reset();
+        foreach (Conjunto c in tabuleiroBackup.getConjuntos())
+        {
+            criadorDeConjuntos.inicializaDeConjuntoLogico(c);
+        }
+        
     }
 
     public void avisoJogadaInvalida(){

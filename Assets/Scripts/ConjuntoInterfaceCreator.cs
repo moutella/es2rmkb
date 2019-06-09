@@ -43,4 +43,32 @@ public class ConjuntoInterfaceCreator : MonoBehaviour
         tabuleiro.GetComponent<TabuleiroInterface>().insereConjInt(conjunto);
         tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
     }
+    public void inicializaDeConjuntoLogico(Conjunto conjLogico)
+    {
+        GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
+        GameObject conjunto = Instantiate(conjuntoPrefab, tabuleiro.transform);
+        ConjuntoInterface conjInt = conjunto.GetComponent<ConjuntoInterface>();
+        conjInt.inicializa();
+        conjInt.setaConjLogico(conjLogico);
+        conjInt.transform.position = conjLogico.calculaPosPorPecas();
+        //conjLogico.printaPecas();
+        foreach (Peca p in conjLogico.getPecas())
+        {
+            GameObject peca = Instantiate(pecaGamePrefab);
+            PecaGame pecaControl = peca.GetComponent<PecaGame>();
+            pecaControl.criaPeca(p);
+            conjInt.addPecaInterface(peca, false);
+        }
+        //foreach (Peca p in conjLogico.getPecas())
+        //{
+        //    GameObject pecaGame = Instantiate(pecaGamePrefab);
+        //    PecaGame criadorPecaGame = pecaGame.GetComponent<PecaGame>();
+        //    criadorPecaGame.criaPeca(p);
+        //    conjInt.addPecaInterface(pecaGame);
+        //}
+        //conjInt.inserePeca(gameObjet);
+        //conjuntoDono = conj;
+        tabuleiro.GetComponent<TabuleiroInterface>().insereConjInt(conjunto);
+        tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
+    }
 }

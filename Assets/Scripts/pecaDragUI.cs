@@ -21,6 +21,7 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     public GameObject tabuleiro;
     private bool jaExistePecaWorld;
     public ControladorJogo Controlador;
+
     public void OnDrag(PointerEventData eventData)
     {
         if(Controlador.getTurno(ControladorJogo.JOGADOR)){
