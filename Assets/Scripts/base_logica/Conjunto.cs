@@ -138,7 +138,7 @@ public class Conjunto
                 }
             }
         }
-        int valorAtribuido = valorAtual-pecas.Count;
+        int valorAtribuido = valorAtual-pecas.Count+1;
         if (numeroCoringas > 0) { 
             foreach (Peca p in this.pecas)
             {
