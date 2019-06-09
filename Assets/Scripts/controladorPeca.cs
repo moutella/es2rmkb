@@ -88,11 +88,8 @@ public class controladorPeca : MonoBehaviour
             if (contaColisao == 0)
             {
                 Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-                Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);
-                if (!pecaNaUi.GetComponent<Image>().enabled)
-                {
-                    criaConjuntoNovo(pecaPos);
-                }
+                Vector3 pecaPos = Camera.main.ScreenToWorldPoint(mousePos);                
+                criaConjuntoNovo(pecaPos);
             }
         }
     }
