@@ -23,7 +23,7 @@ public class PecaGame : MonoBehaviour
         {
             corPeca = GameObject.FindGameObjectWithTag("GameController").
                 GetComponent<ControladorJogo>().
-                coresDoJogo[-pecaLogica.getCodigoCor()];
+                coresDoJogo[Math.Abs(pecaLogica.getCodigoCor())];
             textoPeca.SetText("@");
             textoPeca.color = corPeca;
         }

@@ -22,8 +22,8 @@ public class Deck
                 
             }
         }
-        pecas.Add(new Peca(-1, -1, true));
-        pecas.Add(new Peca(-1, -1, true));
+        pecas.Add(new Peca(0, -1, true));
+        pecas.Add(new Peca(1, -1, true));
     }
     public ArrayList pegaCartasIniciais()
     {
