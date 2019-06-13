@@ -44,14 +44,15 @@ public class ConjuntoInterfaceCreator : MonoBehaviour
         tabuleiro.GetComponent<TabuleiroInterface>().insereConjInt(conjunto);
         tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
     }
-    public void inicializaDeConjuntoLogico(Conjunto conjLogico)
+    public void inicializaParaRollback(Conjunto conjLogico)
     {
         GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
         GameObject conjunto = Instantiate(conjuntoPrefab, tabuleiro.transform);
         ConjuntoInterface conjInt = conjunto.GetComponent<ConjuntoInterface>();
         conjInt.inicializa(true);
         conjInt.setaConjLogicoBkp(conjLogico);
-        conjInt.transform.position = conjLogico.calculaPosPorPecas();
+        //conjInt.transform.position = conjLogico.calculaPosPorPecas();
+        conjInt.transform.position = conjLogico.getPos();
         //conjLogico.printaPecas();
         foreach (Peca p in conjLogico.getPecas())
         {

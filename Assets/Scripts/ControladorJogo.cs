@@ -205,9 +205,9 @@ public class ControladorJogo : MonoBehaviour
         Tabuleiro tabuleiroBackup = (Tabuleiro)tabuleirosValidos[tabuleirosValidos.Count-1];
         tabuleiroAtual = tabuleiroBackup.cloneTabuleiro();
         controlaTabInterface.reset();
-        foreach (Conjunto c in tabuleiroBackup.getConjuntos())
+        foreach (Conjunto c in tabuleiroAtual.getConjuntos())
         {
-            criadorDeConjuntos.inicializaDeConjuntoLogico(c);
+            criadorDeConjuntos.inicializaParaRollback(c);
         }
         
     }
