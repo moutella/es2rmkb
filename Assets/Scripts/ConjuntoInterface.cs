@@ -40,10 +40,6 @@ public class ConjuntoInterface : MonoBehaviour
         else { 
             GetComponent<Collider2D>().enabled = Controlador.modoConjunto;
         }
-
-    }
-    public void LateUpdate()
-    {
         if (gameObject.name.Equals("ConjuntoInterface(Clone)(Clone)"))
         {
             Destroy(gameObject);
@@ -53,8 +49,15 @@ public class ConjuntoInterface : MonoBehaviour
         {
             GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
             tabuleiro.GetComponent<TabuleiroInterface>().removeConjInt(gameObject);
+            Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
+            tabAtual.removeConjunto(conjuntoLogico);
             Destroy(gameObject);
         }
+
+    }
+    public void LateUpdate()
+    {
+       
     }
 
 

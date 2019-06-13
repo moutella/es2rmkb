@@ -57,6 +57,7 @@ public class ConjuntoInterfaceCreator : MonoBehaviour
         foreach (Peca p in conjLogico.getPecas())
         {
             GameObject peca = Instantiate(pecaGamePrefab);
+            
             PecaGame pecaControl = peca.GetComponent<PecaGame>();
             pecaControl.criaPeca(p);
             print("Peca inserida no rollback: " + p.getValor() + "Coringa: " + p.ehCoringa() + "Cor: " + p.getCodigoCor());

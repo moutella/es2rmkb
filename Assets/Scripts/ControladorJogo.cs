@@ -88,7 +88,7 @@ public class ControladorJogo : MonoBehaviour
         if(getTurno(JOGADOR)){
             this.iniciaTurno();
         }
-        
+        tabuleirosValidos.Add(tabuleiroAtual.cloneTabuleiro());
         yield return null;
     }
     public void compraCarta()

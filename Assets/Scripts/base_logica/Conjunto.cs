@@ -61,7 +61,7 @@ public class Conjunto
     }
     public void atualizaCoringa(Peca p, int valor, int cor){
         p.setValor(valor);
-        p.setCodigoCor(cor);
+        //p.setCodigoCor(cor);
     }
 
     public bool validaConjunto(){
