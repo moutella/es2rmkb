@@ -22,7 +22,7 @@ public class ConjuntoInterfaceCreator : MonoBehaviour
         GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
         GameObject conjunto = Instantiate(conjuntoPrefab, tabuleiro.transform);
         ConjuntoInterface conjInt = conjunto.GetComponent<ConjuntoInterface>();
-        conjInt.inicializa();
+        conjInt.inicializa(false);
         conjInt.setaConjLogico(conjLogico);
         conjInt.transform.position = conjLogico.calculaPosPorPecas();
         //conjLogico.printaPecas();
@@ -40,6 +40,7 @@ public class ConjuntoInterfaceCreator : MonoBehaviour
         //}
         //conjInt.inserePeca(gameObjet);
         //conjuntoDono = conj;
+        conjInt.mudaColisorSize();
         tabuleiro.GetComponent<TabuleiroInterface>().insereConjInt(conjunto);
         tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
     }
@@ -48,8 +49,8 @@ public class ConjuntoInterfaceCreator : MonoBehaviour
         GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
         GameObject conjunto = Instantiate(conjuntoPrefab, tabuleiro.transform);
         ConjuntoInterface conjInt = conjunto.GetComponent<ConjuntoInterface>();
-        conjInt.inicializa();
-        conjInt.setaConjLogico(conjLogico);
+        conjInt.inicializa(true);
+        conjInt.setaConjLogicoBkp(conjLogico);
         conjInt.transform.position = conjLogico.calculaPosPorPecas();
         //conjLogico.printaPecas();
         foreach (Peca p in conjLogico.getPecas())
@@ -69,6 +70,7 @@ public class ConjuntoInterfaceCreator : MonoBehaviour
         //}
         //conjInt.inserePeca(gameObjet);
         //conjuntoDono = conj;
+        conjInt.mudaColisorSize();
         tabuleiro.GetComponent<TabuleiroInterface>().insereConjInt(conjunto);
         tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
     }

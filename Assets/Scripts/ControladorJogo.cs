@@ -35,6 +35,11 @@ public class ControladorJogo : MonoBehaviour
         }
 
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            //Para ver estado dos gameobjects quando pressionados
+            Debug.Break();
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("---------------------------------------------------VERIFICANDO CONJUNTOS DA MESAATUAL-------------------------");
@@ -43,6 +48,7 @@ public class ControladorJogo : MonoBehaviour
                 Debug.Log("------------------- Conjunto: " + contador++ + "--Valido: " + c.getValida() + "----------------");
                 c.printaPecas();
             }
+            Debug.Log("Contagem de conjuntos no backup: " + ((Tabuleiro)tabuleirosValidos[tabuleirosValidos.Count - 1]).getConjuntos().Count);
 
         }
         if (Input.GetKeyDown(KeyCode.R))

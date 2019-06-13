@@ -16,7 +16,7 @@ public class controladorPeca : MonoBehaviour
     public Collider2D colisao;
     private Vector3 pecaPos;
     public GameObject tabuleiro;
-    private GameObject conjuntoDono;
+    public GameObject conjuntoDono;
     ControladorJogo Controlador;
 
     public void setaConjuntoDono(GameObject conjuntoInt)
@@ -103,6 +103,14 @@ public class controladorPeca : MonoBehaviour
                 //Debug.Log("COLISAO DESATIVADA");
             }
         }
+
+        //BUGFIX FORÇADISSIMO funciona, mas é uma solução terrível ao problema
+        if(conjuntoDono!=null) {
+            colisao.enabled = !Controlador.modoConjunto; }
+        else
+        {
+            //print("Não ta no conjunto!");
+        }
     }
     void Start()
     {
@@ -184,7 +192,7 @@ public class controladorPeca : MonoBehaviour
                     Quaternion.identity, tabuleiro.transform);
         tabuleiro.GetComponent<TabuleiroInterface>().insereConjInt(conj);
         ConjuntoInterface conjInt = conj.GetComponent<ConjuntoInterface>();
-        conjInt.inicializa();
+        conjInt.inicializa(false);
         conjInt.inserePeca(gameObject, true);
         conjuntoDono = conj;
         tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();

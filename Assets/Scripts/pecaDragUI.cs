@@ -140,6 +140,8 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
         { 
             if (col.tag == "Slot" && !setou)
             {
+                Destroy(pecaGame);
+                pecaGame = null;
                 if (col.GetComponent<slotMao>().vazio())
                 {
                     transform.SetPositionAndRotation(col.transform.position, Quaternion.identity);
