@@ -160,6 +160,8 @@ public class Conjunto
             Peca clonePeca = p.clonePeca();
             clone.inserePeca(p);
         }
+        clone.setPos(this.getPos());
+        clone.valida = this.valida;
         return clone;
     }
     public void printaPecas()

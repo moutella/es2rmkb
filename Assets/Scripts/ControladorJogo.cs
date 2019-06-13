@@ -46,6 +46,7 @@ public class ControladorJogo : MonoBehaviour
             int contador = 1;
             foreach(Conjunto c in tabuleiroAtual.getConjuntos()){
                 Debug.Log("------------------- Conjunto: " + contador++ + "--Valido: " + c.getValida() + "----------------");
+                Debug.Log("Conjunto pos:" + c.getPos()); 
                 c.printaPecas();
             }
             Debug.Log("Contagem de conjuntos no backup: " + ((Tabuleiro)tabuleirosValidos[tabuleirosValidos.Count - 1]).getConjuntos().Count);

@@ -49,10 +49,10 @@ public class ConjuntoInterfaceCreator : MonoBehaviour
         GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
         GameObject conjunto = Instantiate(conjuntoPrefab, tabuleiro.transform);
         ConjuntoInterface conjInt = conjunto.GetComponent<ConjuntoInterface>();
+        conjInt.transform.position = conjLogico.getPos();
         conjInt.inicializa(true);
         conjInt.setaConjLogicoBkp(conjLogico);
         //conjInt.transform.position = conjLogico.calculaPosPorPecas();
-        conjInt.transform.position = conjLogico.getPos();
         //conjLogico.printaPecas();
         foreach (Peca p in conjLogico.getPecas())
         {

@@ -254,6 +254,7 @@ public class ConjuntoInterface : MonoBehaviour
         }
         //Debug.Log(posicao);
         posicao = posicao / pecasObjFilho.Count;
+        conjuntoLogico.setPos(posicao);
         return posicao;
     }
     
@@ -298,6 +299,7 @@ public class ConjuntoInterface : MonoBehaviour
                     offset += distanciaPecas;
                 }
             }
+        conjuntoLogico.setPos(transform.position);
     }
     void OnTriggerEnter2D(Collider2D other)
     {
