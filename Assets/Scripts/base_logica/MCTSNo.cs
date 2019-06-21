@@ -8,14 +8,18 @@ public class MCTSNo{              //Arvore do monte Carlo
     public int vitorias;
     public int visitas;
 
+    public int UCT;    // Valor do estado
+
     public Jogada jogadaGeradora;            //Jogada que gerou esse estado
 
     public MCTSNo(MCTSNo pai,Estado estado,Jogada jogadaGeradora){
+        this.filhos=null;
         this.pai=pai;
         this.vitorias=0;
         this.visitas=0;
         this.estado=estado;
         this.jogadaGeradora=jogadaGeradora;
+        this.UCT=0;
     }
 
     public void expansao(){
@@ -30,13 +34,41 @@ public class MCTSNo{              //Arvore do monte Carlo
     }
 
     public Estado selecao(){  //Função que irá selecionar qual o filho será escolhido
+        Estado melhor=null;
+        foreach(filho p in this.filhos){
+            filho.UCT = (filho.vitorias / filho.visitas) + (1.4 * (Math.sqrt(Math.log(this.visitas) / filho.visitas)));
+            if(melhor!=null){
+                    if(melhor.UCT<filhos.UCT){
+                        melhor=filho;
+                    }
+            }else{
+                melhor=filho;
+            }
+        }
+        return melhor;
 
     }
-    public void backPropagation(){   // Função que irá subir na arvore mudando as vitorias e visitas
-
+    public void backPropagation(int vitoria,int visita,Estado estado){   // Função que irá subir na arvore mudando as vitorias e visitas
+        if(estado.pai==null){
+            return;
+        }
+        else{
+            estado.vitorias+=vitoria;
+            estado.visitas+=visitas;
+            backPropagation(vitoria,visita,estadoo.pai);
+        }
     }
-    public Estado simulacao(){     // Função que ira retornar o melhor estado/jogada(Monte Carlo em si)
-
+    public void simulacao(Estado estado){     // Função que irá jogar aleatoriamente até a folha.
+    	if(estado.filhos==null){
+            estado.expansao();
+        }
+        if(estado.ehEstadoFinal()){
+            estado.backPropagation();
+        }else{
+            Random rnd=new Random();
+            int escolhido=rnd.Next(estado.filhos.getLength);
+            simulacao(estado.filhos[escolhido]);
+        }
     }
 
 
