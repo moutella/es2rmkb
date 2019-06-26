@@ -9,7 +9,7 @@ public class Estado{   //Precisa criar um estado que armazena a mão os dois jog
 
 
 
-    public Estado(MaoIA jogadorIA,MaoIA jogadorRandom,Tabuleiro tabuleiro){
+    public Estado(IA jogadorIA,IA jogadorRandom,Tabuleiro tabuleiro){
         this.jogadorIa=jogadorIA;
         this.jogadorRandom=jogadorRandom;
         this.tabuleiro=tabuleiro;
