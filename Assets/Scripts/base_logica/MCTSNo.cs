@@ -1,4 +1,7 @@
-
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
 
 
 public class MCTSNo{              //Arvore do monte Carlo
@@ -26,19 +29,19 @@ public class MCTSNo{              //Arvore do monte Carlo
         IA jogadorAtual=estado.jogadorAtual();
         ArrayList jogadasPossiveis=jogadorAtual.retornaJogadasPossiveis();
         ArrayList res=new ArrayList();
-        for (int i=0;i<jogadasPossiveis;i++){     //Criando uma copia do estado atual para cada jogada possivel e realizando a jogada
+        for (int i=0;i<jogadasPossiveis.Count;i++){     //Criando uma copia do estado atual para cada jogada possivel e realizando a jogada
                 Estado novoEstado=this.estado.copy();    //Copia o estado atual
-                novoEstado.jogar(jogadasPossiveis[i]);   //Faz a jogada na copia do estado atual
-                res.Add(new MCTSNo(this,novoEstado,jogadasPossiveis[i]));    //Adiciono um novo filho 
+                novoEstado.jogar((Jogada)jogadasPossiveis[i]);   //Faz a jogada na copia do estado atual
+                res.Add(new MCTSNo(this,novoEstado,(Jogada)jogadasPossiveis[i]));    //Adiciono um novo filho 
         }
     }
 
     public Estado selecao(){  //Função que irá selecionar qual o filho será escolhido
         Estado melhor=null;
-        foreach(filho p in this.filhos){
-            filho.UCT = (filho.vitorias / filho.visitas) + (1.4 * (Math.sqrt(Math.log(this.visitas) / filho.visitas)));
+        foreach(Estado filho in this.filhos){
+            filho.UCT = (filho.vitorias / filho.visitas) + (1.4 * (Math.Sqrt(Math.Log(this.visitas) / filho.visitas)));
             if(melhor!=null){
-                    if(melhor.UCT<filhos.UCT){
+                    if(melhor.UCT<filho.UCT){
                         melhor=filho;
                     }
             }else{
@@ -55,7 +58,7 @@ public class MCTSNo{              //Arvore do monte Carlo
         else{
             estado.vitorias+=vitoria;
             estado.visitas+=visitas;
-            backPropagation(vitoria,visita,estadoo.pai);
+            backPropagation(vitoria,visita,estado.pai);
         }
     }
     public void simulacao(Estado estado){     // Função que irá jogar aleatoriamente até a folha.
@@ -65,7 +68,7 @@ public class MCTSNo{              //Arvore do monte Carlo
         if(estado.ehEstadoFinal()){
             estado.backPropagation();
         }else{
-            Random rnd=new Random();
+            System.Random rnd=new System.Random();
             int escolhido=rnd.Next(estado.filhos.getLength);
             simulacao(estado.filhos[escolhido]);
         }

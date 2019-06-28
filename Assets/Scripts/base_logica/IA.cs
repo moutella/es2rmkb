@@ -6,7 +6,7 @@ using System;
 public class IA : MaoUsuario
 {
 	public MCTSNo monteCarloTree;
-	public boolean jogadorAtual;
+	public bool jogadorAtual;
 
 	public IA(){
 		this.pecas = new ArrayList();
@@ -192,6 +192,8 @@ public class IA : MaoUsuario
 		foreach(Peca p in this.pecas){
 			//TODO
 		}
+
+		return new ArrayList();
 	}
 
 
@@ -233,8 +235,8 @@ public class IA : MaoUsuario
 		return jogada;
 	}
 
-	public void jogar(ArrayList subJogadas,ArrayList tabuleiro){
-		foreach(SubJogada sj in subJogadas){
+	public void jogar(Jogada jogada,Tabuleiro tabuleiro){
+		foreach(SubJogada sj in jogada.subjogadas){
 			int tipo=sj.tipo;
 			if (tipo==0){   //Split
 
@@ -246,7 +248,7 @@ public class IA : MaoUsuario
 
 			}
 		}
-		return true;
+		//return true;
 	}
 	
 	public Jogada monteCarlo(MaoUsuario jogador,Tabuleiro tabuleiro){
@@ -256,14 +258,14 @@ public class IA : MaoUsuario
 			//Simulação: Escolhe aleatoriamente uma jogada possivel, passando pro nó novo e chamando novamente a expansão
 			//Backpropagation: Volta o resultado(vitoria/derrota/empate) para o nó acima até chegar na raiz
 			// Pra fazer o monte carlo é preciso criar uma estrutura que vai conter: O pai da jogada atual, quantidade de vitorias, as possiveis jogadas geradas por ele, e a quantidade de vezes que este nó foi visitado 
-
+		return null;
 	}
 
-	public void jogarAleatorio(ArrayList jogadas,ArrayList tabuleiro){
-			 int tamArray=jogadas.getLength(0);
-			 Random rnd=new Random();
-			 int escolhido=rnd.Next(tamArray);
-			return jogar(escolhido,tabuleiro);	
+	public void jogarAleatorio(ArrayList jogadas,Tabuleiro tabuleiro){
+			int tamArray=jogadas.Count;
+			System.Random rnd=new System.Random();
+			Jogada escolhido=(Jogada)jogadas[rnd.Next(tamArray)];
+			jogar(escolhido,tabuleiro);	
 	}
 
 }

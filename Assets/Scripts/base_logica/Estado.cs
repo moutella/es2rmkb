@@ -1,5 +1,7 @@
-
-
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
 
 
 public class Estado{   //Precisa criar um estado que armazena a mão os dois jogadores e o tabuleiro
@@ -23,12 +25,13 @@ public class Estado{   //Precisa criar um estado que armazena a mão os dois jog
         }
         //TODO: Função que retorna o jogador atual
     }
-    public void jogar(ArrayList subJogadas){
-        jogadorAtual().jogar(subJogadas,this.tabuleiro);
+    public void jogar(Jogada jogada){
+        jogadorAtual().jogar(jogada,this.tabuleiro);
         mudarTurno();
     }
     public Estado copy(){
         // TODO: função retornara a copia do estado atual
+        return null;
     }
     public void mudarTurno(){
         if(jogadorIa.jogadorAtual){
