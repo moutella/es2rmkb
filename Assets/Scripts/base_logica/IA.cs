@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class IA : MaoUsuario
 {
+	public MCTSNo monteCarloTree;
+	public boolean jogadorAtual;
 
 	public IA(){
 		this.pecas = new ArrayList();
         this.primeiraJogada = true;
         this.comprouPeca = false;
 	}
-
-
+	public IA(ArrayList pecas,Boolean jogadorAtual){
+		this.pecas=pecas;
+		this.primeiraJogada=true;
+		this.comprouPeca=false;
+		this.jogadorAtual=jogadorAtual;
+	}
 
 /* 
 	public ArrayList procuraConjunto(bool primeiraJogada)
@@ -174,8 +181,6 @@ public class IA : MaoUsuario
 				if(conjunto.getValida()) resp.Add(conjunto.cloneConjunto());		
 			}
 
-			
-			
 			anterior = p;
 		}
 
@@ -226,6 +231,39 @@ public class IA : MaoUsuario
 		}
 
 		return jogada;
+	}
+
+	public void jogar(ArrayList subJogadas,ArrayList tabuleiro){
+		foreach(SubJogada sj in subJogadas){
+			int tipo=sj.tipo;
+			if (tipo==0){   //Split
+
+			}else if(tipo==1){      //inserção
+
+			}else if(tipo==2){      //Novo
+
+			}else if(tipo==3){      //Move
+
+			}
+		}
+		return true;
+	}
+	
+	public Jogada monteCarlo(MaoUsuario jogador,Tabuleiro tabuleiro){
+			//Monte carlo possui 4 etapas:Seleção, expansão, simulação e backpropagation
+			//Seleção: Escolhe uma jogada do estado atual(não é 100% aleatorio, ele leva em consideraçào as jogadas anteriores)
+			//Expansão: Gera todas as jogadas possiveis do estado escolhido
+			//Simulação: Escolhe aleatoriamente uma jogada possivel, passando pro nó novo e chamando novamente a expansão
+			//Backpropagation: Volta o resultado(vitoria/derrota/empate) para o nó acima até chegar na raiz
+			// Pra fazer o monte carlo é preciso criar uma estrutura que vai conter: O pai da jogada atual, quantidade de vitorias, as possiveis jogadas geradas por ele, e a quantidade de vezes que este nó foi visitado 
+
+	}
+
+	public void jogarAleatorio(ArrayList jogadas,ArrayList tabuleiro){
+			 int tamArray=jogadas.getLength(0);
+			 Random rnd=new Random();
+			 int escolhido=rnd.Next(tamArray);
+			return jogar(escolhido,tabuleiro);	
 	}
 
 }
