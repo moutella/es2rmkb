@@ -183,6 +183,13 @@ public class IA : MaoUsuario
 	}
 
 
+	public ArrayList retornaInsercoes(){
+		foreach(Peca p in this.pecas){
+			//TODO
+		}
+	}
+
+
 	public Peca achaCoringaForaDoConj(Conjunto c){
 		foreach(Peca p in this.pecas){
 			if(p.ehCoringa() && !c.getPecas().Contains(p)){
