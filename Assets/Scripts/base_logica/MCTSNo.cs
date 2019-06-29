@@ -30,10 +30,11 @@ public class MCTSNo{              //Arvore do monte Carlo
         ArrayList jogadasPossiveis=jogadorAtual.retornaJogadasPossiveis();
         ArrayList res=new ArrayList();
         for (int i=0;i<jogadasPossiveis.Count;i++){     //Criando uma copia do estado atual para cada jogada possivel e realizando a jogada
-                Estado novoEstado=this.estado.copy();    //Copia o estado atual
+                Estado novoEstado=this.estado.clone();    //Copia o estado atual
                 novoEstado.jogar((Jogada)jogadasPossiveis[i]);   //Faz a jogada na copia do estado atual
                 res.Add(new MCTSNo(this,novoEstado,(Jogada)jogadasPossiveis[i]));    //Adiciono um novo filho 
         }
+        this.filhos=res;
     }
 
     public MCTSNo selecao(){  //Função que irá selecionar qual o filho será escolhido
@@ -76,6 +77,13 @@ public class MCTSNo{              //Arvore do monte Carlo
             System.Random rnd=new System.Random();
             int escolhido=rnd.Next(no.filhos.Count);
             simulacao((MCTSNo)no.filhos[escolhido]);
+        }
+    }
+    public Boolean foiExpandido(){
+        if(this.filhos==null){
+            return false;
+        }else{
+            return true;
         }
     }
 

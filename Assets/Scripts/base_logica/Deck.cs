@@ -25,6 +25,11 @@ public class Deck
         pecas.Add(new Peca(-1, -1, true));
         pecas.Add(new Peca(-1, -1, true));
     }
+    public Deck(ArrayList pecas,int quantasPecasTem){
+        this.pecas=pecas;
+        this.quantasPecasTem=quantasPecasTem;
+
+    }
     public ArrayList pegaCartasIniciais()
     {
         ArrayList pecasCompradas = new ArrayList();
@@ -37,6 +42,9 @@ public class Deck
         }
 
         return pecasCompradas;
+    }
+    public Deck clone(){
+        return new Deck((ArrayList)this.pecas.Clone(),this.quantasPecasTem);
     }
     public Peca pegaPecaAleatoria()
     {

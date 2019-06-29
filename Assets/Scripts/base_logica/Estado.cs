@@ -8,14 +8,16 @@ public class Estado{   //Precisa criar um estado que armazena a mão os dois jog
     public IA jogadorIa;
     public IA jogadorRandom;
     public Tabuleiro tabuleiro;
+    public Deck deck;
 
 
 
 
-    public Estado(IA jogadorIA,IA jogadorRandom,Tabuleiro tabuleiro){
+    public Estado(IA jogadorIA,IA jogadorRandom,Tabuleiro tabuleiro,Deck deck){
         this.jogadorIa=jogadorIA;
         this.jogadorRandom=jogadorRandom;
         this.tabuleiro=tabuleiro;
+        this.deck=deck;
     }
 
     public IA jogadorAtual(){
@@ -30,8 +32,8 @@ public class Estado{   //Precisa criar um estado que armazena a mão os dois jog
         jogadorAtual().jogar(jogada,this.tabuleiro);
         mudarTurno();
     }
-    public Estado copy(){
-        // TODO: função retornara a copia do estado atual
+    public Estado clone(){
+        Estado newEstado=new Estado(this.jogadorIa.clone(),this.jogadorRandom.clone(),this.deck.clone());
         return null;
     }
     public void mudarTurno(){
