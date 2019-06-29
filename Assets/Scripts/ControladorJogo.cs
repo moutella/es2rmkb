@@ -9,6 +9,7 @@ public class ControladorJogo : MonoBehaviour
     float cronometroAtual;
     public Color32[] coresDoJogo;
     public maoUI maoInterface;
+    public IA maoIA;
     private Tabuleiro tabuleiroAtual;
     public TabuleiroInterface controlaTabInterface;
     private Deck deckAtual;
@@ -20,6 +21,7 @@ public class ControladorJogo : MonoBehaviour
 
     void Start()
     {
+        maoIA = new IA();
         tabuleirosValidos = new ArrayList();
         StartCoroutine(GameStart());
     }
@@ -72,8 +74,11 @@ public class ControladorJogo : MonoBehaviour
         deckAtual = new Deck();
         tabuleiroAtual = new Tabuleiro();
         maoInterface.setMaoInicial(deckAtual.pegaCartasIniciais());
+        maoIA.insereMaoInicial(deckAtual.pegaCartasIniciais());
         if(getTurno(JOGADOR)){
             this.iniciaTurno();
+        }else{
+            
         }
         
         yield return null;

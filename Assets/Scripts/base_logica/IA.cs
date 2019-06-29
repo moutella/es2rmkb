@@ -87,12 +87,21 @@ public class IA : MaoUsuario
 	}
 
 	public ArrayList retornaJogadasPossiveis(){
+
 		ArrayList conjuntosDaMao = retornaTodosOsConjuntosDaMao();
 		ArrayList jogadasDaMao = transformaTodosOsArrayListsEmJogadas(conjuntosDaMao);
 
+		ArrayList jogadas = jogadasDaMao;
+
+		ArrayList insercoes = retornaInsercoes(controlador.getTabuleiroAtual());
+
+		jogadas.AddRange(insercoes);
+
+
+
 
 		//Aqui farei um AddRange das outras antes de retornar
-		return jogadasDaMao;
+		return jogadas;
 	}
 
 
