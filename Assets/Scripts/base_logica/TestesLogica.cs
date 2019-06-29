@@ -65,9 +65,11 @@ public class TestesLogica : MonoBehaviour
 
     public bool testesIA(){
 
-        Debug.Log("TesteRetornaGrupos1 - Resultado: " + testeRetornaGrupos1());
+        //Debug.Log("TesteRetornaGrupos1 - Resultado: " + testeRetornaGrupos1());
+        //Debug.Log("TesteRetornaInsercoes1 - Resultado: " + testeRetornaInsercoes1());
+        testeRetornaInsercoes2();
 
-        return testeRetornaGrupos1();
+        return false;
     }
 
     public bool testeRetornaGrupos1(){
@@ -134,9 +136,100 @@ public class TestesLogica : MonoBehaviour
         ArrayList result = maoIA.retornaTodosOsConjuntosDaMao();
         
 
-        //TEM QUE USAR NUGET FLUENTASSERTIONS PARA FUNCIONAR
+        //TEM QUE USAR NUGET FLUENTASSERTIONS PARA FUNCIONAR OU FRAMEWORK DE TESTES UNITARIOS
         return oraculo.Equals(result);
 
+    }
+
+    public bool testeRetornaInsercoes1(){
+        //Deve retornar uma lista com apenas uma jogada, que é colocar o 5 no fim do conjunto existente
+
+        IA maoIA = new IA();
+        Tabuleiro tabuleiro = new Tabuleiro();
+        
+        Peca p1 = new Peca(0,5,false);
+        maoIA.inserePeca(p1);
+        Peca p5 = new Peca(1,7,false);
+        maoIA.inserePeca(p5);
+        Peca p6 = new Peca(2,7,false);
+        maoIA.inserePeca(p6);
+        Peca p8 = new Peca(1,8,false);
+        maoIA.inserePeca(p8);
+
+        Peca p2 = new Peca(0,2,false);
+        Peca p3 = new Peca(0,3,false);
+        Peca p4 = new Peca(0,4,false);
+        Conjunto c1 = new Conjunto();
+        c1.inserePeca(p2);
+        c1.inserePeca(p3);
+        c1.inserePeca(p4);
+
+        tabuleiro.insereConjunto(c1);
+
+        ArrayList jogadas = maoIA.retornaInsercoes(tabuleiro);
+
+        Debug.Log("VAI MOSTRAR A LISTA DE TODAS AS JOGADAS POSSIVEIS\n\n");
+        foreach (Jogada j in jogadas)
+        {
+            Debug.Log("----------------------------------Jogada Possível-------------------------------------\n");
+            foreach (SubJogada sj in j.subjogadas)
+            {
+                Debug.Log("**Subjogada**");
+                Debug.Log("Tipo: " + sj.tipo);
+                Debug.Log("Peca: " + sj.peca.getCodigoCor()+" "+sj.peca.getValor()+" "+sj.peca.ehCoringa());
+                Debug.Log("Conjunto: " + tabuleiro.getConjuntos().LastIndexOf(sj.pai));
+
+            }
+            
+        }
+
+        return false;
+    }
+
+    public bool testeRetornaInsercoes2(){
+        //Deve retornar uma lista com duas jogadas, uma colocando apenas o 7 e outra colocando o 7 e o 8 no conjunto existente
+
+        IA maoIA = new IA();
+        Tabuleiro tabuleiro = new Tabuleiro();
+        
+        Peca p1 = new Peca(0,5,false);
+        maoIA.inserePeca(p1);
+        Peca p5 = new Peca(1,7,false);
+        maoIA.inserePeca(p5);
+        Peca p6 = new Peca(2,7,false);
+        maoIA.inserePeca(p6);
+        Peca p8 = new Peca(1,8,false);
+        maoIA.inserePeca(p8);
+
+        Peca p2 = new Peca(1,4,false);
+        Peca p3 = new Peca(1,5,false);
+        Peca p4 = new Peca(1,6,false);
+        Conjunto c1 = new Conjunto();
+        c1.inserePeca(p2);
+        c1.inserePeca(p3);
+        c1.inserePeca(p4);
+
+        tabuleiro.insereConjunto(c1);
+
+        ArrayList jogadas = maoIA.retornaInsercoes(tabuleiro);
+
+        Debug.Log("VAI MOSTRAR A LISTA DE TODAS AS JOGADAS POSSIVEIS\n\n");
+        foreach (Jogada j in jogadas)
+        {
+            Debug.Log("----------------------------------Jogada Possível-------------------------------------\n");
+            foreach (SubJogada sj in j.subjogadas)
+            {
+                Debug.Log("**Subjogada**");
+                Debug.Log("Tipo: " + sj.tipo);
+                Debug.Log("Peca: " + sj.peca.getCodigoCor()+" "+sj.peca.getValor()+" "+sj.peca.ehCoringa());
+                Debug.Log("Conjunto: " + tabuleiro.getConjuntos().LastIndexOf(sj.pai));
+
+            }
+            
+        }
+
+        return false;
+        
     }
     
 }

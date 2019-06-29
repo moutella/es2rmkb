@@ -12,12 +12,14 @@ public class SubJogada
     public int tipo;
     public Conjunto pai;
     public Conjunto dest;
+    public bool inicio;
 
-    public SubJogada(Peca p, int t, Conjunto pai = null, Conjunto dest = null){
+    public SubJogada(Peca p, int t, Conjunto pai = null, bool ini=false, Conjunto dest = null){
         this.peca = p;
         this.tipo = t;
         this.pai = pai;
         this.dest = dest;
+        this.inicio = ini;
     }
     
 }

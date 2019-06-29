@@ -4,7 +4,7 @@ using UnityEngine;
 public class Conjunto
 {
     private ArrayList pecas;
-    private int tipo; //para salvarmos se a jogada é grupo ou sequencia: -1 inválido, 0 grupo, 1 sequencia
+    public int tipo; //para salvarmos se a jogada é grupo ou sequencia: -1 inválido, 0 grupo, 1 sequencia
     private bool valida; //flag para sabermos se a jogada é válida[utilizado na checagem final do board]
     private Vector3 pos;
 

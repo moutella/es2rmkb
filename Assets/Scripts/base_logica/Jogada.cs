@@ -22,7 +22,7 @@ public class Jogada
         Jogada clone = new Jogada();
         foreach (SubJogada s in subjogadas)
         {
-            clone.insereSubJogada(new SubJogada(s.peca,s.tipo,s.pai,s.dest));
+            clone.insereSubJogada(new SubJogada(s.peca,s.tipo,s.pai,s.inicio,s.dest));
         }
         return clone;
     }

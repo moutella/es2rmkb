@@ -7,17 +7,21 @@ public class IA : MaoUsuario
 {
 	public MCTSNo monteCarloTree;
 	public bool jogadorAtual;
+	public ControladorJogo controlador;
 
 	public IA(){
 		this.pecas = new ArrayList();
         this.primeiraJogada = true;
         this.comprouPeca = false;
+		controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
 	}
 	public IA(ArrayList pecas,Boolean jogadorAtual){
 		this.pecas=pecas;
 		this.primeiraJogada=true;
 		this.comprouPeca=false;
 		this.jogadorAtual=jogadorAtual;
+		controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
+
 	}
 
 /* 
@@ -188,12 +192,35 @@ public class IA : MaoUsuario
 	}
 
 
-	public ArrayList retornaInsercoes(){
-		foreach(Peca p in this.pecas){
-			//TODO
+	public ArrayList retornaInsercoes(Tabuleiro tabuleiro){
+		//Tabuleiro tabuleiro = controlador.getTabuleiroAtual();
+		Conjunto clone = null;
+		ArrayList jogadas = new ArrayList();
+
+		Jogada jogadaAtual = new Jogada();
+		foreach(Conjunto c in tabuleiro.getConjuntos()){
+			clone = c.cloneConjunto();
+			retornaInsercoesBacktrackingFim(clone, jogadaAtual,jogadas, 0, this.pecas.Count, c);
+			//Fazer o do inicio
 		}
 
-		return new ArrayList();
+		return jogadas;
+	}
+
+	public void retornaInsercoesBacktrackingFim(Conjunto clone, Jogada jogadaAtual, ArrayList jogadas, int i, int tam, Conjunto real){
+		Debug.Log(i +", "+tam);
+		if(i>=tam)return;
+		
+		Peca p = (Peca)this.pecas[i];
+		clone.inserePeca(p);
+		if(clone.getValida()){
+			jogadaAtual.insereSubJogada(new SubJogada(p, SubJogada.INS, real, false));
+			jogadas.Add(jogadaAtual.clonaJogada());
+			retornaInsercoesBacktrackingFim(clone, jogadaAtual, jogadas, i+1, tam, real);
+			jogadaAtual.subjogadas.Clear();
+		}
+		clone.removePeca(p);
+		retornaInsercoesBacktrackingFim(clone, jogadaAtual, jogadas, i+1, tam, real);
 	}
 
 
