@@ -24,7 +24,7 @@ public class IA : MaoUsuario
 
 	}
 
-	public IA (MaoUsuario)
+	//public IA (MaoUsuario)
 
 /* 
 	public ArrayList procuraConjunto(bool primeiraJogada)
@@ -202,27 +202,43 @@ public class IA : MaoUsuario
 		Jogada jogadaAtual = new Jogada();
 		foreach(Conjunto c in tabuleiro.getConjuntos()){
 			clone = c.cloneConjunto();
-			retornaInsercoesBacktrackingFim(clone, jogadaAtual,jogadas, 0, this.pecas.Count, c);
+			retornaInsercoesBacktrackingFim(clone, jogadaAtual,jogadas, 0, c);
 			//Fazer o do inicio
+			retornaInsercoesBacktrackingInicio(clone, jogadaAtual,jogadas, this.pecas.Count-1, c);
 		}
 
 		return jogadas;
 	}
 
-	public void retornaInsercoesBacktrackingFim(Conjunto clone, Jogada jogadaAtual, ArrayList jogadas, int i, int tam, Conjunto real){
-		Debug.Log(i +", "+tam);
-		if(i>=tam)return;
+	public void retornaInsercoesBacktrackingFim(Conjunto clone, Jogada jogadaAtual, ArrayList jogadas, int i, Conjunto real){
+		//Debug.Log(i +", "+this.pecas.Count);
+		if(i>=this.pecas.Count)return;
 		
 		Peca p = (Peca)this.pecas[i];
 		clone.inserePeca(p);
 		if(clone.getValida()){
 			jogadaAtual.insereSubJogada(new SubJogada(p, SubJogada.INS, real, false));
 			jogadas.Add(jogadaAtual.clonaJogada());
-			retornaInsercoesBacktrackingFim(clone, jogadaAtual, jogadas, i+1, tam, real);
+			retornaInsercoesBacktrackingFim(clone, jogadaAtual, jogadas, i+1, real);
 			jogadaAtual.subjogadas.Clear();
 		}
 		clone.removePeca(p);
-		retornaInsercoesBacktrackingFim(clone, jogadaAtual, jogadas, i+1, tam, real);
+		retornaInsercoesBacktrackingFim(clone, jogadaAtual, jogadas, i+1, real);
+	}
+
+	public void retornaInsercoesBacktrackingInicio(Conjunto clone, Jogada jogadaAtual, ArrayList jogadas, int i, Conjunto real){
+		if(i<0)return;
+
+		Peca p = (Peca)this.pecas[i];
+		clone.inserePecaAntes(p);
+		if(clone.getValida()){
+			jogadaAtual.insereSubJogada(new SubJogada(p, SubJogada.INS, real, true));
+			jogadas.Add(jogadaAtual.clonaJogada());
+			retornaInsercoesBacktrackingInicio(clone, jogadaAtual, jogadas, i-1, real);
+			jogadaAtual.subjogadas.Clear();
+		}
+		clone.removePeca(p);
+		retornaInsercoesBacktrackingInicio(clone,jogadaAtual,jogadas,i-1, real);
 	}
 
 
@@ -264,7 +280,7 @@ public class IA : MaoUsuario
 		return jogada;
 	}
 	public IA clone(){
-        IA newUsuario=new MaoUsuario();
+        IA newUsuario=(IA)new MaoUsuario();//Pq não new IA()?
         newUsuario.primeiraJogada=this.primeiraJogada;
         newUsuario.comprouPeca=this.comprouPeca;
         newUsuario.pecas=(ArrayList)this.pecas.Clone();
