@@ -24,6 +24,8 @@ public class IA : MaoUsuario
 
 	}
 
+	public IA (MaoUsuario)
+
 /* 
 	public ArrayList procuraConjunto(bool primeiraJogada)
 	{
@@ -261,15 +263,24 @@ public class IA : MaoUsuario
 
 		return jogada;
 	}
+	public IA clone(){
+        IA newUsuario=new MaoUsuario();
+        newUsuario.primeiraJogada=this.primeiraJogada;
+        newUsuario.comprouPeca=this.comprouPeca;
+        newUsuario.pecas=(ArrayList)this.pecas.Clone();
+		newUsuario.controlador=this.controlador;
+		newUsuario.jogadorAtual=this.jogadorAtual;
+        return newUsuario;
+    }
 
-	public void jogar(Jogada jogada,Tabuleiro tabuleiro){
+	public void jogar(Jogada jogada,Tabuleiro tabuleiro,IA jogadorIA){
 		foreach(SubJogada sj in jogada.subjogadas){
 			int tipo=sj.tipo;
 			if (tipo==0){   //Split
 
 			}else if(tipo==1){      //inserção
 
-			}else if(tipo==2){      //Novo
+			}else if(tipo==2){      //Novo			
 
 			}else if(tipo==3){      //Move
 

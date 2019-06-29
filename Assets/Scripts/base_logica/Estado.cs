@@ -29,7 +29,7 @@ public class Estado{   //Precisa criar um estado que armazena a mão os dois jog
         //TODO: Função que retorna o jogador atual
     }
     public void jogar(Jogada jogada){
-        jogadorAtual().jogar(jogada,this.tabuleiro, this.jogadorAtual());
+        jogadorAtual().jogar(jogada,this.tabuleiro,this.jogadorAtual());
         mudarTurno();
     }
     public Estado clone(){
@@ -43,7 +43,7 @@ public class Estado{   //Precisa criar um estado que armazena a mão os dois jog
         }else{
             jogadorIa.jogadorAtual=true;
             jogadorRandom.jogadorAtual=false;
-
+            
         }
     }
 

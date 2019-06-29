@@ -94,14 +94,6 @@ public class MaoUsuario
             Debug.Log("Valor: " +p.getValor()+ " Cor: " + p.getCodigoCor() + " Coringa? " + p.ehCoringa());
         }
     }
-    public MaoUsuario clone(){
-        MaoUsuario newUsuario=new MaoUsuario();
-        newUsuario.primeiraJogada=this.primeiraJogada;
-        newUsuario.comprouPeca=this.comprouPeca;
-        newUsuario.pecas=(ArrayList)this.pecas.Clone();
-        return newUsuario;
-    }
-
     public void limpaJogada(){
         //this.jogadaAtual.Clear();
         this.pecasBackup.Clear();
