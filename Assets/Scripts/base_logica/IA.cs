@@ -289,7 +289,7 @@ public class IA : MaoUsuario
         return newUsuario;
     }
 
-	public void jogar(Jogada jogada,Tabuleiro tabuleiro,IA jogadorIA){
+	public void jogar(Jogada jogada,Tabuleiro tabuleiro){
 		foreach(SubJogada sj in jogada.subjogadas){
 			int tipo=sj.tipo;
 			if (tipo==0){   //Split
