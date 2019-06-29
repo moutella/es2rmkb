@@ -26,13 +26,22 @@ public class MCTSNo{              //Arvore do monte Carlo
     }
 
     public void expansao(){
-        IA jogadorAtual=estado.jogadorAtual();
+        IA jogadorAtual=this.estado.jogadorAtual();
         ArrayList jogadasPossiveis=jogadorAtual.retornaJogadasPossiveis();
         ArrayList res=new ArrayList();
-        for (int i=0;i<jogadasPossiveis.Count;i++){     //Criando uma copia do estado atual para cada jogada possivel e realizando a jogada
-                Estado novoEstado=this.estado.clone();    //Copia o estado atual
-                novoEstado.jogar((Jogada)jogadasPossiveis[i]);   //Faz a jogada na copia do estado atual
-                res.Add(new MCTSNo(this,novoEstado,(Jogada)jogadasPossiveis[i]));    //Adiciono um novo filho 
+        if (jogadasPossiveis){
+            for (int i=0;i<jogadasPossiveis.Count;i++){     //Criando uma copia do estado atual para cada jogada possivel e realizando a jogada
+                    Estado novoEstado=this.estado.clone();    //Copia o estado atual
+                    novoEstado.jogar((Jogada)jogadasPossiveis[i]);   //Faz a jogada na copia do estado atual
+                    res.Add(new MCTSNo(this,novoEstado,(Jogada)jogadasPossiveis[i]));    //Adiciono um novo filho 
+            }
+        }else{
+            Estado novoEstado=this.estado.clone();
+            Peca pecaComprada =novoEstado.deck.pegaPecaAleatoria();
+            novoEstado.jogadorAtual().setComprouPeca;
+            novoEstado.jogadorAtual().inserePeca(pecaComprada);
+            novoEstado.mudarTurno();
+            res.Add(novoEstado);
         }
         this.filhos=res;
     }
