@@ -9,7 +9,8 @@ public class TesteLogica
     [Test]
     public void ValidateSequence()
     {
-        //Conjunto conjunto = new Conjunto();
-        Assert.AreEqual(1, 1);
+        Conjunto c = TesteLogicaMocks.mockConjuntoComGrupoValidoSemCoringa();
+        bool resp = c.validaSequencia();
+        Assert.AreEqual(true, resp);
     }
 }
