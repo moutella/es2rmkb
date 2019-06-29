@@ -29,7 +29,7 @@ public class MCTSNo{              //Arvore do monte Carlo
         IA jogadorAtual=this.estado.jogadorAtual();
         ArrayList jogadasPossiveis=jogadorAtual.retornaJogadasPossiveis();
         ArrayList res=new ArrayList();
-        if (jogadasPossiveis){
+        if (jogadasPossiveis!=null){
             for (int i=0;i<jogadasPossiveis.Count;i++){     //Criando uma copia do estado atual para cada jogada possivel e realizando a jogada
                     Estado novoEstado=this.estado.clone();    //Copia o estado atual
                     novoEstado.jogar((Jogada)jogadasPossiveis[i]);   //Faz a jogada na copia do estado atual
@@ -38,7 +38,7 @@ public class MCTSNo{              //Arvore do monte Carlo
         }else{
             Estado novoEstado=this.estado.clone();
             Peca pecaComprada =novoEstado.deck.pegaPecaAleatoria();
-            novoEstado.jogadorAtual().setComprouPeca;
+            novoEstado.jogadorAtual().setComprouPeca(true);
             novoEstado.jogadorAtual().inserePeca(pecaComprada);
             novoEstado.mudarTurno();
             res.Add(novoEstado);
