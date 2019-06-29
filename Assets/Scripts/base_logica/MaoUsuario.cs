@@ -97,7 +97,7 @@ public class MaoUsuario
     public MaoUsuario clone(){
         MaoUsuario newUsuario=new MaoUsuario();
         newUsuario.primeiraJogada=this.primeiraJogada;
-        newUsuario.compraPeca=this.compraPeca;
+        newUsuario.comprouPeca=this.comprouPeca;
         newUsuario.pecas=(ArrayList)this.pecas.Clone();
         return newUsuario;
     }
