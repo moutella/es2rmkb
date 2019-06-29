@@ -23,6 +23,12 @@ public class IA : MaoUsuario
 		controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
 
 	}
+	public IA(MaoUsuario MaoUsuario){
+		this.pecas=MaoUsuario.getPecas();
+		this.primeiraJogada=MaoUsuario.getPrimeiraJogada();
+		this.comprouPeca= MaoUsuario.getComprouPeca();
+		this.controlador= GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
+	}
 
 	//public IA (MaoUsuario)
 
@@ -296,8 +302,11 @@ public class IA : MaoUsuario
 
 			}else if(tipo==1){      //inserção
 
-			}else if(tipo==2){      //Novo			
-
+			}else if(tipo==2){      //Novo
+				tabuleiro.insereConjunto(sj.pai);
+				foreach(Peca peca in sj.pai.getPecas()){
+					this.removePeca(peca);	
+				}		
 			}else if(tipo==3){      //Move
 
 			}
