@@ -11,7 +11,7 @@ public class MCTSNo{              //Arvore do monte Carlo
     public int vitorias;
     public int visitas;
 
-    public int UCT;    // Valor do estado
+    public double UCT;    // Valor do estado
 
     public Jogada jogadaGeradora;            //Jogada que gerou esse estado
 
@@ -36,9 +36,10 @@ public class MCTSNo{              //Arvore do monte Carlo
         }
     }
 
-    public Estado selecao(){  //Função que irá selecionar qual o filho será escolhido
-        Estado melhor=null;
-        foreach(Estado filho in this.filhos){
+    public MCTSNo selecao(){  //Função que irá selecionar qual o filho será escolhido
+        MCTSNo melhor=null;
+        //MCTSNo colocado para remover erro de compilação
+        foreach(MCTSNo filho in this.filhos){
             filho.UCT = (filho.vitorias / filho.visitas) + (1.4 * (Math.Sqrt(Math.Log(this.visitas) / filho.visitas)));
             if(melhor!=null){
                     if(melhor.UCT<filho.UCT){
@@ -51,7 +52,9 @@ public class MCTSNo{              //Arvore do monte Carlo
         return melhor;
 
     }
-    public void backPropagation(int vitoria,int visita,Estado estado){   // Função que irá subir na arvore mudando as vitorias e visitas
+
+    //Estado trocado por MCTSNo - erros de compilação
+    public void backPropagation(int vitoria,int visita,MCTSNo estado){   // Função que irá subir na arvore mudando as vitorias e visitas
         if(estado.pai==null){
             return;
         }
@@ -61,16 +64,18 @@ public class MCTSNo{              //Arvore do monte Carlo
             backPropagation(vitoria,visita,estado.pai);
         }
     }
-    public void simulacao(Estado estado){     // Função que irá jogar aleatoriamente até a folha.
-    	if(estado.filhos==null){
-            estado.expansao();
+    //Estado trocado por MCTSNo - erros de compilação
+    public void simulacao(MCTSNo no){     // Função que irá jogar aleatoriamente até a folha.
+    	if(no.filhos==null){
+            no.expansao();
         }
-        if(estado.ehEstadoFinal()){
-            estado.backPropagation();
+        if(no.estado.ehEstadoFinal()){
+            //Alterado por erros de compilação
+            no.backPropagation(no.vitorias, no.visitas, no);
         }else{
             System.Random rnd=new System.Random();
-            int escolhido=rnd.Next(estado.filhos.getLength);
-            simulacao(estado.filhos[escolhido]);
+            int escolhido=rnd.Next(no.filhos.Count);
+            simulacao((MCTSNo)no.filhos[escolhido]);
         }
     }
 

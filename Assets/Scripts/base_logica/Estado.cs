@@ -11,6 +11,7 @@ public class Estado{   //Precisa criar um estado que armazena a mão os dois jog
 
 
 
+
     public Estado(IA jogadorIA,IA jogadorRandom,Tabuleiro tabuleiro){
         this.jogadorIa=jogadorIA;
         this.jogadorRandom=jogadorRandom;
@@ -46,7 +47,6 @@ public class Estado{   //Precisa criar um estado que armazena a mão os dois jog
 
     public bool ehEstadoFinal(){    ///função que diz se o estado chegou ao seu ponto final(Vitoria ou derrota)
         return false;
-
     }
 
 }
