@@ -61,4 +61,14 @@ public class TesteLogica
         bool resposta = c.validaGrupo();
         Assert.AreEqual(false, resposta);
     }
+
+    // Input: Um conjunto que de valores iguais, com cores distintas e sem coringa
+    // Output: Verdadeiro
+    [Test]
+    public void TesteValidaGrupo06()
+    {
+        Conjunto c = this.mocks().conjuntoComMesmoValoreEUmaCoresDistintas();
+        bool resposta = c.validaGrupo();
+        Assert.AreEqual(true, resposta);
+    }
 }
