@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TesteLogicaMocks
+public class TesteLogicaGrupoMocks
 {
     
     public Conjunto conjuntoComMaisDe5Pecas() {

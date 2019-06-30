@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TesteLogica
+public class TesteLogicaGrupo
 {
-    public TesteLogicaMocks mocks() {
-        return new TesteLogicaMocks();
+    public TesteLogicaGrupoMocks mocks() {
+        return new TesteLogicaGrupoMocks();
     }
 
     // Input: Conjunto maior que 4 peças
