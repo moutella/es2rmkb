@@ -19,4 +19,13 @@ public static class TesteLogicaMocks
         Conjunto c = new Conjunto();
         return c;
     }
+
+    public static Conjunto conjuntoValidoDeGrupoComCoringa() {
+        Conjunto c = new Conjunto();
+        c.inserePeca(new Peca(0, 1, false));
+        c.inserePeca(new Peca(1, 1, false));
+        c.inserePeca(new Peca(2, 1, false));
+        c.inserePeca(new Peca(3, 1, true));
+        return c;
+    }
 }
