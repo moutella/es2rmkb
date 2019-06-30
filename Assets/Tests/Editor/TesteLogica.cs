@@ -31,7 +31,7 @@ public class TesteLogica
     }
 
 
-    // Input: Grupo valido, com um coringa
+    // Input: Conjunto com mesmo valor e cores distintas, contendo também um coringa
     // Output: Verdadeiro
     [Test]
     public void TesteValidaGrupo03()
@@ -42,7 +42,7 @@ public class TesteLogica
     }
 
 
-    // Input: Conjunto que so nao é grupo porque tem um valor distinto
+    // Input: Conjunto com ao menos um valor distinto
     // Output: Falso
     [Test]
     public void TesteValidaGrupo04()
@@ -52,7 +52,7 @@ public class TesteLogica
         Assert.AreEqual(false, resposta);
     }
 
-    // Input: Um conjunto com ao menos uma peça com a mesma cor
+    // Input: Um conjunto com valores iguais, mas ao menos uma cor distinta
     // Output: Falso
     [Test]
     public void TesteValidaGrupo05()
