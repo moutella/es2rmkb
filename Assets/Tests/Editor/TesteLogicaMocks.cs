@@ -14,4 +14,9 @@ public static class TesteLogicaMocks
         c.inserePeca(new Peca(4, 1, false));
         return c;
     }
+
+    public static Conjunto conjuntoVazio() {
+        Conjunto c = new Conjunto();
+        return c;
+    }
 }

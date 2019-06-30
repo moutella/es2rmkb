@@ -16,4 +16,14 @@ public class TesteLogica
         Assert.AreEqual(false, resposta);
     }
 
+    // Input: Conjunto vazio
+    // Output: Falso, já que um conjunto vazio é inválido
+    [Test]
+    public void TesteValidaGrupo02()
+    {
+        Conjunto c = TesteLogicaMocks.conjuntoVazio();
+        bool resposta = c.validaSequencia();
+        Assert.AreEqual(false, resposta);
+    }
+
 }
