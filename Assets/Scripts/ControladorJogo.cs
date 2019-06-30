@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ControladorJogo : MonoBehaviour
 {
@@ -16,10 +17,12 @@ public class ControladorJogo : MonoBehaviour
     private int turno; //0 é turno do jogador, 1 da ia
     public bool modoConjunto = false;
     public bool isBotandoPeca;
+    public Text contadorTexto;
     //Isso pode ser feito dentro da classe do jogador futuramente
 
     void Start()
     {
+        contadorTexto = GameObject.Find("contador").GetComponent<Text>();
         tabuleirosValidos = new ArrayList();
         StartCoroutine(GameStart());
     }
@@ -125,6 +128,7 @@ public class ControladorJogo : MonoBehaviour
         {
             //Mostrar ao usuário no jogo
             Debug.Log("Tempo: " + cronometroAtual);
+            contadorTexto.text = cronometroAtual.ToString();
             yield return new WaitForSeconds(1.0f);
             cronometroAtual--;
         }
@@ -138,7 +142,7 @@ public class ControladorJogo : MonoBehaviour
         tabuleirosValidos.Add(cloneBase);
         maoInterface.fazBackup();
 
-        //StartCoroutine(IniciaContagem());
+        StartCoroutine(IniciaContagem());
     }
 
     public bool terminaJogada()
