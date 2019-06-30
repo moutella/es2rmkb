@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class TesteLogica
 {
+    public TesteLogicaMocks mocks() {
+        return new TesteLogicaMocks();
+    }
+
     // Input: Conjunto maior que 4 peças
     // Output: Falso, já que temos apenas 4 cores diferentes.
     [Test]
     public void TesteValidaGrupo01()
     {
-        Conjunto c = TesteLogicaMocks.conjuntoComMaisDe5Pecas();
+        Conjunto c = this.mocks().conjuntoComMaisDe5Pecas();
         bool resposta = c.validaGrupo();
         Assert.AreEqual(false, resposta);
     }
@@ -21,7 +25,7 @@ public class TesteLogica
     [Test]
     public void TesteValidaGrupo02()
     {
-        Conjunto c = TesteLogicaMocks.conjuntoVazio();
+        Conjunto c = this.mocks().conjuntoVazio();
         bool resposta = c.validaGrupo();
         Assert.AreEqual(false, resposta);
     }
@@ -32,9 +36,19 @@ public class TesteLogica
     [Test]
     public void TesteValidaGrupo03()
     {
-        Conjunto c = TesteLogicaMocks.conjuntoValidoDeGrupoComCoringa();
+        Conjunto c = this.mocks().conjuntoComMesmoValorECoresDistintasEComCoringa();
         bool resposta = c.validaGrupo();
         Assert.AreEqual(true, resposta);
     }
 
+
+    // Input: Conjunto que so nao é grupo porque tem um valor distinto
+    // Output: Falso
+    [Test]
+    public void TesteValidaGrupo04()
+    {
+        Conjunto c = this.mocks().conjuntoComUmValorDistintoECoresDiferentes();
+        bool resposta = c.validaGrupo();
+        Assert.AreEqual(false, resposta);
+    }
 }

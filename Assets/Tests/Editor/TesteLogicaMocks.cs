@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class TesteLogicaMocks
+public class TesteLogicaMocks
 {
     
-    public static Conjunto conjuntoComMaisDe5Pecas() {
+    public Conjunto conjuntoComMaisDe5Pecas() {
         Conjunto c = new Conjunto();
         c.inserePeca(new Peca(0, 1, false));
         c.inserePeca(new Peca(1, 1, false));
@@ -15,17 +15,26 @@ public static class TesteLogicaMocks
         return c;
     }
 
-    public static Conjunto conjuntoVazio() {
+    public Conjunto conjuntoVazio() {
         Conjunto c = new Conjunto();
         return c;
     }
 
-    public static Conjunto conjuntoValidoDeGrupoComCoringa() {
+    public Conjunto conjuntoComMesmoValorECoresDistintasEComCoringa() {
         Conjunto c = new Conjunto();
         c.inserePeca(new Peca(0, 1, false));
         c.inserePeca(new Peca(1, 1, false));
         c.inserePeca(new Peca(2, 1, false));
-        c.inserePeca(new Peca(3, 1, true));
+        c.inserePeca(new Peca(0, 0, true));
+        return c;
+    }
+
+    public Conjunto conjuntoComUmValorDistintoECoresDiferentes() {
+        Conjunto c = new Conjunto();
+        c.inserePeca(new Peca(0, 1, false));
+        c.inserePeca(new Peca(1, 1, false));
+        c.inserePeca(new Peca(2, 2, false));
+        c.inserePeca(new Peca(3, 1, false));
         return c;
     }
 }
