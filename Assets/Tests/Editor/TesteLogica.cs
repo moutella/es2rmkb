@@ -51,4 +51,14 @@ public class TesteLogica
         bool resposta = c.validaGrupo();
         Assert.AreEqual(false, resposta);
     }
+
+    // Input: Um conjunto com ao menos uma peça com a mesma cor
+    // Output: Falso
+    [Test]
+    public void TesteValidaGrupo05()
+    {
+        Conjunto c = this.mocks().conjuntoComMesmoValoreEUmaCorIgual();
+        bool resposta = c.validaGrupo();
+        Assert.AreEqual(false, resposta);
+    }
 }
