@@ -6,11 +6,14 @@ using UnityEngine;
 public class TesteLogica
 {
     
+    // Input: Conjunto maior que 4 peças
+    // Output: Falso, já que temos apenas 4 cores diferentes.
     [Test]
-    public void ValidateSequence()
+    public void TesteValidaGrupo01()
     {
-        Conjunto c = TesteLogicaMocks.mockConjuntoComGrupoValidoSemCoringa();
-        bool resp = c.validaSequencia();
-        Assert.AreEqual(true, resp);
+        Conjunto c = TesteLogicaMocks.conjuntoComMaisDe5Pecas();
+        bool resposta = c.validaSequencia();
+        Assert.AreEqual(false, resposta);
     }
+
 }
