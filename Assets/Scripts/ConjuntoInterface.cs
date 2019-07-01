@@ -221,7 +221,6 @@ public class ConjuntoInterface : MonoBehaviour
             }
             colisor.size = new Vector2((tamanhoPeca * (x - 1)), 1);
         }
-        setaCores();
     }
 
     public Vector3 recalculaPosition() //Quando retirar vai setar a nova raiz do conjunto no meio do conjunto restante
@@ -318,18 +317,6 @@ public class ConjuntoInterface : MonoBehaviour
             }
             ;
         }
-    }
-
-
-    public void setaCores(){
-        if (conjuntoLogico.getValida())
-            {
-                validezInterface.color = coresFundo[0];
-            }
-            else
-            {                
-                validezInterface.color = coresFundo[1];
-            }
     }
     
 }
