@@ -61,19 +61,23 @@ public class ConjuntoInterface : MonoBehaviour
     }
     private void OnMouseDrag()
     {
-        conjuntoSolto = false;
-        conjuntoEmMovimento = true;
-        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        transform.position = Camera.main.ScreenToWorldPoint(mousePos);
+        if(Controlador.getTurno(ControladorJogo.JOGADOR)){
+            conjuntoSolto = false;
+            conjuntoEmMovimento = true;
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+            transform.position = Camera.main.ScreenToWorldPoint(mousePos);
+        }
     }
 
     private void OnMouseUp()
     {
-        if (conjuntoEmMovimento & contaCol != 0)
-        {
-            conjuntoSolto = true;
+        if(Controlador.getTurno(ControladorJogo.JOGADOR)){
+            if (conjuntoEmMovimento & contaCol != 0)
+            {
+                conjuntoSolto = true;
+            }
+            mudaPosPecasFilho();
         }
-        mudaPosPecasFilho();
         //if (contaCol == 0)
         //{
         //    conjuntoSolto = falso;

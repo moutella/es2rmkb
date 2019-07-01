@@ -46,10 +46,8 @@ public class Deck
         return p;
     }
     public void removeCoringas(){
-        foreach(Peca p in this.pecas){
-            if(p.ehCoringa()){
-                this.pecas.Remove(p);
-            }
+        for(int i=0;i<2;i++){
+            this.pecas.RemoveAt(this.pecas.Count-1);
         }
     }
 }

@@ -11,3 +11,5 @@ Para utilizar o projeto corretamente com o Github for Unity
 - Abra a pasta do repositório no Unity Hub em Add
 - Caso seja perguntado, faça o update do projeto para a sua versão do unity
 - Quando precisar ver a janela do Github for Unity, vá em Window>Github
+
+Caso tenha o problema "Could not load file or assembly 'Github.UnityShim...", baixe o [Github for Unity 1.2.1](https://github.com/github-for-unity/Unity/releases/tag/v1.2.1) e abra o pacote no Unity 
