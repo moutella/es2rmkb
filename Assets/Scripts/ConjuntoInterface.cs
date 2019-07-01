@@ -172,6 +172,7 @@ public class ConjuntoInterface : MonoBehaviour
     {
         //Debug.ClearDeveloperConsole();
         //Debug.Log("--------------COMECOU UM SPLIT----------");
+        peca.GetComponent<controladorPeca>().removeConjuntoDono();
         int x = pecasObjFilho.Count;
         Peca p = peca.GetComponent<PecaGame>().getPecaLogica();
         Conjunto extra = conjuntoLogico.divide(p);
@@ -204,7 +205,7 @@ public class ConjuntoInterface : MonoBehaviour
             GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
             tabuleiro.GetComponent<TabuleiroInterface>().ativaColisores();
 
-            if (transform.childCount == 0)
+            if (transform.childCount == 1)
             {
                 Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
                 tabAtual.removeConjunto(conjuntoLogico);
