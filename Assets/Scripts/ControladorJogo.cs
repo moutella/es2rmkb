@@ -78,11 +78,12 @@ public class ControladorJogo : MonoBehaviour
         if(getTurno(JOGADOR)){
             this.iniciaTurno();
         }else{
-            
+            this.turnoIA();
         }
         
         yield return null;
     }
+
     public void compraCarta()
     {
         if(getTurno(JOGADOR)){
@@ -90,6 +91,8 @@ public class ControladorJogo : MonoBehaviour
                 Peca p = deckAtual.pegaPecaAleatoria();
                 maoInterface.compraPeca(p);
             }
+        }else{
+            maoIA.compraPeca(deckAtual);
         }
     }
 
@@ -138,6 +141,7 @@ public class ControladorJogo : MonoBehaviour
     }
 
     public void iniciaTurno(){
+
         Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
         tabuleirosValidos.Clear();
         tabuleirosValidos.Add(cloneBase);
@@ -164,8 +168,11 @@ public class ControladorJogo : MonoBehaviour
                         return true;
                     }else{
                         avisoJogadaInvalida();
-                        //rollbackJogada();//Fazer verificação de tempo para saber se utiliza rollback
-                        //penalizacaoTimeout();
+                        if(cronometroAtual<=0){
+                            rollbackJogada();//Fazer verificação de tempo para saber se utiliza rollback
+                            penalizacaoTimeout();
+                        }
+                        
                         return false;
                     }
                 }else{
@@ -175,8 +182,10 @@ public class ControladorJogo : MonoBehaviour
                 }
             }else{
                 avisoJogadaInvalida();
-                //rollbackJogada();//Fazer verificação de tempo para saber se utiliza rollback
-                //penalizacaoTimeout();
+                if(cronometroAtual<=0){
+                    rollbackJogada();//Fazer verificação de tempo para saber se utiliza rollback
+                    penalizacaoTimeout();
+                }
                 return false;
             }
         }else{
@@ -205,7 +214,9 @@ public class ControladorJogo : MonoBehaviour
     }
 
     public void penalizacaoTimeout(){
-    	//TODO: Realizar as penalizações caso o usuário estoure o tempo
+        for(int i=0;i<3;i++){
+            this.compraCarta();
+        }
     }
     public void flipaModo()
     {
@@ -214,5 +225,19 @@ public class ControladorJogo : MonoBehaviour
     public void flipaTurno(){
         if(this.turno==CPU)setTurno(JOGADOR);
         else setTurno(CPU);
+    }
+
+    public void iaJogaNoTabuleiro(){
+        Jogada escolhida = maoIA.retornaJogadaAleatoria();
+        if(escolhida==null){
+            compraCarta();
+        }else{
+            //Chama alguma função de interface que joga na tela as peças inseridas
+        } 
+    }
+
+    public void turnoIA(){
+        iaJogaNoTabuleiro();
+        terminaJogada();
     }
 }

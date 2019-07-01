@@ -354,4 +354,18 @@ public class IA : MaoUsuario
 			jogar(escolhido,tabuleiro);	
 	}
 
+	public Jogada retornaJogadaAleatoria(){
+		ArrayList jogadas = retornaJogadasPossiveis();
+		int tamArray=jogadas.Count;
+		Jogada escolhido;
+		if(tamArray>0){
+			System.Random rnd=new System.Random();
+			escolhido=(Jogada)jogadas[rnd.Next(tamArray)];
+		}else{
+			escolhido=null;
+		}
+		
+		return escolhido;
+	}
+
 }
