@@ -30,7 +30,6 @@ public class controladorPeca : MonoBehaviour
     private void OnMouseDown()
         
     {
-<<<<<<< HEAD
 
         if(Controlador.getTurno(ControladorJogo.JOGADOR)){
         
@@ -46,17 +45,6 @@ public class controladorPeca : MonoBehaviour
             contaColisao = 0;
             gameObject.transform.parent = transform.root;
 
-=======
-        
-        Controlador.isBotandoPeca = true;
-        if (conjuntoDono != null)
-        {
-            Debug.Log(this.enabled);
-            conjuntoDono.GetComponent<ConjuntoInterface>().removePeca(gameObject);
-            contaColisao = 0;
-            ignoraConjunto = true;
-            this.enabled = true;
->>>>>>> parent of 199a6e0... Revert "Fixed #30 which also fixes #29"
         }
     }
     private void OnMouseDrag()
