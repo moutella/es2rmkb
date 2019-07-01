@@ -26,4 +26,27 @@ public class Jogada
         }
         return clone;
     }
+
+    public int contaPontos(){
+        int valor = 0;
+        foreach(SubJogada s in subjogadas){
+            if(s.tipo==SubJogada.NOVO){
+                foreach(Peca p in s.pai.getPecas()){
+                    valor+=p.getValor();
+                }
+            }
+        }
+        return valor;
+    }
+
+    public int contaPecas(){
+        int valor = 0;
+        foreach(SubJogada s in subjogadas){
+            if(s.tipo==SubJogada.NOVO){
+                valor+=s.pai.getPecas().Count;
+            }else if(s.tipo==SubJogada.INS) valor++;
+        }
+
+        return valor;
+    }
 }

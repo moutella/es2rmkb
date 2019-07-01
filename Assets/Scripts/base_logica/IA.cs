@@ -99,9 +99,18 @@ public class IA : MaoUsuario
 
 		ArrayList jogadas = jogadasDaMao;
 
-		ArrayList insercoes = retornaInsercoes(controlador.getTabuleiroAtual());
+		if(!this.getPrimeiraJogada()){
+			ArrayList insercoes = retornaInsercoes(controlador.getTabuleiroAtual());
 
-		jogadas.AddRange(insercoes);
+			jogadas.AddRange(insercoes);
+		}else{
+			for(int i=jogadas.Count-1;i>=0;i--){
+				if(((Jogada)jogadas[i]).contaPontos()<30){
+					jogadas.Remove(jogadas[i]);
+				}
+			}
+		}
+		
 
 
 
@@ -219,7 +228,10 @@ public class IA : MaoUsuario
 			clone = c.cloneConjunto();
 			retornaInsercoesBacktrackingFim(clone, jogadaAtual,jogadas, 0, c);
 			//Fazer o do inicio
-			retornaInsercoesBacktrackingInicio(clone, jogadaAtual,jogadas, this.pecas.Count-1, c);
+			if(c.tipo!=0){
+				retornaInsercoesBacktrackingInicio(clone, jogadaAtual,jogadas, this.pecas.Count-1, c);
+			}
+			
 		}
 
 		return jogadas;
@@ -274,6 +286,8 @@ public class IA : MaoUsuario
 
 		return true;
 	}
+
+
 
 	public ArrayList transformaTodosOsArrayListsEmJogadas(ArrayList al){
 		ArrayList resp = new ArrayList();
