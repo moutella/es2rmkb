@@ -70,11 +70,12 @@ public class ControladorJogo : MonoBehaviour
     }
     private IEnumerator GameStart()
     {
-        sorteiaPrimeiroJogador();
+        
         Debug.Log("Quem começa: " + this.turno);
         deckAtual = new Deck();
         tabuleiroAtual = new Tabuleiro();
         maoInterface.setMaoInicial(deckAtual.pegaCartasIniciais());
+        sorteiaPrimeiroJogador();
         if(getTurno(JOGADOR)){
             this.iniciaTurno();
         }
@@ -104,7 +105,7 @@ public class ControladorJogo : MonoBehaviour
     public void sorteiaPrimeiroJogador(){
         /*Neste método vale colocar alguma animação entre os comandos de pegar peça*/
         Deck deckAux = new Deck();
-        deckAux.removeCoringas();
+        //deckAux.removeCoringas();
         Peca pecaPlayer = deckAux.pegaPecaAleatoria();
         Peca pecaCPU = deckAux.pegaPecaAleatoria();
         while(pecaPlayer.getValor()==pecaCPU.getValor() && pecaPlayer.getCodigoCor()==pecaCPU.getCodigoCor()){

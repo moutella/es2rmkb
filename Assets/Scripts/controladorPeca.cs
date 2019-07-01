@@ -81,7 +81,6 @@ public class controladorPeca : MonoBehaviour
             }
             if (inseridaNesteTurno)
             {
-                //Bug 28 dá erro na linha abaixo
                 pecaNaUi.GetComponent<pecaDragUI>().movimentando = false;
 
             }
