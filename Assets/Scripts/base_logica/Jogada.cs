@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 
-public class Jogada
+public class Jogada : IComparable
 {
     public ArrayList subjogadas;
 
@@ -48,5 +48,19 @@ public class Jogada
         }
 
         return valor;
+    }
+
+    public int CompareTo(object obj)
+    {
+        if (obj == null) return 1;
+
+        Jogada j = obj as Jogada;
+        if (j != null)
+        {
+            return this.contaPecas().CompareTo(j.contaPecas());
+        }
+        else
+            throw new ArgumentException("Objeto comparado não é uma Jogada");
+
     }
 }

@@ -251,6 +251,7 @@ public class ControladorJogo : MonoBehaviour
     }
 
     public void iaJogaNoTabuleiro(){
+        //DÁ PARA SETAR DIFICULDADE DA IA, ESCOLHENDO ALEATORIA OU A QUE JOGA O MAIOR NUMERO DE PECAS
         Jogada escolhida = maoIA.retornaJogadaAleatoria();
         if(escolhida==null){
             Debug.Log("----------------------------------COMPROU-------------------------------------\n");

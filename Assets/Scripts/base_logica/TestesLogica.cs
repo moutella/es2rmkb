@@ -67,9 +67,50 @@ public class TestesLogica : MonoBehaviour
 
         //Debug.Log("TesteRetornaGrupos1 - Resultado: " + testeRetornaGrupos1());
         //Debug.Log("TesteRetornaInsercoes1 - Resultado: " + testeRetornaInsercoes1());
-        testeRetornaGrupos1();
+        testeRetornaTUDO1();
 
         return false;
+    }
+
+    public bool testeRetornaTUDO1(){
+        IA maoIA = new IA();
+        Tabuleiro tabuleiro = new Tabuleiro();
+        
+        Peca p1 = new Peca(0,5,false);
+        maoIA.inserePeca(p1);
+        Peca p5 = new Peca(0,3,false);
+        maoIA.inserePeca(p5);
+        Peca p6 = new Peca(0,6,false);
+        maoIA.inserePeca(p6);
+
+        Peca p2 = new Peca(0,4,false);
+        Peca p3 = new Peca(1,4,false);
+        Peca p4 = new Peca(2,4,false);
+        Peca p7 = new Peca(3,4,false);
+        Conjunto c1 = new Conjunto();
+        c1.inserePeca(p2);
+        c1.inserePeca(p3);
+        c1.inserePeca(p4);
+        c1.inserePeca(p7);
+
+        tabuleiro.insereConjunto(c1);
+
+        ArrayList jogadas = maoIA.retornaTUDO(tabuleiro);
+
+        Debug.Log("VAI MOSTRAR A LISTA DE TODAS AS JOGADAS POSSIVEIS\n\n");
+        foreach (Jogada j in jogadas)
+        {
+            Debug.Log("----------------------------------Jogada Possível-------------------------------------\n");
+            foreach (SubJogada sj in j.subjogadas)
+            {
+                Debug.Log("**Inicio de Conjunto**");
+                sj.pai.printaPecas();
+            }
+            
+        }
+
+        return false;
+        
     }
 
     public bool testeRetornaGrupos1(){

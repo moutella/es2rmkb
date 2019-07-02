@@ -30,57 +30,6 @@ public class IA : MaoUsuario
 		this.controlador= GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
 	}
 
-	//public IA (MaoUsuario)
-
-/* 
-	public ArrayList procuraConjunto(bool primeiraJogada)
-	{
-		this.arrumaPorCores();
-		Peca inicio=null;
-		Peca anterior=null;
-		int soma = 0;
-		Conjunto conjunto = new Conjunto();
-		Jogada jogadaAtual = new Jogada();
-		//SubJogada novaSubjogada;
-		foreach (Peca atual in pecas)
-		{
-			if (inicio == null)
-			{
-				inicio = atual;
-				anterior = atual;
-				jogadaAtual.insereSubJogada(new SubJogada(atual, SubJogada.INS));
-				conjunto.inserePeca(atual);
-				//soma += atual.getValor();
-				
-			}
-			else
-			{
-				if(atual.getCodigoCor()==anterior.getCodigoCor()){
-					if (atual.getValor() - anterior.getValor() == 1){
-						anterior = atual;
-					}
-				}
-				if (atual.getValor() - anterior.getValor() == 1 && atual.getCodigoCor() == anterior.getCodigoCor())
-				{
-					anterior = atual;
-					soma += atual.getValor();
-					conjunto.Add(atual);
-				}
-				else if (conjunto.Count >= 3 && ((primeiraJogada && soma >= 30) || (!primeiraJogada)))
-				{
-					return conjunto;
-				}
-				else
-				{
-					conjunto.Clear();
-					soma = conjunto.getValor();
-				}
-			}
-		}
-	}
-
-	*/
-
 	public void conjuntosBacktracking(ArrayList grupos, ArrayList respAtual, ArrayList resp, int k){
 		for(int i=k;i<grupos.Count;i++){
 			if(this.saoDisjuntos((Conjunto)grupos[i],respAtual)){
@@ -94,15 +43,17 @@ public class IA : MaoUsuario
 
 	public ArrayList retornaJogadasPossiveis(){
 
-		ArrayList conjuntosDaMao = retornaTodosOsConjuntosDaMao();
+		ArrayList conjuntosDaMao = retornaTodosOsConjuntosDaMao(this.pecas);
 		ArrayList jogadasDaMao = transformaTodosOsArrayListsEmJogadas(conjuntosDaMao);
 
 		ArrayList jogadas = jogadasDaMao;
 
 		if(!this.getPrimeiraJogada()){
-			ArrayList insercoes = retornaInsercoes(controlador.getTabuleiroAtual());
-
-			jogadas.AddRange(insercoes);
+			//ArrayList insercoes = retornaInsercoes(controlador.getTabuleiroAtual());
+			//ArrayList removendoDeGrupos = retornaRemoveDeGrupo(controlador.getTabuleiroAtual());
+			ArrayList tudo = retornaTUDO(controlador.getTabuleiroAtual());
+			//jogadas.AddRange(insercoes);
+			return tudo;
 		}else{
 			for(int i=jogadas.Count-1;i>=0;i--){
 				if(((Jogada)jogadas[i]).contaPontos()<30){
@@ -114,15 +65,82 @@ public class IA : MaoUsuario
 
 
 
-
-		//Aqui farei um AddRange das outras antes de retornar
 		return jogadas;
 	}
 
 
-	public ArrayList retornaTodosOsConjuntosDaMao(){
-		ArrayList grupos = retornaTodosOsGrupos();
-		ArrayList sequencias = retornaTodasAsSequencias();
+	public ArrayList retornaTUDO(Tabuleiro tabuleiro){
+		ArrayList mao = (ArrayList)this.pecas.Clone();
+		ArrayList pecasTabuleiro = new ArrayList();
+		foreach(Conjunto c in tabuleiro.getConjuntos()){
+			foreach(Peca p in c.getPecas()){
+				mao.Add(p);
+				pecasTabuleiro.Add(p);
+			}
+		}
+
+		//printaPecas(mao);
+		//printaPecas(pecasTabuleiro);
+
+		ArrayList conjuntos = retornaTodosOsConjuntosDaMao(mao);
+		
+		printaConjuntos(conjuntos);
+		for(int i=conjuntos.Count-1;i>=0;i--){
+			if(!jogadaValida((ArrayList)conjuntos[i], pecasTabuleiro, mao)){
+				conjuntos.Remove(conjuntos[i]);
+			}
+		}
+
+		ArrayList jogadas = transformaTodosOsArrayListsEmJogadas(conjuntos);
+
+		return jogadas;
+
+
+	}
+
+	public void printaPecas(ArrayList al){
+		Debug.Log("Vai começar");
+		foreach(Peca p in al){
+			Debug.Log("Peca: "+p.getCodigoCor()+" "+p.getValor());
+		}
+	}
+
+	public void printaConjuntos(ArrayList al){
+		Debug.Log("Vai começar");
+		foreach(ArrayList array in al){
+			Debug.Log("Jogada");
+			foreach(Conjunto c in array){
+				c.printaPecas();
+				Debug.Log("Prox");
+			}
+			
+		}
+	}
+
+	public bool jogadaValida(ArrayList al, ArrayList pecasTabuleiro, ArrayList mao){
+		ArrayList usadas = new ArrayList();
+		foreach(Conjunto c in al){
+			foreach(Peca p in c.getPecas()){
+				usadas.Add(p);
+			}
+		}
+
+		foreach(Peca p in pecasTabuleiro){
+			if(!usadas.Contains(p)){
+				return false;
+			}
+		}
+
+		if(this.pecas.Count==mao.Count-usadas.Count) return false;
+		else return true;
+	}
+
+
+
+
+	public ArrayList retornaTodosOsConjuntosDaMao(ArrayList mao){
+		ArrayList grupos = retornaTodosOsGrupos(mao);
+		ArrayList sequencias = retornaTodasAsSequencias(mao);
 
 		grupos.AddRange(sequencias);
 
@@ -136,22 +154,23 @@ public class IA : MaoUsuario
 		
 	}
 
-	public ArrayList retornaTodasAsSequencias(){
+	public ArrayList retornaTodasAsSequencias(ArrayList mao){
 		Conjunto conjunto = new Conjunto();
 		ArrayList resp = new ArrayList();
 		int pecasNoConjunto = 0;
 		int ultimaCor = -1;
-		this.arrumaPorCores();
+		IComparer comparador = Peca.getComparadorPorCores();
+        mao.Sort(comparador);
 
 		int i, j;
-		for(i = 0; i < this.pecas.Count; i++) {
-			Peca pivo = (Peca) this.pecas[i];
+		for(i = 0; i < mao.Count; i++) {
+			Peca pivo = (Peca) mao[i];
 			conjunto.inserePeca(pivo);
 			ultimaCor = pivo.getCodigoCor();
 			pecasNoConjunto = 1;
 
-			for(j = i+1; j < this.pecas.Count; j++) {
-				Peca auxiliar = (Peca) this.pecas[j];
+			for(j = i+1; j < mao.Count; j++) {
+				Peca auxiliar = (Peca) mao[j];
 				if(ultimaCor != auxiliar.getCodigoCor()) break; //Caso onde eu já to olhando uma cor diferente da primeira peça da sequencia
 				
 				conjunto.inserePeca(auxiliar); //Insiro a possivel proxima peça valida
@@ -167,14 +186,15 @@ public class IA : MaoUsuario
 		return resp;
 	}
 
-	public ArrayList retornaTodosOsGrupos(){
-		this.arrumaSequencial();
+	public ArrayList retornaTodosOsGrupos(ArrayList mao){
+		IComparer comparador = Peca.getComparadorSequencial();
+        pecas.Sort(comparador);
 		Peca coringa = null;
 		Peca anterior = null;
 		int n=0;
 		Conjunto conjunto = new Conjunto();
 		ArrayList resp = new ArrayList();
-		foreach(Peca p in this.pecas){
+		foreach(Peca p in mao){
 			if(!p.ehCoringa()){
 				if(anterior==null){
 					conjunto.inserePeca(p);
@@ -190,12 +210,12 @@ public class IA : MaoUsuario
 						//Se são de valores diferentes este conjunto já não tem mais como aumentar(a não ser por coringas)
 						n = conjunto.getNumPecas();
 						if(n<4){
-							coringa = achaCoringaForaDoConj(conjunto);
+							coringa = achaCoringaForaDoConj(conjunto, mao);
 							while(coringa!=null && conjunto.getNumPecas()<4){
 								//NO CASO DO GRUPO NÃO HÁ ORDEM, ENTÃO A LINHA ABAIXO DEVE FUNCIONAR CORRETAMENTE
 								conjunto.inserePeca(coringa);
 								if(conjunto.getValida()) resp.Add(conjunto.cloneConjunto());
-								coringa = achaCoringaForaDoConj(conjunto);
+								coringa = achaCoringaForaDoConj(conjunto, mao);
 							}
 						}
 
@@ -213,7 +233,27 @@ public class IA : MaoUsuario
 			anterior = p;
 		}
 
+		addPermutacoes(resp);
+
 		return resp;
+	}
+
+	public void addPermutacoes(ArrayList conjuntos){
+		ArrayList add = new ArrayList();
+		Conjunto novo;
+		for(int k=conjuntos.Count-1;k>=0;k--){
+			if(((Conjunto)conjuntos[k]).tipo==0 && ((Conjunto)conjuntos[k]).getNumPecas()==4){
+				for(int i=0;i<3;i++){
+					novo = new Conjunto();
+					for(int j=0;j<4;j++){
+						if(i!=j){
+							novo.inserePeca((Peca)((Conjunto)conjuntos[k]).getPecas()[j]);
+						}
+					}
+					conjuntos.Add(novo);
+				}
+			}
+		}
 	}
 
 
@@ -268,8 +308,8 @@ public class IA : MaoUsuario
 	}
 
 
-	public Peca achaCoringaForaDoConj(Conjunto c){
-		foreach(Peca p in this.pecas){
+	public Peca achaCoringaForaDoConj(Conjunto c, ArrayList mao){
+		foreach(Peca p in mao){
 			if(p.ehCoringa() && !c.getPecas().Contains(p)){
 				return p;
 			}
@@ -360,6 +400,21 @@ public class IA : MaoUsuario
 		if(tamArray>0){
 			System.Random rnd=new System.Random();
 			escolhido=(Jogada)jogadas[rnd.Next(tamArray)];
+		}else{
+			escolhido=null;
+		}
+		
+		return escolhido;
+	}
+
+	public Jogada retornaJogadaOrdenada(){
+		ArrayList jogadas = retornaJogadasPossiveis();
+
+		int tamArray=jogadas.Count;
+		Jogada escolhido;
+		if(tamArray>0){
+			jogadas.Sort();
+			escolhido=(Jogada)jogadas[0];
 		}else{
 			escolhido=null;
 		}
