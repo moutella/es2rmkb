@@ -10,8 +10,8 @@ public class ConjuntoInterface : MonoBehaviour
     public GameObject conjuntoPrefab, pecaGamePrefab;
     public ArrayList pecasObjFilho;
     private BoxCollider2D colisor;
-    private bool conjuntoEmMovimento, conjuntoSolto;
-    private int contaCol;
+    public bool conjuntoEmMovimento, conjuntoSolto;
+    public int contaCol;
     ControladorJogo Controlador;
     public SpriteRenderer validezInterface;
     public List<Color> coresFundo;
@@ -19,7 +19,7 @@ public class ConjuntoInterface : MonoBehaviour
     void Start()
     {
         conjuntoSolto = false;
-        conjuntoEmMovimento = true;
+        conjuntoEmMovimento = false;
         
     }
     void flipaColisor()
@@ -28,6 +28,10 @@ public class ConjuntoInterface : MonoBehaviour
     }
     void Update()
     {
+        if(!conjuntoEmMovimento)
+        {
+            contaCol = 0;
+        }
         distance = -Camera.main.transform.position.z;
         if (Controlador.isBotandoPeca)
         {
@@ -36,10 +40,6 @@ public class ConjuntoInterface : MonoBehaviour
         else { 
             GetComponent<Collider2D>().enabled = Controlador.modoConjunto;
         }
-
-    }
-    public void LateUpdate()
-    {
         if (gameObject.name.Equals("ConjuntoInterface(Clone)(Clone)"))
         {
             Destroy(gameObject);
@@ -49,8 +49,15 @@ public class ConjuntoInterface : MonoBehaviour
         {
             GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
             tabuleiro.GetComponent<TabuleiroInterface>().removeConjInt(gameObject);
+            Tabuleiro tabAtual = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>().getTabuleiroAtual();
+            tabAtual.removeConjunto(conjuntoLogico);
             Destroy(gameObject);
         }
+
+    }
+    public void LateUpdate()
+    {
+       
     }
 
 
@@ -78,24 +85,32 @@ public class ConjuntoInterface : MonoBehaviour
             }
             mudaPosPecasFilho();
         }
-        //if (contaCol == 0)
-        //{
-        //    conjuntoSolto = falso;
-        //}
+        if (contaCol == 0)
+        {
+            conjuntoSolto = false;
+        }
+        conjuntoEmMovimento = false;
     }
     /// <summary>
     /// FIM DAS FUNÇÕES CHAMADAS PELO UNITY
     /// </summary>
-    public void inicializa()
+    public void inicializa(bool backup)
     {
         this.colisor = GetComponent<BoxCollider2D>();
-        this.conjuntoLogico = new Conjunto();
-        this.pecasObjFilho = new ArrayList();
         GameObject tabuleiro = GameObject.FindGameObjectWithTag("Tabuleiro");
         Controlador = GameObject.FindGameObjectWithTag("GameController").GetComponent<ControladorJogo>();
         Tabuleiro tabAtual = Controlador.getTabuleiroAtual();
+        if (!backup)
+        { 
+            this.conjuntoLogico = new Conjunto();
+            tabAtual.insereConjunto(conjuntoLogico);
+        }
+        this.pecasObjFilho = new ArrayList();
+        
         GetComponent<Collider2D>().enabled = Controlador.modoConjunto;
-        tabAtual.insereConjunto(conjuntoLogico);
+
+        
+
         tabuleiro.GetComponent<TabuleiroInterface>().desativaColisores();
 //        conjuntoLogico.setPos(transform.localPosition);
     }
@@ -115,6 +130,7 @@ public class ConjuntoInterface : MonoBehaviour
     public void inserePeca(GameObject peca, bool mudaPos)
     {
         Peca p = peca.GetComponent<PecaGame>().getPecaLogica();
+        peca.GetComponent<controladorPeca>().setaConjuntoDono(gameObject);
         if (!conjuntoLogico.getPecas().Contains(p)) {
             //Debug.Log(tamanhoPeca);
             if (!pecasObjFilho.Contains(peca)) {
@@ -128,7 +144,7 @@ public class ConjuntoInterface : MonoBehaviour
             }
             peca.transform.parent = transform;
             mudaPosPecasFilho();
-            colisor.size = new Vector2(tamanhoPeca * (transform.childCount - 1), 1);
+            mudaColisorSize();
             setaCores();
         }
     }
@@ -142,6 +158,7 @@ public class ConjuntoInterface : MonoBehaviour
     public void inserePecaAntes(GameObject peca)
     {
         Peca p = peca.GetComponent<PecaGame>().getPecaLogica();
+        peca.GetComponent<controladorPeca>().setaConjuntoDono(gameObject);
         if (!conjuntoLogico.getPecas().Contains(p))
         {
             if (!pecasObjFilho.Contains(peca))
@@ -156,7 +173,7 @@ public class ConjuntoInterface : MonoBehaviour
             peca.transform.parent = transform;
 
             mudaPosPecasFilho();
-             colisor.size = new Vector2(tamanhoPeca * (transform.childCount-1), 1);
+            mudaColisorSize();
 
             setaCores();
         }
@@ -223,7 +240,7 @@ public class ConjuntoInterface : MonoBehaviour
                 conjuntoLogico.setPos(transform.localPosition);
                 mudaPosPecasFilho();
             }
-            colisor.size = new Vector2((tamanhoPeca * (x - 1)), 1);
+            mudaColisorSize();
         }
         setaCores();
     }
@@ -240,6 +257,7 @@ public class ConjuntoInterface : MonoBehaviour
         }
         //Debug.Log(posicao);
         posicao = posicao / pecasObjFilho.Count;
+        conjuntoLogico.setPos(posicao);
         return posicao;
     }
     
@@ -251,6 +269,10 @@ public class ConjuntoInterface : MonoBehaviour
         tabAtual.removeConjunto(conjuntoLogico);
         this.conjuntoLogico = conj;
         tabAtual.insereConjunto(conjuntoLogico);
+    }
+    public void setaConjLogicoBkp(Conjunto conj)
+    {
+        this.conjuntoLogico = conj;
     }
     public void mudaPosPecasFilho()    //Após a inserção ou remoção de uma peça, relativo a posição do conjunto
     {
@@ -280,6 +302,7 @@ public class ConjuntoInterface : MonoBehaviour
                     offset += distanciaPecas;
                 }
             }
+        conjuntoLogico.setPos(transform.position);
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -334,6 +357,23 @@ public class ConjuntoInterface : MonoBehaviour
             {                
                 validezInterface.color = coresFundo[1];
             }
+    }
+
+    public bool ehDaMesa()
+    {
+        maoUI jogador = Controlador.getJogador();
+        foreach(Peca p in this.conjuntoLogico.getPecas()){
+            if(jogador.estavaNaMao(p)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public void mudaColisorSize()
+    {
+        Debug.Log("Numero de pecas: " + pecasObjFilho.Count);
+        colisor.size = new Vector2(tamanhoPeca * pecasObjFilho.Count, 1);
+        contaCol = 0;
     }
     
 }

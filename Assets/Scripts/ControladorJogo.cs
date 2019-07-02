@@ -17,6 +17,7 @@ public class ControladorJogo : MonoBehaviour
     private int turno; //0 é turno do jogador, 1 da ia
     public bool modoConjunto = false;
     public bool isBotandoPeca;
+    public ConjuntoInterfaceCreator criadorDeConjuntos;
     //Isso pode ser feito dentro da classe do jogador futuramente
 
     void Start()
@@ -36,14 +37,21 @@ public class ControladorJogo : MonoBehaviour
         }
 
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            //Para ver estado dos gameobjects quando pressionados
+            Debug.Break();
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("---------------------------------------------------VERIFICANDO CONJUNTOS DA MESAATUAL-------------------------");
             int contador = 1;
             foreach(Conjunto c in tabuleiroAtual.getConjuntos()){
                 Debug.Log("------------------- Conjunto: " + contador++ + "--Valido: " + c.getValida() + "----------------");
+                Debug.Log("Conjunto pos:" + c.getPos()); 
                 c.printaPecas();
             }
+            Debug.Log("Contagem de conjuntos no backup: " + ((Tabuleiro)tabuleirosValidos[tabuleirosValidos.Count - 1]).getConjuntos().Count);
 
         }
         if (Input.GetKeyDown(KeyCode.R))
@@ -59,6 +67,11 @@ public class ControladorJogo : MonoBehaviour
             if(getTurno(JOGADOR) && terminada){
                 iniciaTurno();
             }
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            print("Rollback");
+            rollbackJogada();
         }
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
         
@@ -80,7 +93,7 @@ public class ControladorJogo : MonoBehaviour
         }else{
             this.turnoIA();
         }
-        
+        tabuleirosValidos.Add(tabuleiroAtual.cloneTabuleiro());
         yield return null;
     }
 
@@ -206,6 +219,12 @@ public class ControladorJogo : MonoBehaviour
     public void rollbackConjuntos() {
         Tabuleiro tabuleiroBackup = (Tabuleiro)tabuleirosValidos[tabuleirosValidos.Count-1];
         tabuleiroAtual = tabuleiroBackup.cloneTabuleiro();
+        controlaTabInterface.reset();
+        foreach (Conjunto c in tabuleiroAtual.getConjuntos())
+        {
+            criadorDeConjuntos.inicializaParaRollback(c);
+        }
+        
     }
 
     public void avisoJogadaInvalida(){
@@ -239,5 +258,9 @@ public class ControladorJogo : MonoBehaviour
     public void turnoIA(){
         iaJogaNoTabuleiro();
         terminaJogada();
+    }
+    
+    public maoUI getJogador(){
+        return this.maoInterface;
     }
 }

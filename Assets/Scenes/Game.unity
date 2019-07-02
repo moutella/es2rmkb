@@ -1416,7 +1416,6 @@ GameObject:
   - component: {fileID: 1059058171}
   - component: {fileID: 1059058170}
   - component: {fileID: 1059058173}
-  - component: {fileID: 1059058172}
   m_Layer: 0
   m_Name: ControladorJogo
   m_TagString: GameController
@@ -1451,19 +1450,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1059058172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059058169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35273d6d0f1001e43ab00ad4a4d45141, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  peca: {fileID: 1029946743598585878, guid: 9baa241392ee4684dbba42bb684e9bdb, type: 3}
 --- !u!114 &1059058173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1480,7 +1466,7 @@ MonoBehaviour:
   - serializedVersion: 2
     rgba: 4278190335
   - serializedVersion: 2
-    rgba: 4278221823
+    rgba: 4278207362
   - serializedVersion: 2
     rgba: 4294907904
   - serializedVersion: 2
@@ -1489,6 +1475,7 @@ MonoBehaviour:
   controlaTabInterface: {fileID: 663109675}
   modoConjunto: 0
   isBotandoPeca: 0
+  criadorDeConjuntos: {fileID: 663109676}
 --- !u!1 &1108651782
 GameObject:
   m_ObjectHideFlags: 0

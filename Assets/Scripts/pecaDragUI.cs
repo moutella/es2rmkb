@@ -21,6 +21,7 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     public GameObject tabuleiro;
     private bool jaExistePecaWorld;
     public ControladorJogo Controlador;
+
     public void OnDrag(PointerEventData eventData)
     {
         if(Controlador.getTurno(ControladorJogo.JOGADOR)){
@@ -139,6 +140,8 @@ public class pecaDragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
         { 
             if (col.tag == "Slot" && !setou)
             {
+                Destroy(pecaGame);
+                pecaGame = null;
                 if (col.GetComponent<slotMao>().vazio())
                 {
                     transform.SetPositionAndRotation(col.transform.position, Quaternion.identity);

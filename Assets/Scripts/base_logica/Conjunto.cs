@@ -61,7 +61,7 @@ public class Conjunto
     }
     public void atualizaCoringa(Peca p, int valor, int cor){
         p.setValor(valor);
-        p.setCodigoCor(cor);
+        //p.setCodigoCor(cor);
     }
 
     public bool validaConjunto(){
@@ -138,7 +138,7 @@ public class Conjunto
                 }
             }
         }
-        int valorAtribuido = valorAtual-pecas.Count;
+        int valorAtribuido = valorAtual-pecas.Count+1;
         if (numeroCoringas > 0) { 
             foreach (Peca p in this.pecas)
             {
@@ -160,6 +160,8 @@ public class Conjunto
             Peca clonePeca = p.clonePeca();
             clone.inserePeca(p);
         }
+        clone.setPos(this.getPos());
+        clone.valida = this.valida;
         return clone;
     }
     public void printaPecas()

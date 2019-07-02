@@ -77,47 +77,61 @@ public class maoUI : MonoBehaviour
         arranjaPecas();
     }
     public void rollbackPecas() {
+        liberaTodos();
         maoLogica.rollbackPecas();
+        arranjaPecas();
     }
+
     public int getPontosDaJogada(){
         return maoLogica.pontuacaoJogada();
     }
+
     public bool getPrimeiraJogada(){
         return maoLogica.getPrimeiraJogada();
     }
+
     public void setPrimeiraJogada(bool valor){
         maoLogica.setPrimeiraJogada(valor);
     }
+
     public void limpaJogada(){
         maoLogica.limpaJogada();
     }
+
     public bool jogouAlgumaPeca(){
         return maoLogica.jogouAlgumaPeca();
     }
+
     public bool estavaNaMao(Peca p){
         return maoLogica.estavaNaMao(p);
     }
+
     public void fazBackup() {
         maoLogica.saveBackupPeca();
     }
+
     public bool getComprouPeca(){
         return maoLogica.getComprouPeca();
     }
+
     public void setComprouPeca(bool valor){
         maoLogica.setComprouPeca(valor);
     }
+
     public void removePeca(GameObject peca)
     {
         Peca p = peca.GetComponent<pecaGameUI>().getPeca();
         pecaUIObjects.Remove(peca);
         maoLogica.removePeca(p);
     }
+
     public void inserePeca(GameObject peca)
     {
         Peca p = peca.GetComponent<pecaGameUI>().getPeca();
         pecaUIObjects.Add(peca);
         maoLogica.inserePeca(p);
     }
+
     public void compraPeca(Peca p)
     {   if(!(maoLogica.getComprouPeca() || maoLogica.jogouAlgumaPeca())){
             maoLogica.inserePeca(p);
@@ -132,6 +146,7 @@ public class maoUI : MonoBehaviour
             maoLogica.setComprouPeca(true);
         }
     }
+
     public void reset()
     {
         maoLogica = new MaoUsuario();
