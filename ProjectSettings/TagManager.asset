@@ -10,6 +10,7 @@ TagManager:
   - SeguraPecaUi
   - Conjunto
   - Tabuleiro
+  - Cara
   layers:
   - Default
   - TransparentFX

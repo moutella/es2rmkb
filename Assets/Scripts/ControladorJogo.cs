@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ControladorJogo : MonoBehaviour
 {
+    public const float OFFSET=34.7f;
     public const int JOGADOR=0;
     public const int CPU=1;
     float cronometroAtual;
@@ -18,10 +19,13 @@ public class ControladorJogo : MonoBehaviour
     public bool modoConjunto = false;
     public bool isBotandoPeca;
     public ConjuntoInterfaceCreator criadorDeConjuntos;
+    public GameObject cara;
+
     //Isso pode ser feito dentro da classe do jogador futuramente
 
     void Start()
     {
+        cara = GameObject.FindGameObjectWithTag("Cara");
         maoIA = new IA();
         tabuleirosValidos = new ArrayList();
         StartCoroutine(GameStart());
@@ -34,7 +38,7 @@ public class ControladorJogo : MonoBehaviour
             //muda o turno
             flipaTurno();
             maoInterface.setComprouPeca(false);
-            turnoIA();
+            StartCoroutine(turnoIA());
         }
 
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
@@ -68,7 +72,7 @@ public class ControladorJogo : MonoBehaviour
             if(getTurno(JOGADOR) && terminada){
                 iniciaTurno();
             }else if(getTurno(CPU)){
-                turnoIA();
+                StartCoroutine(turnoIA());
             }
         }
         if (Input.GetKeyDown(KeyCode.P))
@@ -87,6 +91,10 @@ public class ControladorJogo : MonoBehaviour
     {
         sorteiaPrimeiroJogador();
         Debug.Log("Quem começa: " + this.turno);
+        if(this.turno==1){
+            Vector3 v = cara.transform.position;
+            cara.transform.position= new Vector3(v.x, v.y-OFFSET, v.z); 
+        }
         deckAtual = new Deck();
         tabuleiroAtual = new Tabuleiro();
         maoInterface.setMaoInicial(deckAtual.pegaCartasIniciais());
@@ -94,7 +102,7 @@ public class ControladorJogo : MonoBehaviour
         if(getTurno(JOGADOR)){
             this.iniciaTurno();
         }else{
-            this.turnoIA();
+            StartCoroutine(turnoIA());
         }
         tabuleirosValidos.Add(tabuleiroAtual.cloneTabuleiro());
         yield return null;
@@ -149,7 +157,7 @@ public class ControladorJogo : MonoBehaviour
         {
             //Mostrar ao usuário no jogo
             Debug.Log("Tempo: " + cronometroAtual);
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSecondsRealtime(1.0f);
             cronometroAtual--;
         }
 
@@ -246,8 +254,17 @@ public class ControladorJogo : MonoBehaviour
         modoConjunto = !modoConjunto;
     }
     public void flipaTurno(){
-        if(this.turno==CPU)setTurno(JOGADOR);
-        else setTurno(CPU);
+        Vector3 v = cara.transform.position;
+        if(this.turno==CPU){
+            setTurno(JOGADOR);
+            cara.transform.position= new Vector3(v.x, v.y+OFFSET, v.z);
+        }
+        else {
+            setTurno(CPU);
+            cara.transform.position= new Vector3(v.x, v.y-OFFSET, v.z);
+        }
+
+
     }
 
     public void iaJogaNoTabuleiro(){
@@ -274,7 +291,8 @@ public class ControladorJogo : MonoBehaviour
         } 
     }
 
-    public void turnoIA(){
+    IEnumerator turnoIA(){
+        yield return new WaitForSecondsRealtime(5.0f);
         iaJogaNoTabuleiro();
         terminaJogada();
     }

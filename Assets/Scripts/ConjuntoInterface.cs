@@ -68,7 +68,8 @@ public class ConjuntoInterface : MonoBehaviour
     }
     private void OnMouseDrag()
     {
-        if(Controlador.getTurno(ControladorJogo.JOGADOR)){
+        
+        if(Controlador.getTurno(ControladorJogo.JOGADOR) && !(Controlador.getJogador().getPrimeiraJogada() && ehDaMesa())){
             conjuntoSolto = false;
             conjuntoEmMovimento = true;
             Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
@@ -78,7 +79,7 @@ public class ConjuntoInterface : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if(Controlador.getTurno(ControladorJogo.JOGADOR)){
+        if(Controlador.getTurno(ControladorJogo.JOGADOR) && !(Controlador.getJogador().getPrimeiraJogada() && ehDaMesa())){
             if (conjuntoEmMovimento & contaCol != 0)
             {
                 conjuntoSolto = true;
@@ -323,7 +324,7 @@ public class ConjuntoInterface : MonoBehaviour
 
         //Debug.Log("BIRL COLIDIU COM: " + other.gameObject.tag);
 
-        if (conjuntoSolto & other.gameObject.tag == "Conjunto")
+        if (conjuntoSolto & other.gameObject.tag == "Conjunto" && !(Controlador.getJogador().getPrimeiraJogada() && ehDaMesa()))
         {
             Debug.Log("ENTROU");
             conjuntoSolto = false;
