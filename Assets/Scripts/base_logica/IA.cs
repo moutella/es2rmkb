@@ -155,7 +155,6 @@ public class IA : MaoUsuario
 				if(ultimaCor != auxiliar.getCodigoCor()) break; //Caso onde eu já to olhando uma cor diferente da primeira peça da sequencia
 				
 				conjunto.inserePeca(auxiliar); //Insiro a possivel proxima peça valida
-				conjunto.printaPecas();
 				pecasNoConjunto += 1; //Atribuo 1 ao número de elementos no conjunto
 				if(conjunto.getValida()) resp.Add(conjunto.cloneConjunto()); // Se o conjunto estiver válido com esse elemento adicionado, adiciono na resposta
 				else if (pecasNoConjunto >= 3) { // Caso onde o conjunto já ficou inválido, e já tem mais de 2 peças no conjunto, ou seja ele nao ficar mais valido se eu adicionar mais peças

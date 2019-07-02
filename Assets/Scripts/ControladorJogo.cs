@@ -34,6 +34,7 @@ public class ControladorJogo : MonoBehaviour
             //muda o turno
             flipaTurno();
             maoInterface.setComprouPeca(false);
+            turnoIA();
         }
 
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
@@ -66,6 +67,8 @@ public class ControladorJogo : MonoBehaviour
             bool terminada = terminaJogada();
             if(getTurno(JOGADOR) && terminada){
                 iniciaTurno();
+            }else if(getTurno(CPU)){
+                turnoIA();
             }
         }
         if (Input.GetKeyDown(KeyCode.P))
@@ -205,6 +208,7 @@ public class ControladorJogo : MonoBehaviour
             //A IA vai calcular as jogadas possíveis, apenas... Nunca vai fazer uma jogada que permita um tabuleiro inválido
             //Dessa forma, acho que não é necessária validação aqui...
             flipaTurno();
+            iniciaTurno();//inicia turno do jogador
             return true;
             //Por enquanto só flipa turno, até termos ia implementada
             
@@ -249,9 +253,23 @@ public class ControladorJogo : MonoBehaviour
     public void iaJogaNoTabuleiro(){
         Jogada escolhida = maoIA.retornaJogadaAleatoria();
         if(escolhida==null){
+            Debug.Log("----------------------------------COMPROU-------------------------------------\n");
             compraCarta();
         }else{
+            Debug.Log("----------------------------------Jogada IA-------------------------------------\n");
+            foreach (SubJogada sj in escolhida.subjogadas)
+            {
+                Debug.Log("**Subjogada**");
+                Debug.Log("Tipo: " + sj.tipo);
+                Debug.Log("Conjunto: " + tabuleiroAtual.getConjuntos().LastIndexOf(sj.pai));
+                sj.pai.printaPecas();
+
+            }
             //Chama alguma função de interface que joga na tela as peças inseridas
+
+
+
+            if(maoIA.getPrimeiraJogada())maoIA.setPrimeiraJogada(false);
         } 
     }
 
@@ -259,7 +277,7 @@ public class ControladorJogo : MonoBehaviour
         iaJogaNoTabuleiro();
         terminaJogada();
     }
-    
+
     public maoUI getJogador(){
         return this.maoInterface;
     }
