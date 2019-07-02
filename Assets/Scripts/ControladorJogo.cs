@@ -18,6 +18,7 @@ public class ControladorJogo : MonoBehaviour
     private int turno; //0 é turno do jogador, 1 da ia
     public bool modoConjunto = false;
     public bool isBotandoPeca;
+    public bool paraCronometro;
     public ConjuntoInterfaceCreator criadorDeConjuntos;
     public GameObject cara;
 
@@ -28,6 +29,7 @@ public class ControladorJogo : MonoBehaviour
         cara = GameObject.FindGameObjectWithTag("Cara");
         maoIA = new IA();
         tabuleirosValidos = new ArrayList();
+        paraCronometro=false;
         StartCoroutine(GameStart());
     }
 
@@ -152,8 +154,10 @@ public class ControladorJogo : MonoBehaviour
     
     public IEnumerator IniciaContagem(float tempoMax = 60)
     {
+        
         cronometroAtual = tempoMax;
-        while (cronometroAtual > 0)
+        //Debug.Log("Tempo: " + cronometroAtual);
+        while (cronometroAtual > 0 && !paraCronometro)
         {
             //Mostrar ao usuário no jogo
             Debug.Log("Tempo: " + cronometroAtual);
@@ -161,7 +165,10 @@ public class ControladorJogo : MonoBehaviour
             cronometroAtual--;
         }
 
-        terminaJogada();
+
+        if(cronometroAtual<=0)terminaJogada();
+
+        paraCronometro=false;
     }
 
     public void iniciaTurno(){
@@ -189,7 +196,12 @@ public class ControladorJogo : MonoBehaviour
                         Debug.Log("passou");
                         maoInterface.setPrimeiraJogada(false);
                         maoInterface.limpaJogada();
-                        flipaTurno();
+                        bool fim = checaFim();
+                        if(fim){
+                            vaiParaTelaDeFim();
+                        }else{
+                            flipaTurno();
+                        }
                         return true;
                     }else{
                         avisoJogadaInvalida();
@@ -202,7 +214,13 @@ public class ControladorJogo : MonoBehaviour
                     }
                 }else{
                     maoInterface.limpaJogada();
-                    flipaTurno();
+                    bool fim = checaFim();
+                    if(fim){
+                        vaiParaTelaDeFim();
+                    }else{
+                        flipaTurno();
+                    }
+                    
                     return true;
                 }
             }else{
@@ -262,6 +280,7 @@ public class ControladorJogo : MonoBehaviour
         }
         else {
             setTurno(CPU);
+            paraCronometro=true;
             cara.transform.position= new Vector3(v.x, v.y-OFFSET, v.z);
         }
 
@@ -300,5 +319,17 @@ public class ControladorJogo : MonoBehaviour
 
     public maoUI getJogador(){
         return this.maoInterface;
+    }
+
+    public bool checaFim(){
+        return (maoInterface.ehVazia() || maoIA.ehVazia());
+    }
+
+    public void vaiParaTelaDeFim(){
+        if(this.turno==0){
+            //Vai para tela você ganhou
+        }else{
+            //Vai para tela você perdeu
+        }
     }
 }

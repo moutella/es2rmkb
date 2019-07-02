@@ -111,5 +111,8 @@ public class MaoUsuario
     public bool estavaNaMao(Peca p){
         return this.pecasBackup.Contains(p);
     }
+    public bool ehVazia(){
+        return (this.pecas.Count==0);
+    }
     
 }

@@ -160,4 +160,8 @@ public class maoUI : MonoBehaviour
         pecaUIObjects = new ArrayList();
         
     }
+
+    public bool ehVazia(){
+        return maoLogica.ehVazia();
+    }
 }
