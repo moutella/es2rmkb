@@ -166,12 +166,13 @@ public class ControladorJogo : MonoBehaviour
 
     public void iniciaTurno(){
 
+        cronometroAtual=60;
         Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
         tabuleirosValidos.Clear();
         tabuleirosValidos.Add(cloneBase);
         maoInterface.fazBackup();
 
-        //StartCoroutine(IniciaContagem());
+        StartCoroutine(IniciaContagem());
     }
 
     public bool terminaJogada()
