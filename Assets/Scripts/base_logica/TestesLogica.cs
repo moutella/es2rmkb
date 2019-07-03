@@ -113,6 +113,48 @@ public class TestesLogica : MonoBehaviour
         
     }
 
+    public bool testeRetornaSeqOuGrupos(){
+        
+        //Só é possível fazer grupos na mão(Sem Coringas)
+        Deck deck = new Deck();
+        IA maoIA = new IA();
+        
+        Peca p1 = new Peca(3,5,false);
+        maoIA.inserePeca(p1);
+        Peca p2 = new Peca(1,5,false);
+        maoIA.inserePeca(p2);
+        Peca p3 = new Peca(2,5,false);
+        maoIA.inserePeca(p3);
+        Peca p5 = new Peca(0,3,false);
+        maoIA.inserePeca(p5);
+        Peca p6 = new Peca(0,6,false);
+        maoIA.inserePeca(p6);
+        Peca p4 = new Peca(0,7,false);
+        maoIA.inserePeca(p4);
+        Peca p7 = new Peca(0,8,false);
+        maoIA.inserePeca(p7);
+        
+        
+
+        //ArrayList seqs = maoIA.retornaTodasAsSequencias(maoIA.getPecas());
+        
+
+        
+        /* 
+        Debug.Log("VAI MOSTRAR A LISTA DE TODAS AS JOGADAS POSSIVEIS\n\n");
+        foreach (ArrayList j in seqs)
+        {
+            Debug.Log("----------------------------------Jogada Possível-------------------------------------\n");
+            foreach (SubJogada sj in j.subjogadas)
+            {
+                Debug.Log("**Inicio de Conjunto**");
+                sj.pai.printaPecas();
+            }
+            
+        }*/
+        return false;
+    }
+
     public bool testeRetornaGrupos1(){
         
         //Só é possível fazer grupos na mão(Sem Coringas)

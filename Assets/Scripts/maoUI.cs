@@ -164,4 +164,8 @@ public class maoUI : MonoBehaviour
     public bool ehVazia(){
         return maoLogica.ehVazia();
     }
+
+    public MaoUsuario getMaoLogica(){
+        return this.maoLogica;
+    }
 }

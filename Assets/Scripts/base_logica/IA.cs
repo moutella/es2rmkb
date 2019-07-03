@@ -43,10 +43,7 @@ public class IA : MaoUsuario
 
 	public ArrayList retornaJogadasPossiveis(){
 
-		ArrayList conjuntosDaMao = retornaTodosOsConjuntosDaMao(this.pecas);
-		ArrayList jogadasDaMao = transformaTodosOsArrayListsEmJogadas(conjuntosDaMao);
-
-		ArrayList jogadas = jogadasDaMao;
+		
 
 		if(!this.getPrimeiraJogada()){
 			//ArrayList insercoes = retornaInsercoes(controlador.getTabuleiroAtual());
@@ -55,17 +52,23 @@ public class IA : MaoUsuario
 			//jogadas.AddRange(insercoes);
 			return tudo;
 		}else{
+			ArrayList conjuntosDaMao = retornaTodosOsConjuntosDaMao(this.pecas);
+			ArrayList jogadasDaMao = transformaTodosOsArrayListsEmJogadas(conjuntosDaMao);
+
+			ArrayList jogadas = jogadasDaMao;
 			for(int i=jogadas.Count-1;i>=0;i--){
 				if(((Jogada)jogadas[i]).contaPontos()<30){
 					jogadas.Remove(jogadas[i]);
 				}
 			}
+
+			return jogadas;
 		}
 		
 
 
 
-		return jogadas;
+		
 	}
 
 
@@ -84,7 +87,7 @@ public class IA : MaoUsuario
 
 		ArrayList conjuntos = retornaTodosOsConjuntosDaMao(mao);
 		
-		printaConjuntos(conjuntos);
+		//printaConjuntos(conjuntos);
 		for(int i=conjuntos.Count-1;i>=0;i--){
 			if(!jogadaValida((ArrayList)conjuntos[i], pecasTabuleiro, mao)){
 				conjuntos.Remove(conjuntos[i]);
@@ -142,7 +145,7 @@ public class IA : MaoUsuario
 		ArrayList grupos = retornaTodosOsGrupos(mao);
 		ArrayList sequencias = retornaTodasAsSequencias(mao);
 
-		grupos.AddRange(sequencias);
+		sequencias.AddRange(grupos);
 
 
 		ArrayList jogadas = new ArrayList();

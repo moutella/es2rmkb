@@ -69,4 +69,10 @@ public class TabuleiroInterface : MonoBehaviour
             Destroy(conj);
         }
     }
+
+
+
+    public void redesenhaTabuleiros(){
+        
+    }
 }

@@ -31,6 +31,7 @@ public class ControladorJogo : MonoBehaviour
     {
         cara = GameObject.FindGameObjectWithTag("Cara");
         maoIA = new IA();
+        maoIA.setPrimeiraJogada(false);
         contadorTexto = GameObject.Find("contador").GetComponent<Text>();
         tabuleirosValidos = new ArrayList();
         paraCronometro=false;
@@ -164,7 +165,7 @@ public class ControladorJogo : MonoBehaviour
         while (cronometroAtual > 0 && !paraCronometro)
         {
             //Mostrar ao usuário no jogo
-            Debug.Log("Tempo: " + cronometroAtual);
+            //Debug.Log("Tempo: " + cronometroAtual);
             contadorTexto.text = cronometroAtual.ToString();
             yield return new WaitForSeconds(1.0f);
             cronometroAtual--;
@@ -284,6 +285,7 @@ public class ControladorJogo : MonoBehaviour
             cara.transform.position= new Vector3(v.x, v.y+OFFSET, v.z);
         }
         else {
+            Debug.Log("Primeira Jogada? "+maoIA.getPrimeiraJogada());
             setTurno(CPU);
             paraCronometro=true;
             cara.transform.position= new Vector3(v.x, v.y-OFFSET, v.z);
@@ -309,7 +311,7 @@ public class ControladorJogo : MonoBehaviour
 
             }
             //Chama alguma função de interface que joga na tela as peças inseridas
-
+            jogaIA(escolhida);
 
 
             if(maoIA.getPrimeiraJogada())maoIA.setPrimeiraJogada(false);
@@ -317,6 +319,10 @@ public class ControladorJogo : MonoBehaviour
     }
 
     IEnumerator turnoIA(){
+        ArrayList al = maoIA.getPecas();
+        foreach(Peca p in al){
+            Debug.Log("Peca: "+p.getCodigoCor()+" "+p.getValor());
+        }
         yield return new WaitForSecondsRealtime(5.0f);
         iaJogaNoTabuleiro();
         terminaJogada();
@@ -337,6 +343,25 @@ public class ControladorJogo : MonoBehaviour
         }else{
             SceneManager.LoadScene(2);
             //Vai para tela você perdeu
+        }
+    }
+
+    public void jogaIA(Jogada j){
+        Tabuleiro tab = new Tabuleiro();
+        Conjunto atual;
+        foreach(SubJogada sj in j.subjogadas){
+            atual = sj.pai;
+            tab.insereConjunto(atual);
+            foreach(Peca p in atual.getPecas()){
+                if(maoIA.getPecas().Contains(p)){
+                    maoIA.removePeca(p);
+                }
+            }
+        }
+        if(!maoIA.getPrimeiraJogada())controlaTabInterface.reset();
+        
+        foreach(Conjunto c in tab.conjuntos){
+            criadorDeConjuntos.inicializaParaRollback(c);
         }
     }
 }
