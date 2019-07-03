@@ -151,7 +151,7 @@ public class IA : MaoUsuario
 		ArrayList jogadas = new ArrayList();
 		ArrayList jogadaAtual = new ArrayList();
 		
-		conjuntosBacktracking(grupos, jogadaAtual, jogadas, 0);
+		conjuntosBacktracking(sequencias, jogadaAtual, jogadas, 0);
 
 		return jogadas;
 		

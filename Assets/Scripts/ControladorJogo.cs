@@ -31,7 +31,6 @@ public class ControladorJogo : MonoBehaviour
     {
         cara = GameObject.FindGameObjectWithTag("Cara");
         maoIA = new IA();
-        maoIA.setPrimeiraJogada(false);
         contadorTexto = GameObject.Find("contador").GetComponent<Text>();
         tabuleirosValidos = new ArrayList();
         paraCronometro=false;
@@ -161,18 +160,24 @@ public class ControladorJogo : MonoBehaviour
     {
         
         cronometroAtual = tempoMax;
+        contadorTexto.text = cronometroAtual.ToString();
         //Debug.Log("Tempo: " + cronometroAtual);
         while (cronometroAtual > 0 && !paraCronometro)
         {
             //Mostrar ao usuário no jogo
             //Debug.Log("Tempo: " + cronometroAtual);
-            contadorTexto.text = cronometroAtual.ToString();
             yield return new WaitForSeconds(1.0f);
             cronometroAtual--;
+            contadorTexto.text = cronometroAtual.ToString();
         }
 
 
-        if(cronometroAtual<=0)terminaJogada();
+        contadorTexto.text = cronometroAtual.ToString();
+        if(cronometroAtual<=0){
+            Debug.Log("Acabou o tempo");
+            terminaJogada();
+            StartCoroutine(turnoIA());
+        }
 
         paraCronometro=false;
     }
@@ -214,6 +219,7 @@ public class ControladorJogo : MonoBehaviour
                         if(cronometroAtual<=0){
                             rollbackJogada();//Fazer verificação de tempo para saber se utiliza rollback
                             penalizacaoTimeout();
+                            flipaTurno();
                         }
                         
                         return false;
@@ -234,6 +240,7 @@ public class ControladorJogo : MonoBehaviour
                 if(cronometroAtual<=0){
                     rollbackJogada();//Fazer verificação de tempo para saber se utiliza rollback
                     penalizacaoTimeout();
+                    flipaTurno();
                 }
                 return false;
             }
@@ -358,10 +365,15 @@ public class ControladorJogo : MonoBehaviour
                 }
             }
         }
+
         if(!maoIA.getPrimeiraJogada())controlaTabInterface.reset();
         
+        int i = 0;
         foreach(Conjunto c in tab.conjuntos){
-            criadorDeConjuntos.inicializaParaRollback(c);
+            criadorDeConjuntos.inicializaParaRollbackInteligente(c, i);
+            if(maoIA.getPrimeiraJogada())tabuleiroAtual.insereConjunto(c);
+            else tabuleiroAtual=tab;
+            i++;
         }
     }
 }
