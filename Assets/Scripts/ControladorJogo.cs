@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+<<<<<<< HEAD
 using UnityEngine.SceneManagement;
+=======
+>>>>>>> 874b7049bbe53f7058f46f59389e220648c8758c
 
 public class ControladorJogo : MonoBehaviour
 {
@@ -20,18 +23,25 @@ public class ControladorJogo : MonoBehaviour
     private int turno; //0 é turno do jogador, 1 da ia
     public bool modoConjunto = false;
     public bool isBotandoPeca;
+<<<<<<< HEAD
     public bool paraCronometro;
     public ConjuntoInterfaceCreator criadorDeConjuntos;
     public GameObject cara;
     public float tempoTurno, turnoEnd;
     public Text contadorTexto;
     public List<RectTransform> caraPos;
+=======
+    public Text contadorTexto;
+>>>>>>> 874b7049bbe53f7058f46f59389e220648c8758c
     //Isso pode ser feito dentro da classe do jogador futuramente
 
     void Start()
     {
+<<<<<<< HEAD
         cara = GameObject.FindGameObjectWithTag("Cara");
         maoIA = new IA();
+=======
+>>>>>>> 874b7049bbe53f7058f46f59389e220648c8758c
         contadorTexto = GameObject.Find("contador").GetComponent<Text>();
         tabuleirosValidos = new ArrayList();
         paraCronometro=false;
@@ -189,6 +199,7 @@ public class ControladorJogo : MonoBehaviour
     }
 
     
+<<<<<<< HEAD
     //public IEnumerator IniciaContagem(float tempoMax)
     //{
     //    cronometroAtual = tempoMax;
@@ -202,6 +213,19 @@ public class ControladorJogo : MonoBehaviour
     //        cronometroAtual--;
     //        contadorTexto.text = cronometroAtual.ToString();
     //    }
+=======
+    public IEnumerator IniciaContagem(float tempoMax = 60)
+    {
+        cronometroAtual = tempoMax;
+        while (cronometroAtual > 0)
+        {
+            //Mostrar ao usuário no jogo
+            Debug.Log("Tempo: " + cronometroAtual);
+            contadorTexto.text = cronometroAtual.ToString();
+            yield return new WaitForSeconds(1.0f);
+            cronometroAtual--;
+        }
+>>>>>>> 874b7049bbe53f7058f46f59389e220648c8758c
 
 
     //    contadorTexto.text = cronometroAtual.ToString();
@@ -224,7 +248,12 @@ public class ControladorJogo : MonoBehaviour
         tabuleirosValidos.Clear();
         tabuleirosValidos.Add(cloneBase);
         maoInterface.fazBackup();
+<<<<<<< HEAD
         turnoEnd = Time.time + tempoTurno;
+=======
+
+        StartCoroutine(IniciaContagem());
+>>>>>>> 874b7049bbe53f7058f46f59389e220648c8758c
     }
 
     public bool terminaJogada()
