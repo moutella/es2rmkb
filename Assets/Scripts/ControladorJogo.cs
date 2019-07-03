@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ControladorJogo : MonoBehaviour
 {
@@ -331,8 +332,10 @@ public class ControladorJogo : MonoBehaviour
 
     public void vaiParaTelaDeFim(){
         if(this.turno==0){
+            SceneManager.LoadScene(3);
             //Vai para tela você ganhou
         }else{
+            SceneManager.LoadScene(2);
             //Vai para tela você perdeu
         }
     }
