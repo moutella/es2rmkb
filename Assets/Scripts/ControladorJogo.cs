@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ControladorJogo : MonoBehaviour
 {
@@ -22,12 +23,14 @@ public class ControladorJogo : MonoBehaviour
     public ConjuntoInterfaceCreator criadorDeConjuntos;
     public GameObject cara;
 
+    public Text contadorTexto;
     //Isso pode ser feito dentro da classe do jogador futuramente
 
     void Start()
     {
         cara = GameObject.FindGameObjectWithTag("Cara");
         maoIA = new IA();
+        contadorTexto = GameObject.Find("contador").GetComponent<Text>();
         tabuleirosValidos = new ArrayList();
         paraCronometro=false;
         StartCoroutine(GameStart());
@@ -161,7 +164,8 @@ public class ControladorJogo : MonoBehaviour
         {
             //Mostrar ao usuário no jogo
             Debug.Log("Tempo: " + cronometroAtual);
-            yield return new WaitForSecondsRealtime(1.0f);
+            contadorTexto.text = cronometroAtual.ToString();
+            yield return new WaitForSeconds(1.0f);
             cronometroAtual--;
         }
 
