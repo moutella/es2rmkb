@@ -23,8 +23,9 @@ public class ControladorJogo : MonoBehaviour
     public bool paraCronometro;
     public ConjuntoInterfaceCreator criadorDeConjuntos;
     public GameObject cara;
-
+    public float tempoTurno, turnoEnd;
     public Text contadorTexto;
+    public List<RectTransform> caraPos;
     //Isso pode ser feito dentro da classe do jogador futuramente
 
     void Start()
@@ -38,13 +39,45 @@ public class ControladorJogo : MonoBehaviour
     }
 
     // Update is called once per frame
+    private void FixedUpdate()
+    {
+        if (getTurno(JOGADOR)) {
+            cara.GetComponent<RectTransform>().anchoredPosition = caraPos[0].anchoredPosition;
+        }
+        else
+        {
+            cara.GetComponent<RectTransform>().anchoredPosition = caraPos[1].anchoredPosition;
+        }
+    }
     void Update()
     {
-        if(maoInterface.getComprouPeca()){
-            //muda o turno
-            flipaTurno();
-            maoInterface.setComprouPeca(false);
-            StartCoroutine(turnoIA());
+        float timeleft = turnoEnd - Time.time;
+        if (getTurno(JOGADOR)) { 
+            if(timeleft <= 0)
+            {
+                terminaJogada();
+
+            }
+            else
+            {
+                contadorTexto.text = Mathf.CeilToInt(timeleft).ToString();
+            }
+        }
+        if (getTurno(CPU))
+        {
+            contadorTexto.text = "IA";
+        }
+        if (maoInterface.getComprouPeca()){
+            if(timeleft > 0)
+            {
+                
+                timeleft += 10000;
+                setTurno(CPU);
+                StartCoroutine(turnoIA());
+                contadorTexto.text = "IA";
+                maoInterface.setComprouPeca(false);
+            }
+            
         }
 
         //------------------------------------------COISAS PARA USAR COMO DEBUG---------------------------------------------------------------
@@ -99,7 +132,6 @@ public class ControladorJogo : MonoBehaviour
         Debug.Log("Quem começa: " + this.turno);
         if(this.turno==1){
             Vector3 v = cara.transform.position;
-            cara.transform.position= new Vector3(v.x, v.y-OFFSET, v.z); 
         }
         deckAtual = new Deck();
         tabuleiroAtual = new Tabuleiro();
@@ -120,6 +152,7 @@ public class ControladorJogo : MonoBehaviour
             if (maoInterface.maoLogica.getPecas().Count < 24) { 
                 Peca p = deckAtual.pegaPecaAleatoria();
                 maoInterface.compraPeca(p);
+                
             }
         }else{
             maoIA.compraPeca(deckAtual);
@@ -156,41 +189,42 @@ public class ControladorJogo : MonoBehaviour
     }
 
     
-    public IEnumerator IniciaContagem(float tempoMax = 60)
-    {
-        
-        cronometroAtual = tempoMax;
-        contadorTexto.text = cronometroAtual.ToString();
-        //Debug.Log("Tempo: " + cronometroAtual);
-        while (cronometroAtual > 0 && !paraCronometro)
-        {
-            //Mostrar ao usuário no jogo
-            //Debug.Log("Tempo: " + cronometroAtual);
-            yield return new WaitForSeconds(1.0f);
-            cronometroAtual--;
-            contadorTexto.text = cronometroAtual.ToString();
-        }
+    //public IEnumerator IniciaContagem(float tempoMax)
+    //{
+    //    cronometroAtual = tempoMax;
+    //    contadorTexto.text = cronometroAtual.ToString();
+    //    //Debug.Log("Tempo: " + cronometroAtual);
+    //    while (cronometroAtual > 0 && !paraCronometro)
+    //    {
+    //        //Mostrar ao usuário no jogo
+    //        //Debug.Log("Tempo: " + cronometroAtual);
+    //        yield return new WaitForSeconds(1.0f);
+    //        cronometroAtual--;
+    //        contadorTexto.text = cronometroAtual.ToString();
+    //    }
 
 
-        contadorTexto.text = cronometroAtual.ToString();
-        if(cronometroAtual<=0){
-            Debug.Log("Acabou o tempo");
-            terminaJogada();
-            StartCoroutine(turnoIA());
-        }
+    //    contadorTexto.text = cronometroAtual.ToString();
+    //    if(cronometroAtual<=0){
+    //        paraCronometro = true;
+    //        Debug.Log("Acabou o tempo");
+    //        terminaJogada();
+    //        StartCoroutine(turnoIA());
+    //        cronometroAtual = 6f;
+    //        yield return null;
 
-        paraCronometro=false;
-    }
+    //    }
+
+    //    paraCronometro=false;
+    //}
 
     public void iniciaTurno(){
-
-        cronometroAtual=60;
+       
         Tabuleiro cloneBase = tabuleiroAtual.cloneTabuleiro();
         tabuleirosValidos.Clear();
         tabuleirosValidos.Add(cloneBase);
         maoInterface.fazBackup();
-
-        StartCoroutine(IniciaContagem());
+        turnoEnd = Time.time + tempoTurno;
     }
 
     public bool terminaJogada()
@@ -239,7 +273,11 @@ public class ControladorJogo : MonoBehaviour
                 avisoJogadaInvalida();
                 if(cronometroAtual<=0){
                     rollbackJogada();//Fazer verificação de tempo para saber se utiliza rollback
-                    penalizacaoTimeout();
+                    if (!maoInterface.getComprouPeca())
+                    {
+                        penalizacaoTimeout();
+                    }
+                    maoInterface.setComprouPeca(false);
                     flipaTurno();
                 }
                 return false;
@@ -277,9 +315,7 @@ public class ControladorJogo : MonoBehaviour
     }
 
     public void penalizacaoTimeout(){
-        for(int i=0;i<3;i++){
-            this.compraCarta();
-        }
+        compraCarta();
     }
     public void flipaModo()
     {
@@ -289,19 +325,17 @@ public class ControladorJogo : MonoBehaviour
         Vector3 v = cara.transform.position;
         if(this.turno==CPU){
             setTurno(JOGADOR);
-            cara.transform.position= new Vector3(v.x, v.y+OFFSET, v.z);
         }
         else {
             Debug.Log("Primeira Jogada? "+maoIA.getPrimeiraJogada());
             setTurno(CPU);
             paraCronometro=true;
-            cara.transform.position= new Vector3(v.x, v.y-OFFSET, v.z);
         }
 
 
     }
 
-    public void iaJogaNoTabuleiro(){
+    public IEnumerator iaJogaNoTabuleiro(){
         //DÁ PARA SETAR DIFICULDADE DA IA, ESCOLHENDO ALEATORIA OU A QUE JOGA O MAIOR NUMERO DE PECAS
         Jogada escolhida = maoIA.retornaJogadaAleatoria();
         if(escolhida==null){
@@ -322,7 +356,8 @@ public class ControladorJogo : MonoBehaviour
 
 
             if(maoIA.getPrimeiraJogada())maoIA.setPrimeiraJogada(false);
-        } 
+        }
+        yield return null;
     }
 
     IEnumerator turnoIA(){
@@ -331,8 +366,9 @@ public class ControladorJogo : MonoBehaviour
             Debug.Log("Peca: "+p.getCodigoCor()+" "+p.getValor());
         }
         yield return new WaitForSecondsRealtime(5.0f);
-        iaJogaNoTabuleiro();
+        StartCoroutine(iaJogaNoTabuleiro());
         terminaJogada();
+        yield return null;
     }
 
     public maoUI getJogador(){
