@@ -13,3 +13,6 @@ Para utilizar o projeto corretamente com o Github for Unity
 - Quando precisar ver a janela do Github for Unity, vá em Window>Github
 
 Caso tenha o problema "Could not load file or assembly 'Github.UnityShim...", baixe o [Github for Unity 1.2.1](https://github.com/github-for-unity/Unity/releases/tag/v1.2.1) e abra o pacote no Unity 
+
+# See it in action
+[![Rummikub Prototype](http://img.youtube.com/vi/9CFf7y0zIw4/0.jpg)](http://www.youtube.com/watch?v=9CFf7y0zIw4 "Tower of London Prototype")
